@@ -1,14 +1,15 @@
-import HomeLayout from "../routes/home/HomeLayout";
 import HomePage from "../routes/home/HomePage";
-import LandingLayout from "../routes/landing/LandingLayout";
 import LandingPage from "../routes/landing/LandingPage";
-import MainLayPage from "../routes/Layout";
-import MyLayout from "../routes/my/MyLayout";
 import MyPage from "../routes/my/MyPage";
-import RewardLayout from "../routes/reward/RewardLayout";
 import RewardPage from "../routes/reward/RewardPage";
-import StockLayout from "../routes/stock/StockLayout";
 import StockPage from "../routes/stock/StockPage";
+
+import MainLayPage from "../routes/Layout";
+import LandingLayout from "../routes/landing/LandingLayout";
+import HomeLayout from "../routes/home/HomeLayout";
+import RewardLayout from "../routes/reward/RewardLayout";
+import StockLayout from "../routes/stock/StockLayout";
+import MyLayout from "../routes/my/MyLayout";
 
 const mainRouter = [
     {
