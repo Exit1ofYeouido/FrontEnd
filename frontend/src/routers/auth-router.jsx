@@ -1,17 +1,10 @@
-// import React from "react";
-// import Login from "../routes/login/Login";
-// import Signup from "../routes/signup/Signup";
+import LoginSignUp from "../routes/login/LoginSignUp";
 
 const authRouter = [
-    // {
-    //     path: "/login",
-    //     element: <Login />,
-    //     index: true,
-    // },
-    // {
-    //     path: "/signup",
-    //     element: <Signup />,
-    // },
+    {
+        path: "/login",
+        element: <LoginSignUp />,
+    },
 ];
 
 export { authRouter };
