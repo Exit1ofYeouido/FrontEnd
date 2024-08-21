@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import Logo from "../../assets/Logo.svg";
 import "./LoginSignUp.css";
 
 export default function LoginSignUp() {
@@ -23,7 +24,13 @@ export default function LoginSignUp() {
     };
 
     const handleNextStep = async () => {
-        const result = await trigger(["id", "password", "name", "birthdate"]);
+        const result = await trigger([
+            "id",
+            "password",
+            "name",
+            "birthdate",
+            "genderDigit",
+        ]);
         if (result) {
             setStep(2);
         }
@@ -34,7 +41,7 @@ export default function LoginSignUp() {
     };
 
     const onSubmit = (data) => {
-        console.log(data); // 폼 데이터를 콘솔에 출력
+        console.log(data);
     };
 
     return (
@@ -106,16 +113,67 @@ export default function LoginSignUp() {
                                     <div className="birth-info-text">
                                         생년월일
                                     </div>
-                                    <input
-                                        type="text"
-                                        {...register("birthdate", {
-                                            required: true,
-                                        })}
-                                        className="birth-input"
-                                    />
+                                    <div className="birth-gender">
+                                        <input
+                                            type="text"
+                                            {...register("birthdate", {
+                                                required:
+                                                    "생년월일 6자리를 입력해주세요.",
+                                                pattern: {
+                                                    value: /^\d{6}$/,
+                                                    message:
+                                                        "6자리 숫자를 입력해주세요.",
+                                                },
+                                            })}
+                                            maxLength={6}
+                                            className="birth-input"
+                                        />
+                                        <div>&nbsp;-&nbsp;</div>
+                                        <input
+                                            type="text"
+                                            {...register("genderDigit", {
+                                                required:
+                                                    "성별 코드 1자리를 입력해주세요.",
+                                                pattern: {
+                                                    value: /^[1-4]$/,
+                                                    message:
+                                                        "1에서 4 사이의 숫자를 입력해주세요.",
+                                                },
+                                            })}
+                                            maxLength={1}
+                                            className="gender-input"
+                                        />
+                                        <div className="masked-value">
+                                            <span className="masked-dot">
+                                                •
+                                            </span>
+                                            <span className="masked-dot">
+                                                •
+                                            </span>
+                                            <span className="masked-dot">
+                                                •
+                                            </span>
+                                            <span className="masked-dot">
+                                                •
+                                            </span>
+                                            <span className="masked-dot">
+                                                •
+                                            </span>
+                                            <span className="masked-dot">
+                                                •
+                                            </span>
+                                        </div>
+                                    </div>
+                                    {/* 생년월일 오류 메시지 */}
                                     {errors.birthdate && (
                                         <span className="error-message">
-                                            생년월일을 입력해주세요.
+                                            {errors.birthdate.message}
+                                        </span>
+                                    )}
+                                    {/* 성별 코드 오류 메시지 */}
+                                    {errors.genderDigit && (
+                                        <span className="error-message">
+                                            {errors.genderDigit.message}
                                         </span>
                                     )}
                                 </div>
@@ -197,29 +255,36 @@ export default function LoginSignUp() {
                 </div>
                 <div className="form-container sign-in">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="login-text">로그인</div>
-                        <br />
-                        <input
-                            type="text"
-                            className="login-id-input"
-                            {...register("loginEmail", { required: true })}
-                        />
-                        {errors.loginEmail && (
-                            <span className="error-message">
-                                아이디을 입력해주세요.
-                            </span>
-                        )}
-
-                        <input
-                            type="password"
-                            className="login-pw-input"
-                            {...register("loginPassword", { required: true })}
-                        />
-                        {errors.loginPassword && (
-                            <span className="error-message">
-                                비밀번호를 입력해주세요.
-                            </span>
-                        )}
+                        {/* <div className="login-text"></div> */}
+                        <img src={Logo} className="login-img"></img>
+                        <div>
+                            <div className="birth-info-text">아이디</div>
+                            <input
+                                type="text"
+                                className="login-id-input"
+                                {...register("loginEmail", { required: true })}
+                            />
+                            {errors.loginEmail && (
+                                <span className="error-message">
+                                    아이디을 입력해주세요.
+                                </span>
+                            )}
+                        </div>
+                        <div>
+                            <div className="birth-info-text">비밀번호</div>
+                            <input
+                                type="password"
+                                className="login-pw-input"
+                                {...register("loginPassword", {
+                                    required: true,
+                                })}
+                            />
+                            {errors.loginPassword && (
+                                <span className="error-message">
+                                    비밀번호를 입력해주세요.
+                                </span>
+                            )}
+                        </div>
                         <button type="submit" className="login_button">
                             로그인
                         </button>
@@ -243,7 +308,9 @@ export default function LoginSignUp() {
                             </button>
                         </div>
                         <div className="toggle-panel toggle-right">
-                            <div className="welcome">어서오세요!</div>
+                            <div className="welcome">
+                                StockCraft에 오신걸<br></br>환영합니다!
+                            </div>
                             <p>
                                 처음이시면 아래 버튼을 눌러
                                 <br />
