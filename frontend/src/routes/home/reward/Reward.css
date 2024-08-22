@@ -1,0 +1,65 @@
+/* reward/Reward.css */
+
+.reward-section {
+    background-color: #fff;
+    height: 280px;
+    padding: 30px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.reward-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.video-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.receipt-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-top: 40px;
+    cursor: pointer;
+}
+
+.video-text,
+.receipt-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 50px;
+}
+
+.video-title,
+.receipt-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.video-description,
+.receipt-description {
+    font-size: 13px;
+    color: #8b8b8b;
+}
+
+.video {
+    width: 50px;
+    height: 50px;
+    background: url("../../../assets/video.svg") no-repeat center;
+    background-size: contain;
+}
+
+.receipt {
+    width: 50px;
+    height: 50px;
+    background: url("../../../assets/receipt.svg") no-repeat center;
+    background-size: contain;
+}
