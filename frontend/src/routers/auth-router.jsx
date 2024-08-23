@@ -1,4 +1,4 @@
-import LoginSignUp from "../routes/login/LoginSignUp";
+import LoginSignUp from "../routes/loginPage/LoginSignUp";
 
 const authRouter = [
     {
