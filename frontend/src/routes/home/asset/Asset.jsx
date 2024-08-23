@@ -1,5 +1,6 @@
 import React from "react";
 import "./Asset.css";
+import { motion } from "framer-motion";
 
 export default function Asset() {
     return (
@@ -7,7 +8,11 @@ export default function Asset() {
             <div className="asset-title">내 자산</div>
             <div className="asset-details">
                 <div className="asset-amount">200,000원</div>
-                <div className="asset-more">더 보기</div>
+                <motion.div
+                    className="asset-more"
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
+                >더보기</motion.div>
             </div>
             <div className="asset-earningrate">0원 (0.00%)</div>
             <div className="line"></div>
