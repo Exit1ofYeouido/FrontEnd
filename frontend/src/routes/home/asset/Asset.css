@@ -32,6 +32,7 @@
     background-color: #000;
     padding: 6px 20px;
     border-radius: 7px;
+    cursor: pointer;
 }
 
 .asset-earningrate {
