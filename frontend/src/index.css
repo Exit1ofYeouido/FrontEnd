@@ -5,9 +5,9 @@
     font-weight: 400;
     font-style: normal;
 }
-/* ::-webkit-scrollbar {
+::-webkit-scrollbar {
     display: none;
-} */
+}
 
 html,
 body,

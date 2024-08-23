@@ -1,15 +1,25 @@
-import HomePage from "../routes/home/HomePage";
-import LandingPage from "../routes/landing/LandingPage";
-import MyPage from "../routes/my/MyPage";
-import RewardPage from "../routes/reward/RewardPage";
-import StockPage from "../routes/stock/StockPage";
+import HomePage from "../routes/homePage/HomePage";
+import LandingPage from "../routes/landingPage/LandingPage";
+import MyPage from "../routes/myPage/MyPage";
+import RewardPage from "../routes/rewardPage/RewardPage";
+import StockPage from "../routes/stockPage/StockPage";
+import ChartPage from "../routes/stockPage/ChartPage";
+import HoldPointPage from "../routes/myPage/HoldPoint";
+import HoldStockPage from "../routes/myPage/HoldStock";
+import VideoPage from "../routes/rewardPage/Video";
+import ReceiptPage from "../routes/rewardPage/Receipt";
+import ReceiptTutorialPage from "../routes/rewardPage/ReceiptTutorial";
+import VideoTutorialPage from "../routes/rewardPage/VideoTutorial";
+import AttendancePage from "../routes/rewardPage/Attendance";
+import NoticePage from "../routes/myPage/Notice";
+import FaqPage from "../routes/myPage/Faq";
 
 import MainLayPage from "../routes/Layout";
-import LandingLayout from "../routes/landing/LandingLayout";
-import HomeLayout from "../routes/home/HomeLayout";
-import RewardLayout from "../routes/reward/RewardLayout";
-import StockLayout from "../routes/stock/StockLayout";
-import MyLayout from "../routes/my/MyLayout";
+import LandingLayout from "../routes/landingPage/LandingLayout";
+import HomeLayout from "../routes/homePage/HomeLayout";
+import RewardLayout from "../routes/rewardPage/RewardLayout";
+import StockLayout from "../routes/stockPage/StockLayout";
+import MyLayout from "../routes/myPage/MyLayout";
 
 const mainRouter = [
     {
@@ -47,6 +57,31 @@ const mainRouter = [
                         element: <RewardPage />,
                         index: true,
                     },
+                    {
+                        path: "video",
+                        element: <VideoPage />,
+                        index: true,
+                    },
+                    {
+                        path: "receipt",
+                        element: <ReceiptPage />,
+                        index: true,
+                    },
+                    {
+                        path: "videotutorial",
+                        element: <VideoTutorialPage />,
+                        index: true,
+                    },
+                    {
+                        path: "receipttutorial",
+                        element: <ReceiptTutorialPage />,
+                        index: true,
+                    },
+                    {
+                        path: "attendance",
+                        element: <AttendancePage />,
+                        index: true,
+                    },
                 ],
             },
             {
@@ -58,6 +93,11 @@ const mainRouter = [
                         element: <StockPage />,
                         index: true,
                     },
+                    {
+                        path: "chart",
+                        element: <ChartPage />,
+                        index: true,
+                    },
                 ],
             },
             {
@@ -67,6 +107,26 @@ const mainRouter = [
                     {
                         path: "",
                         element: <MyPage />,
+                        index: true,
+                    },
+                    {
+                        path: "stock",
+                        element: <HoldStockPage />,
+                        index: true,
+                    },
+                    {
+                        path: "point",
+                        element: <HoldPointPage />,
+                        index: true,
+                    },
+                    {
+                        path: "notice",
+                        element: <NoticePage />,
+                        index: true,
+                    },
+                    {
+                        path: "faq",
+                        element: <FaqPage />,
                         index: true,
                     },
                 ],
