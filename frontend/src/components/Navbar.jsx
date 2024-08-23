@@ -1,14 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
-import homeIcon from "../assets/home.svg";
-import rewardIcon from "../assets/reward.svg";
-import searchIcon from "../assets/search.svg";
-import profileIcon from "../assets/profile.svg";
+import homeIcon from "~assets/navbar/home.svg";
+import rewardIcon from "~assets/navbar/reward.svg";
+import searchIcon from "~assets/navbar/search.svg";
+import profileIcon from "~assets/navbar/profile.svg";
 
 const Navbar = () => {
     const navigate = useNavigate();
-    
+
     return (
         <div className="navbar">
             <div className="nav-four">
