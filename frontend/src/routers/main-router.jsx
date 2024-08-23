@@ -1,6 +1,6 @@
 import HomePage from "../routes/home/HomePage";
 import LandingPage from "../routes/landing/LandingPage";
-import MyPage from "../routes/my/MyPage";
+import MyPage from "../routes/mypage/MyPage";
 import RewardPage from "../routes/reward/RewardPage";
 import StockPage from "../routes/stock/StockPage";
 
@@ -9,7 +9,7 @@ import LandingLayout from "../routes/landing/LandingLayout";
 import HomeLayout from "../routes/home/HomeLayout";
 import RewardLayout from "../routes/reward/RewardLayout";
 import StockLayout from "../routes/stock/StockLayout";
-import MyLayout from "../routes/my/MyLayout";
+import MyLayout from "../routes/mypage/MyLayout";
 
 const mainRouter = [
     {
