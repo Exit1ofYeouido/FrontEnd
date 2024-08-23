@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Brand.css";
 
 import starbucks from "~assets/brand_logo/starbucks.svg";
@@ -10,16 +10,24 @@ import emtek from "~assets/brand_logo/emtek.svg";
 import apple from "~assets/brand_logo/apple.svg";
 import jls from "~assets/brand_logo/jls.svg";
 
-const logos = [logo1, logo2, logo3, logo4];
+const logos1 = [starbucks, cocacola, apple, shinhan];
+const logos2 = [jls, emtek, samsung, lg];
 
 export default function Brand() {
+    const [selectedLogos, setSelectedLogos] = useState([]);
+
+    useEffect(() => {
+        const randomGroup = Math.random() > 0.5 ? logos1 : logos2;
+        setSelectedLogos(randomGroup);
+    }, []);
+
     return (
         <div>
             <div className="home-text">
                 오늘은 어떤 주식을 받을 수 있을까요?
             </div>
             <div className="brand-container">
-                {logos.map((logo, index) => (
+                {selectedLogos.map((logo, index) => (
                     <div
                         key={index}
                         className="brand-logo"
