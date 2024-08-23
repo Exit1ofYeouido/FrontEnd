@@ -1,19 +1,30 @@
-import HomePage from "../routes/homePage/HomePage";
+// 랜딩 페이지
 import LandingPage from "../routes/landingPage/LandingPage";
-import MyPage from "../routes/myPage/MyPage";
+
+// 메인 페이지
+import HomePage from "../routes/homePage/HomePage";
+
+//리워드 페이지
 import RewardPage from "../routes/rewardPage/RewardPage";
-import StockPage from "../routes/stockPage/StockPage";
-import ChartPage from "../routes/stockPage/ChartPage";
-import HoldPointPage from "../routes/myPage/HoldPoint";
-import HoldStockPage from "../routes/myPage/HoldStock";
 import VideoPage from "../routes/rewardPage/Video";
 import ReceiptPage from "../routes/rewardPage/Receipt";
 import ReceiptTutorialPage from "../routes/rewardPage/ReceiptTutorial";
 import VideoTutorialPage from "../routes/rewardPage/VideoTutorial";
 import AttendancePage from "../routes/rewardPage/Attendance";
+import CompanyInfoPage from "../routes/rewardPage/CompanyInfo";
+
+// 주식 검색
+import StockPage from "../routes/stockPage/StockPage";
+import ChartPage from "../routes/stockPage/ChartPage";
+
+// 마이 페이지
+import MyPage from "../routes/myPage/MyPage";
+import HoldPointPage from "../routes/myPage/HoldPoint";
+import HoldStockPage from "../routes/myPage/HoldStock";
 import NoticePage from "../routes/myPage/Notice";
 import FaqPage from "../routes/myPage/Faq";
 
+// 레이아웃
 import MainLayPage from "../routes/Layout";
 import LandingLayout from "../routes/landingPage/LandingLayout";
 import HomeLayout from "../routes/homePage/HomeLayout";
@@ -80,6 +91,11 @@ const mainRouter = [
                     {
                         path: "attendance",
                         element: <AttendancePage />,
+                        index: true,
+                    },
+                    {
+                        path: "info",
+                        element: <CompanyInfoPage />,
                         index: true,
                     },
                 ],
