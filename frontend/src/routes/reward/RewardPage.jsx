@@ -1,7 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function RewardPage() {
-  return (
-    <div>RewardPage</div>
-  )
+    return <div>RewardPage</div>;
 }

@@ -12,7 +12,9 @@ export default function Asset() {
                     className="asset-more"
                     whileHover={{ scale: 1.2 }}
                     whileTap={{ scale: 0.9 }}
-                >더보기</motion.div>
+                >
+                    더보기
+                </motion.div>
             </div>
             <div className="asset-earningrate">0원 (0.00%)</div>
             <div className="line"></div>

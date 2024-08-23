@@ -1,7 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function StockPage() {
-  return (
-    <div>StockPage</div>
-  )
+    return <div>StockPage</div>;
 }
