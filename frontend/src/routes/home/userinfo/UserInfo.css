@@ -28,7 +28,7 @@
 .calendar {
     width: 30px;
     height: 30px;
-    background: url("../../../assets/calendar.svg") no-repeat center;
+    background: url("~assets/homepage/calendar.svg") no-repeat center;
     background-size: contain;
     cursor: pointer;
 }
@@ -36,7 +36,7 @@
 .point {
     width: 30px;
     height: 30px;
-    background: url("../../../assets/point.svg") no-repeat center;
+    background: url("~assets/homepage/point.svg") no-repeat center;
     background-size: contain;
     cursor: pointer;
 }
@@ -44,7 +44,7 @@
 .use {
     width: 30px;
     height: 30px;
-    background: url("../../../assets/use.svg") no-repeat center;
+    background: url("~assets/homepage/use.svg") no-repeat center;
     background-size: contain;
     cursor: pointer;
 }
@@ -52,7 +52,7 @@
 .faq {
     width: 30px;
     height: 30px;
-    background: url("../../../assets/faq.svg") no-repeat center;
+    background: url("~assets/homepage/faq.svg") no-repeat center;
     background-size: contain;
     cursor: pointer;
 }

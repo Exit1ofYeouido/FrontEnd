@@ -53,13 +53,13 @@
 .video {
     width: 50px;
     height: 50px;
-    background: url("../../../assets/video.svg") no-repeat center;
+    background: url("~assets/homepage/video.svg") no-repeat center;
     background-size: contain;
 }
 
 .receipt {
     width: 50px;
     height: 50px;
-    background: url("../../../assets/receipt.svg") no-repeat center;
+    background: url("~assets/homepage/receipt.svg") no-repeat center;
     background-size: contain;
 }

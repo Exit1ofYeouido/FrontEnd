@@ -1,7 +1,8 @@
 import React from "react";
-import Navbar from "../../components/Navbar";
+import { motion } from "framer-motion";
+import Navbar from "~components/Navbar";
 import Reward from "./reward/Reward";
-import Brand from "./brand/Brand";
+import Brand from "./brand/brand";
 import Asset from "./asset/Asset";
 import UserInfo from "./userinfo/UserInfo";
 import "./HomePage.css";

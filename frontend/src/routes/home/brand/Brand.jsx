@@ -1,11 +1,14 @@
 import React from "react";
 import "./Brand.css";
 
-// 이미지 파일을 import합니다.
-import logo1 from "../../../assets/starbucks.svg";
-import logo2 from "../../../assets/shinhan.svg";
-import logo3 from "../../../assets/lg.svg";
-import logo4 from "../../../assets/samsung.svg";
+import starbucks from "~assets/brand_logo/starbucks.svg";
+import shinhan from "~assets/brand_logo/shinhan.svg";
+import lg from "~assets/brand_logo/lg.svg";
+import samsung from "~assets/brand_logo/samsung.svg";
+import cocacola from "~assets/brand_logo/cocacola.svg";
+import emtek from "~assets/brand_logo/emtek.svg";
+import apple from "~assets/brand_logo/apple.svg";
+import jls from "~assets/brand_logo/jls.svg";
 
 const logos = [logo1, logo2, logo3, logo4];
 
