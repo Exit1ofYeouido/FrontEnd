@@ -33,7 +33,7 @@ export default function Brand() {
                         className="brand-logo"
                         style={{
                             backgroundImage: `url(${logo})`,
-                            animationDelay: `${index * 2}s`,
+                            animationDelay: `${-6 + index * 2}s`,
                         }}
                     ></div>
                 ))}
