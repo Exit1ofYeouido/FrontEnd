@@ -11,6 +11,8 @@ import ReceiptPage from "../routes/rewardPage/Receipt";
 import ReceiptTutorialPage from "../routes/rewardPage/ReceiptTutorial";
 import VideoTutorialPage from "../routes/rewardPage/VideoTutorial";
 import AttendancePage from "../routes/rewardPage/Attendance";
+import NoticePage from "../routes/myPage/Notice";
+import FaqPage from "../routes/myPage/Faq";
 
 import MainLayPage from "../routes/Layout";
 import LandingLayout from "../routes/landingPage/LandingLayout";
@@ -115,6 +117,16 @@ const mainRouter = [
                     {
                         path: "point",
                         element: <HoldPointPage />,
+                        index: true,
+                    },
+                    {
+                        path: "notice",
+                        element: <NoticePage />,
+                        index: true,
+                    },
+                    {
+                        path: "faq",
+                        element: <FaqPage />,
                         index: true,
                     },
                 ],
