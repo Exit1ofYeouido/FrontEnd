@@ -1,11 +1,10 @@
-/* reward/Reward.css */
-
 .reward-section {
     background-color: #fff;
-    height: 280px;
     padding: 30px;
+    height: auto;
     border-radius: 10px;
     margin-top: 20px;
+    margin-bottom: 30px;
 }
 
 .reward-title {

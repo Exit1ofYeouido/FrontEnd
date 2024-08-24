@@ -1,8 +1,11 @@
 import React from "react";
 import "./Asset.css";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 export default function Asset() {
+    const navigate = useNavigate();
+
     return (
         <div className="asset-info">
             <div className="asset-title">내 자산</div>
@@ -12,6 +15,7 @@ export default function Asset() {
                     className="asset-more"
                     whileHover={{ scale: 1.2 }}
                     whileTap={{ scale: 0.9 }}
+                    onClick={() => navigate("/my")}
                 >
                     더보기
                 </motion.div>
