@@ -3,7 +3,7 @@ import styles from "./Attendance.module.css";
 import { IoIosArrowBack } from "react-icons/io";
 import { motion } from "framer-motion";
 import Navbar from "~components/Navbar";
-import Modal from "./AttendanceModal"; // 모달 컴포넌트 추가
+import Modal from "./AttendanceModal";
 import day1 from "~assets/attendance/day1.svg";
 import day2 from "~assets/attendance/day2.svg";
 import day3 from "~assets/attendance/day3.svg";
@@ -63,6 +63,8 @@ const images = [
 export default function Attendance() {
     const [month] = useState(8);
     const [attendCount, setAttendCount] = useState(9);
+    const [company] = useState("아디다스");
+    const [amount] = useState(0.02);
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [isFirstRender, setIsFirstRender] = useState(true);
     const [showModal, setShowModal] = useState(false);
@@ -157,17 +159,14 @@ export default function Attendance() {
                         whileTap={{ scale: 0.95 }}
                         onClick={handleAttendance}
                         disabled={isButtonDisabled}
-                        style={{
-                            backgroundColor: isButtonDisabled ? "#ccc" : "#1E1D69",
-                            cursor: isButtonDisabled ? "not-allowed" : "pointer",
-                        }}
                     >
                         출석하기
                     </motion.button>
                 </div>
             </motion.div>
             <Modal show={showModal} onClose={handleCloseModal}>
-                축하합니다! 5일 단위 출석을 완료했습니다.
+                <div className={styles.companyName}>{company}</div>
+                <div className={styles.amount}>{amount}주가 도착했어요!</div>
             </Modal>
             <Navbar />
         </div>
