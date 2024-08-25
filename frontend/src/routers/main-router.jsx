@@ -8,8 +8,8 @@ import HomePage from "../routes/homePage/HomePage";
 import RewardPage from "../routes/rewardPage/rewardLanding/RewardPage";
 import VideoPage from "../routes/rewardPage/video/Video";
 import ReceiptPage from "../routes/rewardPage/receipt/Receipt";
-import ReceiptTutorialPage from "../routes/rewardPage/tutorial/ReceiptTutorial";
-import VideoTutorialPage from "../routes/rewardPage/tutorial/VideoTutorial";
+import ReceiptTutorialPage from "../routes/rewardPage/tutorial/receipt/ReceiptTutorial";
+import VideoTutorialPage from "../routes/rewardPage/tutorial/video/VideoTutorial";
 import AttendancePage from "../routes/rewardPage/attendance/Attendance";
 import CompanyInfoPage from "../routes/rewardPage/companyInfo/CompanyInfo";
 
