@@ -1,0 +1,15 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 90px);
+    overflow: hidden;
+}
+
+.content {
+    overflow-y: auto;
+    background-color: #f5f5f5;
+}
+
+.wrapper {
+    padding: 15px 20px 0px 20px;
+}

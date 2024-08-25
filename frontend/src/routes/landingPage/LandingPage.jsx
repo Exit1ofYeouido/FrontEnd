@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from "../../assets/Logo.svg";
-import "./LandingPage.css";
+import styles from "./LandingPage.module.css";
 import { useNavigate } from "react-router-dom";
 
 export default function LandingPage() {
@@ -11,9 +11,9 @@ export default function LandingPage() {
     };
 
     return (
-        <div className="main">
+        <div className={styles.container}>
             <img src={Logo} alt="Logo" />
-            <button className="start_button" onClick={goLogin}>
+            <button className={styles.button} onClick={goLogin}>
                 시작하기
             </button>
         </div>

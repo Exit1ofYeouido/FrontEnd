@@ -5,13 +5,13 @@ import LandingPage from "../routes/landingPage/LandingPage";
 import HomePage from "../routes/homePage/HomePage";
 
 //리워드 페이지
-import RewardPage from "../routes/rewardPage/RewardPage";
-import VideoPage from "../routes/rewardPage/Video";
-import ReceiptPage from "../routes/rewardPage/Receipt";
-import ReceiptTutorialPage from "../routes/rewardPage/ReceiptTutorial";
-import VideoTutorialPage from "../routes/rewardPage/VideoTutorial";
-import AttendancePage from "../routes/rewardPage/Attendance";
-import CompanyInfoPage from "../routes/rewardPage/CompanyInfo";
+import RewardPage from "../routes/rewardPage/rewardLanding/RewardPage";
+import VideoPage from "../routes/rewardPage/video/Video";
+import ReceiptPage from "../routes/rewardPage/receipt/Receipt";
+import ReceiptTutorialPage from "../routes/rewardPage/tutorial/ReceiptTutorial";
+import VideoTutorialPage from "../routes/rewardPage/tutorial/VideoTutorial";
+import AttendancePage from "../routes/rewardPage/attendance/Attendance";
+import CompanyInfoPage from "../routes/rewardPage/companyInfo/CompanyInfo";
 
 // 주식 검색
 import StockPage from "../routes/stockPage/StockPage";

@@ -1,5 +1,5 @@
 import React from "react";
-import "./Asset.css";
+import styles from "./Asset.module.css";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
@@ -7,12 +7,12 @@ export default function Asset() {
     const navigate = useNavigate();
 
     return (
-        <div className="asset-info">
-            <div className="asset-title">내 자산</div>
-            <div className="asset-details">
-                <div className="asset-amount">200,000원</div>
+        <div className={styles.info}>
+            <div className={styles.title}>내 자산</div>
+            <div className={styles.details}>
+                <div className={styles.amount}>200,000원</div>
                 <motion.div
-                    className="asset-more"
+                    className={styles.more}
                     whileHover={{ scale: 1.2 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => navigate("/my")}
@@ -20,16 +20,16 @@ export default function Asset() {
                     더보기
                 </motion.div>
             </div>
-            <div className="asset-earningrate">0원 (0.00%)</div>
-            <div className="line"></div>
-            <div className="sub-asset-info">
-                <div className="sub-asset-stock">
-                    <div className="my-stock">내 주식</div>
-                    <div className="my-stock-amount">10,000원</div>
+            <div className={styles.earningRate}>0원 (0.00%)</div>
+            <div className={styles.line}></div>
+            <div className={styles.subInfo}>
+                <div className={styles.stock}>
+                    <div className={styles.stockTitle}>내 주식</div>
+                    <div className={styles.stockAmount}>10,000원</div>
                 </div>
-                <div className="sub-asset-point">
-                    <div className="my-point">내 포인트</div>
-                    <div className="my-point-amount">10,000점</div>
+                <div className={styles.point}>
+                    <div className={styles.pointTitle}>내 포인트</div>
+                    <div className={styles.pointAmount}>10,000점</div>
                 </div>
             </div>
         </div>
