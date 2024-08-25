@@ -1,4 +1,4 @@
-.main {
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6,7 +6,7 @@
     flex-direction: column;
 }
 
-.start_button {
+.button {
     width: 200px;
     height: 40px;
     margin-top: 20px;

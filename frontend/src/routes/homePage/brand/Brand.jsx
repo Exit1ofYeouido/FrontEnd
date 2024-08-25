@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Brand.css";
+import styles from "./Brand.module.css";
 
 import starbucks from "~assets/brand_logo/starbucks.svg";
 import shinhan from "~assets/brand_logo/shinhan.svg";
@@ -23,14 +23,14 @@ export default function Brand() {
 
     return (
         <div>
-            <div className="home-text">
+            <div className={styles.text}>
                 오늘은 어떤 주식을 받을 수 있을까요?
             </div>
-            <div className="brand-container">
+            <div className={styles.container}>
                 {selectedLogos.map((logo, index) => (
                     <div
                         key={index}
-                        className="brand-logo"
+                        className={styles.logo}
                         style={{
                             backgroundImage: `url(${logo})`,
                             animationDelay: `${-6 + index * 2}s`,

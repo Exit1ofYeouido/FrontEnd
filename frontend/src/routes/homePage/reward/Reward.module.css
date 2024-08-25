@@ -1,4 +1,4 @@
-.reward-section {
+.section {
     background-color: #fff;
     padding: 30px;
     height: auto;
@@ -7,13 +7,13 @@
     margin-bottom: 30px;
 }
 
-.reward-title {
+.title {
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 10px;
 }
 
-.video-section {
+.item {
     display: flex;
     align-items: flex-start;
     gap: 20px;
@@ -21,44 +21,35 @@
     cursor: pointer;
 }
 
-.receipt-section {
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-    margin-top: 40px;
-    cursor: pointer;
-}
-
-.video-text,
-.receipt-text {
+.text {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     height: 50px;
 }
 
-.video-title,
-.receipt-title {
+.itemTitle {
     font-size: 18px;
     font-weight: 600;
 }
 
-.video-description,
-.receipt-description {
+.description {
     font-size: 13px;
     color: #8b8b8b;
 }
 
-.video {
+.icon {
     width: 50px;
     height: 50px;
-    background: url("~assets/homepage/video.svg") no-repeat center;
     background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
-.receipt {
-    width: 50px;
-    height: 50px;
-    background: url("~assets/homepage/receipt.svg") no-repeat center;
-    background-size: contain;
+.videoIcon {
+    background-image: url("~assets/homepage/video.svg");
+}
+
+.receiptIcon {
+    background-image: url("~assets/homepage/receipt.svg");
 }
