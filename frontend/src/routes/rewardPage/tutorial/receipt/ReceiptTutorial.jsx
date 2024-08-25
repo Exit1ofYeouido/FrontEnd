@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import styles from "./ReceiptTutorial.module.css";
 import { useNavigate } from "react-router-dom";
 import shot1 from "~assets/tutorial/receipt/shot1.svg";
@@ -52,7 +53,12 @@ const slides = [
 
 export default function ReceiptTutorial() {
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [isFirstRender, setIsFirstRender] = useState(true);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        setIsFirstRender(false);
+    }, []);
 
     const handleNext = () => {
         if (currentSlide < slides.length - 1) {
@@ -60,8 +66,23 @@ export default function ReceiptTutorial() {
         }
     };
 
-    const handlePrevious = () => {
+    const handleSkip = () => {
         navigate("/reward/receipt");
+    };
+
+    const variants = {
+        enter: {
+            x: 300,
+            opacity: 0,
+        },
+        center: {
+            x: 0,
+            opacity: 1,
+        },
+        exit: {
+            x: -300,
+            opacity: 0,
+        },
     };
 
     return (
@@ -76,7 +97,18 @@ export default function ReceiptTutorial() {
                 <div>영수증 인증</div>
             </div>
 
-            <div className={styles.slide}>
+            <motion.div
+                className={styles.slide}
+                key={currentSlide}
+                variants={variants}
+                initial={isFirstRender && currentSlide === 0 ? false : "enter"}
+                animate="center"
+                exit="exit"
+                transition={{
+                    x: { type: "spring", stiffness: 300, damping: 30 },
+                    opacity: { duration: 0.2 },
+                }}
+            >
                 <div className={styles.iconWrapper}>
                     <img
                         src={slides[currentSlide].icon}
@@ -89,11 +121,11 @@ export default function ReceiptTutorial() {
                         {slides[currentSlide].description}
                     </div>
                 </div>
-            </div>
+            </motion.div>
 
             <div className={styles.controls}>
                 {currentSlide >= 0 && (
-                    <div onClick={handlePrevious} className={styles.button}>
+                    <div onClick={handleSkip} className={styles.button}>
                         하룻동안 보지 않기
                     </div>
                 )}
@@ -102,7 +134,7 @@ export default function ReceiptTutorial() {
                         다음
                     </div>
                 ) : (
-                    <div className={styles.button} onClick={handlePrevious}>
+                    <div onClick={handleSkip} className={styles.button}>
                         영수증 인증 하기
                     </div>
                 )}
