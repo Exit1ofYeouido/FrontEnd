@@ -46,6 +46,19 @@
     z-index: 1;
 }
 
+.attendanceMonth{
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.attendanceDay{
+    margin-left: 10px;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+}
+
 .calendarWrapper{
     display: flex;
     justify-content: center;
@@ -78,4 +91,20 @@
     border: none;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.attendanceButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.companyName{
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.amount{
+    font-size: 18px;
+    font-weight: 500;
 }
