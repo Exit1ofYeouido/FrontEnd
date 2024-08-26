@@ -160,7 +160,7 @@ export default function Attendance() {
                         onClick={handleAttendance}
                         disabled={isButtonDisabled}
                     >
-                        출석하기
+                        {isButtonDisabled ? "출석완료" : "출석하기"}
                     </motion.button>
                 </div>
             </motion.div>
