@@ -129,7 +129,7 @@ export default function ReceiptTutorial() {
             </motion.div>
 
             <div className={styles.controls}>
-                {!(location.state && location.state.from) &&
+                {!(location.state && location.state.from == "home/useway") &&
                     currentSlide >= 0 && (
                         <div onClick={handleSkip} className={styles.button}>
                             하룻동안 보지 않기
@@ -141,7 +141,7 @@ export default function ReceiptTutorial() {
                     </div>
                 ) : (
                     <div onClick={handleSkip} className={styles.button}>
-                        영수증 인증 하기
+                        영수증 인증 해볼까요?
                     </div>
                 )}
             </div>

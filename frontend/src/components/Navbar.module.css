@@ -35,3 +35,38 @@
     color: #333;
     cursor: pointer;
 }
+
+@media (max-width: 480px) {
+    .group {
+        gap: 55px;
+    }
+
+    .icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .text {
+        font-size: 11px;
+    }
+}
+
+
+@media (max-width: 380px) {
+    .group {
+        gap: 50px;
+    }
+
+    .icon {
+        width: 26px;
+        height: 26px;
+    }
+
+    .text {
+        font-size: 10px;
+    }
+
+    .bar {
+        height: 70px;
+    }
+}
