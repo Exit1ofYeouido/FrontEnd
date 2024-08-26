@@ -2,7 +2,7 @@
 import LandingPage from "../routes/landingPage/LandingPage";
 
 // 메인 페이지
-import HomePage from "../routes/homePage/homePage";
+import HomePage from "../routes/homePage/HomePage";
 import UseWayPage from "../routes/homePage/userinfo/UseWay";
 
 //리워드 페이지
