@@ -71,3 +71,65 @@
     margin-left: 25px;
     font-weight: 600;
 }
+
+@media (max-width: 480px) {
+    .info {
+        padding: 20px;
+        height: auto;
+        margin-top: 15px;
+    }
+
+    .title {
+        font-size: 18px;
+    }
+
+    .details {
+        margin: 5px 0;
+    }
+
+    .amount {
+        font-size: 28px;
+    }
+
+    .more {
+        font-size: 10px;
+        padding: 4px 15px;
+    }
+
+    .earningRate {
+        font-size: 12px;
+    }
+
+    .line {
+        margin: 20px 0;
+    }
+
+    .subInfo {
+        font-size: 12px;
+        margin-top: 8px;
+    }
+
+    .stockTitle,
+    .pointTitle {
+        font-size: 14px;
+    }
+
+    .stockAmount,
+    .pointAmount {
+        font-size: 18px;
+        margin-left: 15px;
+    }
+}
+
+@media (max-width: 380px) {
+    .stockTitle,
+    .pointTitle {
+        font-size: 12px;
+    }
+
+    .stockAmount,
+    .pointAmount {
+        font-size: 16px;
+        margin-left: 15px;
+    }
+}
