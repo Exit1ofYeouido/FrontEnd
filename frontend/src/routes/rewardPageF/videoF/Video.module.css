@@ -1,0 +1,76 @@
+.container {
+    padding: 20px;
+    background-color: #ffffff;
+    height: calc(100vh - 90px);
+    overflow-y: auto;
+}
+
+.topBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 600;
+    position: relative;
+    width: 100%;
+    margin-bottom: 60px;
+}
+
+.topBar .arrow {
+    position: absolute;
+    left: 0px;
+    cursor: pointer;
+}
+
+.total {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
+.videoList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.videoCard {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #f9f9f9;
+}
+
+.thumbnailContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000;
+    padding: 10px;
+}
+
+.thumbnail {
+    width: 100%;
+    height: auto;
+    max-height: 210px;
+    object-fit: contain;
+}
+
+.videoInfo {
+    padding: 10px 15px;
+    background-color: #ffffff;
+    height: 50px;
+}
+
+.videoInfo p {
+    margin: 4px 0;
+    font-size: 14px;
+    color: #333333;
+}
+
+.videoInfo .name {
+    font-size: 12px;
+    color: #888888;
+}
