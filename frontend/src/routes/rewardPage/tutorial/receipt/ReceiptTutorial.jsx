@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import styles from "./ReceiptTutorial.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import shot1 from "~assets/tutorial/receipt/shot1.svg";
 import shot2 from "~assets/tutorial/receipt/shot2.svg";
 import shot3 from "~assets/tutorial/receipt/shot3.svg";
@@ -55,7 +55,7 @@ export default function ReceiptTutorial() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isFirstRender, setIsFirstRender] = useState(true);
     const navigate = useNavigate();
-
+    const location = useLocation();
     useEffect(() => {
         setIsFirstRender(false);
     }, []);
@@ -68,6 +68,14 @@ export default function ReceiptTutorial() {
 
     const handleSkip = () => {
         navigate("/reward/receipt");
+    };
+
+    const handleBack = () => {
+        if (location.state && location.state.from) {
+            navigate(`/${location.state.from}`);
+        } else {
+            navigate("/reward");
+        }
     };
 
     const variants = {
@@ -88,10 +96,7 @@ export default function ReceiptTutorial() {
     return (
         <div className={styles.container}>
             <div className={styles.topBar}>
-                <div
-                    className={styles.arrow}
-                    onClick={() => navigate("/reward")}
-                >
+                <div className={styles.arrow} onClick={handleBack}>
                     <IoIosArrowBack />
                 </div>
                 <div>영수증 인증</div>
@@ -124,11 +129,12 @@ export default function ReceiptTutorial() {
             </motion.div>
 
             <div className={styles.controls}>
-                {currentSlide >= 0 && (
-                    <div onClick={handleSkip} className={styles.button}>
-                        하룻동안 보지 않기
-                    </div>
-                )}
+                {!(location.state && location.state.from) &&
+                    currentSlide >= 0 && (
+                        <div onClick={handleSkip} className={styles.button}>
+                            하룻동안 보지 않기
+                        </div>
+                    )}
                 {currentSlide < slides.length - 1 ? (
                     <div onClick={handleNext} className={styles.button}>
                         다음

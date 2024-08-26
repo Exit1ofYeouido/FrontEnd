@@ -1,26 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import styles from "./RewardPage.module.css";
-import calendarIcon from "~assets/homepage/calendar.svg";
+import styles from "./UseWay.module.css";
 import receiptIcon from "~assets/homepage/receipt.svg";
 import videoIcon from "~assets/homepage/video.svg";
 import { IoIosArrowForward } from "react-icons/io";
 import Navbar from "~components/Navbar";
+import { IoIosArrowBack } from "react-icons/io";
 
-const RewardItem = ({ icon, title, description, navigateTo, tutoChecked }) => {
+const RewardItem = ({ icon, title, description, navigateTo }) => {
     const navigate = useNavigate();
 
     const handleNavigation = () => {
-        if (
-            (navigateTo === "/reward/video" ||
-                navigateTo === "/reward/receipt") &&
-            !tutoChecked
-        ) {
-            navigate(`${navigateTo}tutorial`, { state: { from: "reward" } });
-        } else {
-            navigate(navigateTo);
-        }
+        navigate(navigateTo, { state: { from: "home/useway" } });
     };
 
     return (
@@ -43,9 +35,12 @@ const RewardItem = ({ icon, title, description, navigateTo, tutoChecked }) => {
     );
 };
 
-export default function RewardPage() {
-    const [tutoChecked] = useState(false);
+export default function UseWay() {
+    const navigate = useNavigate();
 
+    const handlePrevious = () => {
+        navigate("/home");
+    };
     return (
         <div>
             <div className={styles.container}>
@@ -56,23 +51,22 @@ export default function RewardPage() {
                     transition={{ duration: 0.5, ease: "easeInOut" }}
                     className={styles.content}
                 >
-                    <div className={styles.totalTitle}>
-                        <div>리워드</div>
-                    </div>
-                    <div>
-                        <RewardItem
-                            icon={calendarIcon}
-                            title="출석 체크"
-                            description="출석을 통해 랜덤 주식을 받을 수 있어요!"
-                            navigateTo="/reward/attendance"
-                            tutoChecked={tutoChecked}
+                    <div className={styles.topBar}>
+                        <IoIosArrowBack
+                            className={styles.backIcon}
+                            onClick={handlePrevious}
                         />
+                        <div className={styles.totalTitle}>
+                            <div>이용 방법</div>
+                        </div>
+                    </div>
+
+                    <div>
                         <RewardItem
                             icon={videoIcon}
                             title="기업 광고 시청"
                             description="내가 원하는 기업 광고를 재미있게 시청하고 주식 받자!"
-                            navigateTo="/reward/video"
-                            tutoChecked={tutoChecked}
+                            navigateTo="/reward/videotutorial"
                         />
                         <RewardItem
                             icon={receiptIcon}
@@ -83,8 +77,7 @@ export default function RewardPage() {
                                     해당 기업의 주식을 받을 수 있어요!
                                 </>
                             }
-                            navigateTo="/reward/receipt"
-                            tutoChecked={tutoChecked}
+                            navigateTo="/reward/receipttutorial"
                         />
                     </div>
                 </motion.div>
