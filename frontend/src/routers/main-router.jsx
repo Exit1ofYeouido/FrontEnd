@@ -15,23 +15,23 @@ import AttendancePage from "../routes/rewardPage/attendance/Attendance";
 import CompanyInfoPage from "../routes/rewardPage/companyInfo/CompanyInfo";
 
 // 주식 검색
-import StockPage from "../routes/stockPage/StockPage";
-import ChartPage from "../routes/stockPage/ChartPage";
+import StockPage from "../routes/stockPageF/StockPage";
+import ChartPage from "../routes/stockPageF/ChartPage";
 
 // 마이 페이지
-import MyPage from "../routes/myPage/MyPage";
-import HoldPointPage from "../routes/myPage/HoldPoint";
-import HoldStockPage from "../routes/myPage/HoldStock";
-import NoticePage from "../routes/myPage/Notice";
-import FaqPage from "../routes/myPage/Faq";
+import MyPage from "../routes/myPageF/MyPage";
+import HoldPointPage from "../routes/myPageF/HoldPoint";
+import HoldStockPage from "../routes/myPageF/HoldStock";
+import NoticePage from "../routes/myPageF/Notice";
+import FaqPage from "../routes/myPageF/Faq";
 
 // 레이아웃
 import MainLayPage from "../routes/Layout";
 import LandingLayout from "../routes/landingPageF/LandingLayout";
 import HomeLayout from "../routes/homePageF/HomeLayout";
 import RewardLayout from "../routes/rewardPage/RewardLayout";
-import StockLayout from "../routes/stockPage/StockLayout";
-import MyLayout from "../routes/myPage/MyLayout";
+import StockLayout from "../routes/stockPageF/StockLayout";
+import MyLayout from "../routes/myPageF/MyLayout";
 
 const mainRouter = [
     {
