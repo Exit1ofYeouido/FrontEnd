@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import styles from "./VideoTutorial.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import shot1 from "~assets/tutorial/video/shot1.svg";
 import shot2 from "~assets/tutorial/video/shot2.svg";
 import shot3 from "~assets/tutorial/video/shot3.svg";
@@ -21,11 +21,7 @@ const slides = [
     {
         id: 2,
         icon: shot2,
-        description: (
-            <>
-                영상에 대한 퀴즈를 풀어보세요
-            </>
-        ),
+        description: <>영상에 대한 퀴즈를 풀어보세요</>,
     },
     {
         id: 3,
@@ -43,6 +39,7 @@ export default function VideoTutorial() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isFirstRender, setIsFirstRender] = useState(true);
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         setIsFirstRender(false);
@@ -51,6 +48,15 @@ export default function VideoTutorial() {
     const handleNext = () => {
         if (currentSlide < slides.length - 1) {
             setCurrentSlide(currentSlide + 1);
+        }
+    };
+
+    const handleBack = () => {
+        console.log(location.state.from);
+        if (location.state && location.state.from) {
+            navigate(`/${location.state.from}`);
+        } else {
+            navigate("/reward");
         }
     };
 
@@ -76,10 +82,7 @@ export default function VideoTutorial() {
     return (
         <div className={styles.container}>
             <div className={styles.topBar}>
-                <div
-                    className={styles.arrow}
-                    onClick={() => navigate("/reward")}
-                >
+                <div className={styles.arrow} onClick={handleBack}>
                     <IoIosArrowBack />
                 </div>
                 <div>기업 영상 시청</div>
@@ -112,11 +115,12 @@ export default function VideoTutorial() {
             </motion.div>
 
             <div className={styles.controls}>
-                {currentSlide >= 0 && (
-                    <div onClick={handleSkip} className={styles.button}>
-                        하룻동안 보지 않기
-                    </div>
-                )}
+                {!(location.state && location.state.from) &&
+                    currentSlide >= 0 && (
+                        <div onClick={handleSkip} className={styles.button}>
+                            하룻동안 보지 않기
+                        </div>
+                    )}
                 {currentSlide < slides.length - 1 ? (
                     <div onClick={handleNext} className={styles.button}>
                         다음
