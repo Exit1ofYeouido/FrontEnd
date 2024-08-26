@@ -1,10 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Navbar from "~components/Navbar";
-import Reward from "./reward/Reward";
-import Brand from "./brand/Brand";
-import Asset from "./asset/Asset";
-import UserInfo from "./userinfo/UserInfo";
+import Reward from "./rewardF/Reward";
+import Brand from "./brandF/Brand";
+import Asset from "./assetF/Asset";
+import UserInfo from "./userinfoF/UserInfo";
 import styles from "./HomePage.module.css";
 
 function HomePage() {
