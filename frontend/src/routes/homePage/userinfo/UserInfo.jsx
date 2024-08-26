@@ -35,7 +35,7 @@ export default function UserInfo() {
                     className={styles.actionItem}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                    // onClick={() => navigate("/페이지 만들기")}
+                    onClick={() => navigate("/home/useway")}
                 >
                     <div className={`${styles.icon} ${styles.useIcon}`}></div>
                     <div className={styles.actionLabel}>이용방법</div>
