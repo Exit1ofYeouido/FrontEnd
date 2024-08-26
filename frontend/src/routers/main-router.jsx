@@ -1,37 +1,37 @@
 // 랜딩 페이지
-import LandingPage from "../routes/landingPage/LandingPage";
+import LandingPage from "../routes/landingPageF/LandingPage";
 
 // 메인 페이지
-import HomePage from "../routes/homePage/HomePage";
-import UseWayPage from "../routes/homePage/userinfo/UseWay";
+import HomePage from "../routes/homePageF/HomePage";
+import UseWayPage from "../routes/homePageF/userinfoF/UseWay";
 
 //리워드 페이지
-import RewardPage from "../routes/rewardPage/rewardLanding/RewardPage";
-import VideoPage from "../routes/rewardPage/video/Video";
-import ReceiptPage from "../routes/rewardPage/receipt/Receipt";
-import ReceiptTutorialPage from "../routes/rewardPage/tutorial/receipt/ReceiptTutorial";
-import VideoTutorialPage from "../routes/rewardPage/tutorial/video/VideoTutorial";
-import AttendancePage from "../routes/rewardPage/attendance/Attendance";
-import CompanyInfoPage from "../routes/rewardPage/companyInfo/CompanyInfo";
+import RewardPage from "../routes/rewardPageF/rewardLandingF/RewardPage";
+import VideoPage from "../routes/rewardPageF/videoF/Video";
+import ReceiptPage from "../routes/rewardPageF/receiptF/Receipt";
+import ReceiptTutorialPage from "../routes/rewardPageF/tutorialF/receiptF/ReceiptTutorial";
+import VideoTutorialPage from "../routes/rewardPageF/tutorialF/videoF/VideoTutorial";
+import AttendancePage from "../routes/rewardPageF/attendanceF/Attendance";
+import CompanyInfoPage from "../routes/rewardPageF/companyInfoF/CompanyInfo";
 
 // 주식 검색
-import StockPage from "../routes/stockPage/StockPage";
-import ChartPage from "../routes/stockPage/ChartPage";
+import StockPage from "../routes/stockPageF/StockPage";
+import ChartPage from "../routes/stockPageF/ChartPage";
 
 // 마이 페이지
-import MyPage from "../routes/myPage/MyPage";
-import HoldPointPage from "../routes/myPage/HoldPoint";
-import HoldStockPage from "../routes/myPage/HoldStock";
-import NoticePage from "../routes/myPage/Notice";
-import FaqPage from "../routes/myPage/Faq";
+import MyPage from "../routes/myPageF/MyPage";
+import HoldPointPage from "../routes/myPageF/HoldPoint";
+import HoldStockPage from "../routes/myPageF/HoldStock";
+import NoticePage from "../routes/myPageF/Notice";
+import FaqPage from "../routes/myPageF/Faq";
 
 // 레이아웃
 import MainLayPage from "../routes/Layout";
-import LandingLayout from "../routes/landingPage/LandingLayout";
-import HomeLayout from "../routes/homePage/HomeLayout";
-import RewardLayout from "../routes/rewardPage/RewardLayout";
-import StockLayout from "../routes/stockPage/StockLayout";
-import MyLayout from "../routes/myPage/MyLayout";
+import LandingLayout from "../routes/landingPageF/LandingLayout";
+import HomeLayout from "../routes/homePageF/HomeLayout";
+import RewardLayout from "../routes/rewardPageF/RewardLayout";
+import StockLayout from "../routes/stockPageF/StockLayout";
+import MyLayout from "../routes/myPageF/MyLayout";
 
 const mainRouter = [
     {
