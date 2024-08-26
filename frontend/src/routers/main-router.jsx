@@ -2,7 +2,8 @@
 import LandingPage from "../routes/landingPage/LandingPage";
 
 // 메인 페이지
-import HomePage from "../routes/homePage/HomePage";
+import HomePage from "../routes/homePage/homePage";
+import UseWayPage from "../routes/homePage/userinfo/UseWay";
 
 //리워드 페이지
 import RewardPage from "../routes/rewardPage/rewardLanding/RewardPage";
@@ -55,6 +56,11 @@ const mainRouter = [
                     {
                         path: "",
                         element: <HomePage />,
+                        index: true,
+                    },
+                    {
+                        path: "useway",
+                        element: <UseWayPage />,
                         index: true,
                     },
                 ],
