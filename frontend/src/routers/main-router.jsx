@@ -2,8 +2,8 @@
 import LandingPage from "../routes/landingPage/LandingPage";
 
 // 메인 페이지
-import HomePage from "../routes/homePage/HomePage";
-import UseWayPage from "../routes/homePage/userinfo/UseWay";
+import HomePage from "../routes/homePageF/HomePage";
+import UseWayPage from "../routes/homePageF/userinfoF/UseWay";
 
 //리워드 페이지
 import RewardPage from "../routes/rewardPage/rewardLanding/RewardPage";
@@ -28,7 +28,7 @@ import FaqPage from "../routes/myPage/Faq";
 // 레이아웃
 import MainLayPage from "../routes/Layout";
 import LandingLayout from "../routes/landingPage/LandingLayout";
-import HomeLayout from "../routes/homePage/HomeLayout";
+import HomeLayout from "../routes/homePageF/HomeLayout";
 import RewardLayout from "../routes/rewardPage/RewardLayout";
 import StockLayout from "../routes/stockPage/StockLayout";
 import MyLayout from "../routes/myPage/MyLayout";
