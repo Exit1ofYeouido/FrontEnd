@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import styles from "./RewardPage.module.css";
@@ -8,11 +8,19 @@ import videoIcon from "~assets/homepage/video.svg";
 import { IoIosArrowForward } from "react-icons/io";
 import Navbar from "~components/Navbar";
 
-const RewardItem = ({ icon, title, description, navigateTo }) => {
+const RewardItem = ({ icon, title, description, navigateTo, tutoChecked }) => {
     const navigate = useNavigate();
 
     const handleNavigation = () => {
-        navigate(navigateTo);
+        if (
+            (navigateTo === "/reward/video" ||
+                navigateTo === "/reward/receipt") &&
+            !tutoChecked
+        ) {
+            navigate(`${navigateTo}tutorial`, { state: { from: "reward" } });
+        } else {
+            navigate(navigateTo);
+        }
     };
 
     return (
@@ -36,6 +44,8 @@ const RewardItem = ({ icon, title, description, navigateTo }) => {
 };
 
 export default function RewardPage() {
+    const [tutoChecked] = useState(false);
+
     return (
         <div>
             <div className={styles.container}>
@@ -55,12 +65,14 @@ export default function RewardPage() {
                             title="출석 체크"
                             description="출석을 통해 랜덤 주식을 받을 수 있어요!"
                             navigateTo="/reward/attendance"
+                            tutoChecked={tutoChecked}
                         />
                         <RewardItem
                             icon={videoIcon}
                             title="기업 광고 시청"
                             description="내가 원하는 기업 광고를 재미있게 시청하고 주식 받자!"
                             navigateTo="/reward/video"
+                            tutoChecked={tutoChecked}
                         />
                         <RewardItem
                             icon={receiptIcon}
@@ -72,6 +84,7 @@ export default function RewardPage() {
                                 </>
                             }
                             navigateTo="/reward/receipt"
+                            tutoChecked={tutoChecked}
                         />
                     </div>
                 </motion.div>
