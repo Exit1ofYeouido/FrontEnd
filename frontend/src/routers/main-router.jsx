@@ -6,13 +6,13 @@ import HomePage from "../routes/homePageF/HomePage";
 import UseWayPage from "../routes/homePageF/userinfoF/UseWay";
 
 //리워드 페이지
-import RewardPage from "../routes/rewardPage/rewardLanding/RewardPage";
-import VideoPage from "../routes/rewardPage/video/Video";
-import ReceiptPage from "../routes/rewardPage/receipt/Receipt";
-import ReceiptTutorialPage from "../routes/rewardPage/tutorial/receipt/ReceiptTutorial";
-import VideoTutorialPage from "../routes/rewardPage/tutorial/video/VideoTutorial";
-import AttendancePage from "../routes/rewardPage/attendance/Attendance";
-import CompanyInfoPage from "../routes/rewardPage/companyInfo/CompanyInfo";
+import RewardPage from "../routes/rewardPageF/rewardLandingF/RewardPage";
+import VideoPage from "../routes/rewardPageF/videoF/Video";
+import ReceiptPage from "../routes/rewardPageF/receiptF/Receipt";
+import ReceiptTutorialPage from "../routes/rewardPageF/tutorialF/receiptTutoF/ReceiptTutorial";
+import VideoTutorialPage from "../routes/rewardPageF/tutorialF/videoTutoF/VideoTutorial";
+import AttendancePage from "../routes/rewardPageF/attendanceF/Attendance";
+import CompanyInfoPage from "../routes/rewardPageF/companyInfoF/CompanyInfo";
 
 // 주식 검색
 import StockPage from "../routes/stockPageF/StockPage";
@@ -29,7 +29,7 @@ import FaqPage from "../routes/myPageF/Faq";
 import MainLayPage from "../routes/Layout";
 import LandingLayout from "../routes/landingPageF/LandingLayout";
 import HomeLayout from "../routes/homePageF/HomeLayout";
-import RewardLayout from "../routes/rewardPage/RewardLayout";
+import RewardLayout from "../routes/rewardPageF/RewardLayout";
 import StockLayout from "../routes/stockPageF/StockLayout";
 import MyLayout from "../routes/myPageF/MyLayout";
 
