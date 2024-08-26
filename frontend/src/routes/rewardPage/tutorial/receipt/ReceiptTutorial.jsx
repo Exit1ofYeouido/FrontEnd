@@ -141,7 +141,7 @@ export default function ReceiptTutorial() {
                     </div>
                 ) : (
                     <div onClick={handleSkip} className={styles.button}>
-                        영수증 인증 하기
+                        영수증 인증 해볼까요?
                     </div>
                 )}
             </div>
