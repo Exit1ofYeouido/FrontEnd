@@ -8,11 +8,13 @@ import UseWayPage from "../routes/homePageF/userinfoF/UseWay";
 //리워드 페이지
 import RewardPage from "../routes/rewardPageF/rewardLandingF/RewardPage";
 import VideoPage from "../routes/rewardPageF/videoF/Video";
+import VideoDetailPage from "../routes/rewardPageF/videoF/VideoDetail";
 import ReceiptPage from "../routes/rewardPageF/receiptF/Receipt";
 import ReceiptTutorialPage from "../routes/rewardPageF/tutorialF/receiptTutoF/ReceiptTutorial";
 import VideoTutorialPage from "../routes/rewardPageF/tutorialF/videoTutoF/VideoTutorial";
 import AttendancePage from "../routes/rewardPageF/attendanceF/Attendance";
 import CompanyInfoPage from "../routes/rewardPageF/companyInfoF/CompanyInfo";
+
 
 // 주식 검색
 import StockPage from "../routes/stockPageF/StockPage";
@@ -77,6 +79,11 @@ const mainRouter = [
                     {
                         path: "video",
                         element: <VideoPage />,
+                        index: true,
+                    },
+                    {
+                        path: "videodetail",
+                        element: <VideoDetailPage />,
                         index: true,
                     },
                     {
