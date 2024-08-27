@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import styles from "./Video.module.css";
 import { IoIosArrowBack } from "react-icons/io";
 import Navbar from "~components/Navbar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Video() {
     const [videos, setVideos] = useState([]);
     const navigate = useNavigate();
+    const location = useLocation();
 
     const dummyData = [
         {
@@ -44,11 +45,19 @@ export default function Video() {
         navigate("/reward/videodetail", { state: { video } });
     };
 
+    const handleBack = () => {
+        if (location.state && location.state.from) {
+            navigate(`/${location.state.from}`);
+        } else {
+            navigate("/reward");
+        }
+    };
+
     return (
         <>
             <div className={styles.container}>
                 <div className={styles.topBar}>
-                    <div className={styles.arrow}>
+                    <div className={styles.arrow} onClick={handleBack}>
                         <IoIosArrowBack />
                     </div>
                     <div>기업 영상 시청</div>
