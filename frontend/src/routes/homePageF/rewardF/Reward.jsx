@@ -12,7 +12,9 @@ export default function Reward() {
 
             <div
                 className={styles.item}
-                onClick={() => navigate("/reward/video")}
+                onClick={() =>
+                    navigate("/reward/video", { state: { from: "home" } })
+                }
             >
                 <motion.div
                     className={`${styles.icon} ${styles.videoIcon}`}
@@ -39,7 +41,8 @@ export default function Reward() {
                 <div className={styles.text}>
                     <div className={styles.itemTitle}>영수증 인증</div>
                     <div className={styles.description}>
-                        좋아하는 물품을 사고나서 해당 기업의 주식을 받을 수 있어요!
+                        좋아하는 물품을 사고나서 해당 기업의 주식을 받을 수
+                        있어요!
                     </div>
                 </div>
             </div>
