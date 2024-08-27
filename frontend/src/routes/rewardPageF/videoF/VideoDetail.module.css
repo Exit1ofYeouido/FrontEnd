@@ -1,18 +1,13 @@
-/* .container {
-} */
-
-/* .videoWrapper {
+.container {
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
+}
 
 .videoWrapper iframe {
     width: 100%;
-    height: calc(100vh - 50px);
+    height: calc(100vh - 40px);
     max-width: 100vw;
     border-radius: 20px;
+    z-index: 1;
 }
 
 @media (max-width: 480px) {
@@ -21,11 +16,88 @@
     }
 }
 
-
-.topBar .arrow {
-    position: absolute;
-    top: 0px;
-    left: 0px;
+.volumeControl {
+    position: fixed;
+    margin-left: 20px;
+    top: 90px;
+    z-index: 10;
+    border-radius: 5px;
     cursor: pointer;
-    color: white; 
+    display: flex;
+    align-items: center;
+    height: 40px;
+}
+
+.volumeContainer {
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 50px;
+    border-radius: 30px;
+}
+
+.arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #f5f5f5;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.volumeButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.volumeSlider {
+    margin: 5px 30px 0px 10px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.volumeControl:hover .volumeSlider {
+    opacity: 1;
+}
+
+.videoInfo {
+    position: fixed;
+    margin-left: 20px;
+    bottom: 100px;
+    color: #fff;
+}
+
+.company {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.videoName {
+    font-size: 14px;
+}
+
+.name {
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.logo {
+    width: 30px;
+    height: 30px;
 }
