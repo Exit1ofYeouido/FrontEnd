@@ -36,6 +36,14 @@
     cursor: pointer;
 }
 
+.darkMode{
+    background-color: #000000;
+}
+
+.darkMode .text {
+    color: #ffffff;
+}
+
 @media (max-width: 480px) {
     .group {
         gap: 55px;
@@ -50,7 +58,6 @@
         font-size: 11px;
     }
 }
-
 
 @media (max-width: 380px) {
     .group {
