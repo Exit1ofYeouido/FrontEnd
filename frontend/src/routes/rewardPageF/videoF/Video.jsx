@@ -40,6 +40,10 @@ export default function Video() {
         setVideos(dummyData);
     }, []);
 
+    const handleVideoClick = (video) => {
+        navigate("/reward/videodetail", { state: { video } });
+    };
+
     return (
         <>
             <div className={styles.container}>
@@ -57,7 +61,7 @@ export default function Video() {
                         <div
                             key={video.mediaId}
                             className={styles.videoCard}
-                            onClick={() => navigate("/reward/videodetail")}
+                            onClick={() => handleVideoClick(video)}
                         >
                             <div className={styles.thumbnailContainer}>
                                 <img
