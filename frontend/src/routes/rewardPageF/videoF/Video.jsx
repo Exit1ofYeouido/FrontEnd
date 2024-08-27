@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import styles from "./Video.module.css";
 import { IoIosArrowBack } from "react-icons/io";
 import Navbar from "~components/Navbar";
+import { useNavigate } from "react-router-dom";
 
 export default function Video() {
     const [videos, setVideos] = useState([]);
+    const navigate = useNavigate();
 
     const dummyData = [
         {
@@ -52,7 +54,11 @@ export default function Video() {
 
                 <div className={styles.videoList}>
                     {videos.map((video) => (
-                        <div key={video.mediaId} className={styles.videoCard}>
+                        <div
+                            key={video.mediaId}
+                            className={styles.videoCard}
+                            onClick={() => navigate("/reward/videodetail")}
+                        >
                             <div className={styles.thumbnailContainer}>
                                 <img
                                     src={video.thumbnail}
@@ -61,8 +67,21 @@ export default function Video() {
                                 />
                             </div>
                             <div className={styles.videoInfo}>
-                                <div>{video.videoName}</div>
-                                <div className={styles.name}>{video.name}</div>
+                                <img
+                                    src={`https://stock-craft.s3.ap-northeast-2.amazonaws.com/logos/${encodeURIComponent(
+                                        video.name
+                                    )}.svg`}
+                                    alt={`${video.name} logo`}
+                                    className={styles.logo}
+                                />
+                                <div className={styles.textContainer}>
+                                    <div className={styles.videoName}>
+                                        {video.videoName}
+                                    </div>
+                                    <div className={styles.name}>
+                                        {video.name}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     ))}
