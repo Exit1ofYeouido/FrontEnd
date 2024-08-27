@@ -1,0 +1,31 @@
+/* .container {
+} */
+
+/* .videoWrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+.videoWrapper iframe {
+    width: 100%;
+    height: calc(100vh - 50px);
+    max-width: 100vw;
+    border-radius: 20px;
+}
+
+@media (max-width: 480px) {
+    .videoWrapper iframe {
+        width: 470px;
+    }
+}
+
+
+.topBar .arrow {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    cursor: pointer;
+    color: white; 
+}
