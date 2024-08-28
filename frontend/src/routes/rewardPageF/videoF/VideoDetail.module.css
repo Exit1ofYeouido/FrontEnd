@@ -75,12 +75,16 @@
     opacity: 1;
 }
 
+
 .videoInfo {
+    display: flex;
     position: fixed;
     margin-left: 20px;
     bottom: 100px;
     color: #fff;
+    justify-content: space-between;
 }
+
 
 .company {
     display: flex;
@@ -100,4 +104,22 @@
 .logo {
     width: 30px;
     height: 30px;
+}
+
+.quizButton {
+    font-size: 12px;
+    background-color: #535ef0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000;
+    height: 30px;
+    margin-left: 20px;
+    margin-top: 30px;
+    
+}
+
+.quizButton:hover {
+    background-color: #d249ee;
 }
