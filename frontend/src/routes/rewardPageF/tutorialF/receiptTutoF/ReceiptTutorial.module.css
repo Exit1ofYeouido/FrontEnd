@@ -39,7 +39,8 @@
 }
 
 .icon {
-    width: 250px;
+    width: 100%;
+    max-width: 250px;
     height: auto;
 }
 
@@ -73,4 +74,11 @@
     border: 0.5px solid #e0e0e0;
     font-weight: 500;
     text-align: center;
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: calc(100vw - 20px);
+        max-width: 460px;
+    }
 }

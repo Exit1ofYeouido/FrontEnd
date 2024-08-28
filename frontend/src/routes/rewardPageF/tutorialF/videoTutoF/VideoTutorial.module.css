@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(164deg, #FFF 0.02%, #FFEAEB 99.98%);
+    background: linear-gradient(164deg, #fff 0.02%, #ffeaeb 99.98%);
     padding: 20px;
     box-sizing: border-box;
 }
@@ -17,7 +17,6 @@
     justify-content: center;
     overflow: hidden;
 }
-
 
 .topBar {
     display: flex;
@@ -40,7 +39,8 @@
 }
 
 .icon {
-    width: 250px;
+    width: 100%;
+    max-width: 250px;
     height: auto;
 }
 
@@ -71,7 +71,14 @@
     font-size: 18px;
     background-color: white;
     cursor: pointer;
-    border: 0.5px solid #E0E0E0;
+    border: 0.5px solid #e0e0e0;
     font-weight: 500;
     text-align: center;
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: calc(100vw - 20px);
+        max-width: 460px;
+    }
 }
