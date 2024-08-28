@@ -39,8 +39,7 @@
 }
 
 .icon {
-    width: 100%;
-    max-width: 250px;
+    max-width: 230px;
     height: auto;
 }
 
@@ -80,5 +79,9 @@
     .container {
         width: calc(100vw - 20px);
         max-width: 460px;
+    }
+
+    .icon {
+        width: calc(45vw);
     }
 }
