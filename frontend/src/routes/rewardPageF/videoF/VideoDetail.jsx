@@ -8,11 +8,12 @@ import { FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 import Slider from "@mui/material/Slider";
 import Quiz from "./Quiz";
 import { motion, AnimatePresence } from "framer-motion";
+import axios from "axios";
 
 export default function VideoDetail() {
     const navigate = useNavigate();
     const location = useLocation();
-    const videoId = "mZsAfmwldas";
+    const [videoId, setVideoId] = useState("");
     const [player, setPlayer] = useState(null);
     const [isMuted, setIsMuted] = useState(false);
     const [volume, setVolume] = useState(10);
@@ -30,13 +31,21 @@ export default function VideoDetail() {
             wmode: "opaque",
         },
     };
-
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsQuizButtonVisible(true);
-        }, 10000);
+        const fetchVideos = async () => {
+            const response = await axios.get(`/api/ad/${video.mediaId}`);
+            if (response && response.data) {
+                setVideoId(response.data.uri);
+            } else {
+                console.error("Fail");
+            }
+            const timer = setTimeout(() => {
+                setIsQuizButtonVisible(true);
+            }, 10000);
 
-        return () => clearTimeout(timer);
+            return () => clearTimeout(timer);
+        };
+        fetchVideos();
     }, []);
 
     const handleVideoReady = (event) => {
@@ -146,7 +155,7 @@ export default function VideoDetail() {
                                 <div className={styles.name}>{video?.name}</div>
                             </div>
                             <div className={styles.videoName}>
-                                {video?.videoName}
+                                {video?.thumbnailName}
                             </div>
                         </div>
                         {isQuizButtonVisible && (
@@ -168,7 +177,7 @@ export default function VideoDetail() {
                                 transition={{ duration: 0.5, ease: "easeOut" }}
                                 className={styles.quizContainer}
                             >
-                                <Quiz onClose={handleClose} />
+                                <Quiz onClose={handleClose} mediaId={video.mediaId} enterpriseName={video.name}/>
                             </motion.div>
                         )}
                     </AnimatePresence>
