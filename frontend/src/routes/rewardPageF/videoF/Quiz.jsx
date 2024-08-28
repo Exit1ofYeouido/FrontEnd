@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styles from "./Quiz.module.css";
 import { motion } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
+import { FaChevronDown } from "react-icons/fa";
+
 import axios from "axios";
 import Modal from "./QuizModal";
 
@@ -9,7 +11,7 @@ export default function Quiz({ onClose, mediaId, enterpriseName }) {
     const [answer, setAnswer] = useState(0);
     const [question, setQuestion] = useState("");
     const [quizSectionList, setQuizSectionList] = useState([]);
-    const [amount, setAmount] = useState(0.000000);
+    const [amount, setAmount] = useState(0.0);
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
@@ -62,7 +64,7 @@ export default function Quiz({ onClose, mediaId, enterpriseName }) {
                 className={styles.container}
             >
                 <div className={styles.closeButton} onClick={onClose}>
-                    <IoMdClose />
+                    <FaChevronDown />
                 </div>
                 <div className={styles.question}>{question}</div>
 
