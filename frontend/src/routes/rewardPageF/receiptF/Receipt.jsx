@@ -67,67 +67,69 @@ export default function Receipt() {
     };
 
     return (
-        <div className={styles.container}>
-            <div className={styles.topBar}>
-                <div className={styles.arrow} onClick={handleBack}>
-                    <IoIosArrowBack />
+        <div>
+            <div className={styles.container}>
+                <div className={styles.topBar}>
+                    <div className={styles.arrow} onClick={handleBack}>
+                        <IoIosArrowBack />
+                    </div>
+                    <div>영수증 인증</div>
                 </div>
-                <div>영수증 인증</div>
-            </div>
-            <div className={styles.content}>
-                {uploadedImage ? (
-                    <img
-                        src={uploadedImage}
-                        alt="Captured"
-                        className={styles.imagePreview}
+                <div className={styles.content}>
+                    {uploadedImage ? (
+                        <img
+                            src={uploadedImage}
+                            alt="Captured"
+                            className={styles.imagePreview}
+                        />
+                    ) : (
+                        <div>사진을 업로드하거나 찍어주세요.</div>
+                    )}
+                </div>
+                <div className={styles.bottomBar}>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileUpload}
+                        ref={fileInputRef}
+                        style={{ display: "none" }}
                     />
-                ) : (
-                    <div>사진을 업로드하거나 찍어주세요.</div>
-                )}
-            </div>
-            <div className={styles.bottomBar}>
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileUpload}
-                    ref={fileInputRef}
-                    style={{ display: "none" }}
-                />
-                <button
-                    onClick={handleUploadButtonClick}
-                    className={styles.uploadButton}
+                    <button
+                        onClick={handleUploadButtonClick}
+                        className={styles.uploadButton}
+                    >
+                        파일 업로드
+                    </button>
+                    <button
+                        onClick={handleCameraAccess}
+                        className={styles.cameraButton}
+                    >
+                        카메라 찍기
+                    </button>
+                </div>
+
+                <Modal
+                    isOpen={isCameraModalOpen}
+                    onRequestClose={() => setIsCameraModalOpen(false)}
+                    contentLabel="카메라"
+                    className={styles.modal}
+                    overlayClassName={styles.overlay}
                 >
-                    파일 업로드
-                </button>
-                <button
-                    onClick={handleCameraAccess}
-                    className={styles.cameraButton}
-                >
-                    카메라 찍기
-                </button>
+                    <video
+                        ref={videoRef}
+                        className={styles.videoPreview}
+                        autoPlay
+                    />
+                    <button
+                        onClick={handleCapturePhoto}
+                        className={styles.captureButton}
+                    >
+                        찍기
+                    </button>
+                    <canvas ref={canvasRef} style={{ display: "none" }} />
+                </Modal>
             </div>
             <Navbar />
-
-            <Modal
-                isOpen={isCameraModalOpen}
-                onRequestClose={() => setIsCameraModalOpen(false)}
-                contentLabel="카메라"
-                className={styles.modal}
-                overlayClassName={styles.overlay}
-            >
-                <video
-                    ref={videoRef}
-                    className={styles.videoPreview}
-                    autoPlay
-                />
-                <button
-                    onClick={handleCapturePhoto}
-                    className={styles.captureButton}
-                >
-                    찍기
-                </button>
-                <canvas ref={canvasRef} style={{ display: "none" }} />
-            </Modal>
         </div>
     );
 }
