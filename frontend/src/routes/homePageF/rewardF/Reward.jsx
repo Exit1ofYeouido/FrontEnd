@@ -31,7 +31,9 @@ export default function Reward() {
 
             <div
                 className={styles.item}
-                onClick={() => navigate("/reward/receipt")}
+                onClick={() =>
+                    navigate("/reward/receipt", { state: { from: "home" } })
+                }
             >
                 <motion.div
                     className={`${styles.icon} ${styles.receiptIcon}`}
