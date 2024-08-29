@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import styles from "./RewardPage.module.css";
-import calendarIcon from "~assets/homepage/calendar.svg";
+import calendarIcon from "~assets/homepage/calendar.png";
 import receiptIcon from "~assets/homepage/receipt.svg";
 import videoIcon from "~assets/homepage/video.svg";
 import { IoIosArrowForward } from "react-icons/io";
