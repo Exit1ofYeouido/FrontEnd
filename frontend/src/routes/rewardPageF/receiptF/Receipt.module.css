@@ -1,0 +1,109 @@
+.container {
+    padding: 20px;
+    background-color: #ffffff;
+    height: calc(100vh - 90px);
+    overflow-y: auto;
+}
+
+.topBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 600;
+    position: relative;
+    width: 100%;
+    margin-bottom: 60px;
+}
+
+.topBar .arrow {
+    position: absolute;
+    left: 0px;
+    cursor: pointer;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    height: 40vh;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: #e9ecef;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.videoPreview, .imagePreview {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.bottomBar {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-top: 1px solid #dee2e6;
+    position: sticky;
+    bottom: 0;
+    width: 100%; 
+}
+
+.uploadButton, .cameraButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.uploadButton:hover, .cameraButton:hover {
+    background-color: #0056b3;
+}
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.75);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.captureButton {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.captureButton:hover {
+    background-color: #0056b3;
+}
