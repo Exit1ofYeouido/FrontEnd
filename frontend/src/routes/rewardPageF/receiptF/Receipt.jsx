@@ -1,18 +1,17 @@
 import React, { useRef, useState } from "react";
+import axios from "axios";
 import styles from "./Receipt.module.css";
 import Navbar from "~components/Navbar";
 import { IoIosArrowBack } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router-dom";
-import Modal from "react-modal";
 
 export default function Receipt() {
     const location = useLocation();
     const navigate = useNavigate();
     const fileInputRef = useRef(null);
-    const videoRef = useRef(null);
-    const canvasRef = useRef(null);
     const [uploadedImage, setUploadedImage] = useState(null);
-    const [isCameraModalOpen, setIsCameraModalOpen] = useState(false);
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleBack = () => {
         if (location.state && location.state.from) {
@@ -27,6 +26,7 @@ export default function Receipt() {
         if (file) {
             const imageUrl = URL.createObjectURL(file);
             setUploadedImage(imageUrl);
+            setSelectedFile(file);
         }
     };
 
@@ -34,36 +34,40 @@ export default function Receipt() {
         fileInputRef.current.click();
     };
 
-    const handleCameraAccess = () => {
-        setIsCameraModalOpen(true);
-        navigator.mediaDevices
-            .getUserMedia({ video: true })
-            .then((stream) => {
-                if (videoRef.current) {
-                    videoRef.current.srcObject = stream;
-                    videoRef.current.play();
+    const handleImageSubmit = async () => {
+        if (!selectedFile) {
+            alert("먼저 이미지를 업로드해주세요.");
+            return;
+        }
+
+        setIsSubmitting(true);
+
+        
+        const formData = new FormData();
+        formData.append("receipt_img", selectedFile);
+
+        try {
+            const response = await axios.post(
+                "https://your-api-endpoint.com/upload",
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
                 }
-            })
-            .catch((error) => {
-                console.error("Error accessing camera:", error);
-            });
-    };
+            );
 
-    const handleCapturePhoto = () => {
-        const video = videoRef.current;
-        const canvas = canvasRef.current;
-
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-
-        const context = canvas.getContext("2d");
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-        const imageUrl = canvas.toDataURL("image/png");
-        setUploadedImage(imageUrl);
-        setIsCameraModalOpen(false);
-
-        video.srcObject.getTracks().forEach((track) => track.stop());
+            if (response.status === 200) {
+                alert("이미지가 성공적으로 제출되었습니다!");
+            } else {
+                alert("이미지 제출에 실패했습니다.");
+            }
+        } catch (error) {
+            console.error("이미지 제출 중 오류 발생:", error);
+            alert("이미지를 제출하는 동안 오류가 발생했습니다.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -75,7 +79,11 @@ export default function Receipt() {
                     </div>
                     <div>영수증 인증</div>
                 </div>
-                <div className={styles.content}>
+                <div
+                    className={styles.content}
+                    onClick={handleUploadButtonClick}
+                    style={{ cursor: "pointer" }}
+                >
                     {uploadedImage ? (
                         <img
                             src={uploadedImage}
@@ -83,51 +91,28 @@ export default function Receipt() {
                             className={styles.imagePreview}
                         />
                     ) : (
-                        <div>사진을 업로드하거나 찍어주세요.</div>
+                        <div>
+                            <div>사진을 업로드 해주세요.</div>
+                            <div>업로드 하기</div>
+                        </div>
                     )}
                 </div>
                 <div className={styles.bottomBar}>
                     <input
                         type="file"
-                        accept="image/*"
+                        accept="image/jpeg, image/png"
                         onChange={handleFileUpload}
                         ref={fileInputRef}
                         style={{ display: "none" }}
                     />
                     <button
-                        onClick={handleUploadButtonClick}
-                        className={styles.uploadButton}
+                        onClick={handleImageSubmit}
+                        className={styles.submitButton}
+                        disabled={isSubmitting}
                     >
-                        파일 업로드
-                    </button>
-                    <button
-                        onClick={handleCameraAccess}
-                        className={styles.cameraButton}
-                    >
-                        카메라 찍기
+                        {isSubmitting ? "제출 중..." : "사진 제출"}
                     </button>
                 </div>
-
-                <Modal
-                    isOpen={isCameraModalOpen}
-                    onRequestClose={() => setIsCameraModalOpen(false)}
-                    contentLabel="카메라"
-                    className={styles.modal}
-                    overlayClassName={styles.overlay}
-                >
-                    <video
-                        ref={videoRef}
-                        className={styles.videoPreview}
-                        autoPlay
-                    />
-                    <button
-                        onClick={handleCapturePhoto}
-                        className={styles.captureButton}
-                    >
-                        찍기
-                    </button>
-                    <canvas ref={canvasRef} style={{ display: "none" }} />
-                </Modal>
             </div>
             <Navbar />
         </div>
