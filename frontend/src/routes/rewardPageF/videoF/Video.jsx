@@ -3,42 +3,30 @@ import styles from "./Video.module.css";
 import { IoIosArrowBack } from "react-icons/io";
 import Navbar from "~components/Navbar";
 import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
+// import { videoList } from "~apis/rewardAPI/videoListApi";
 
 export default function Video() {
     const [videos, setVideos] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
 
-    const dummyData = [
-        {
-            mediaId: 1,
-            name: "이엠텍",
-            videoName: "이엠텍의 반란 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ",
-            thumbnail:
-                "https://cdn.e2news.com/news/photo/201808/201645_61210_418.jpg",
-        },
-        {
-            mediaId: 2,
-            name: "이엠텍",
-            videoName: "이엠텍 사고 경제적 자유 얻는 방법",
-            thumbnail: "https://i.ytimg.com/vi/LT96AKZDb3s/maxresdefault.jpg",
-        },
-        {
-            mediaId: 3,
-            name: "이엠텍",
-            videoName: "이엠텍 사고 경제적 자유 얻는 방법",
-            thumbnail: "https://i.ytimg.com/vi/LT96AKZDb3s/maxresdefault.jpg",
-        },
-        {
-            mediaId: 4,
-            name: "이엠텍",
-            videoName: "이엠텍 사고 경제적 자유 얻는 방법",
-            thumbnail: "https://i.ytimg.com/vi/LT96AKZDb3s/maxresdefault.jpg",
-        },
-    ];
+    // const dummyData = videoList();
 
     useEffect(() => {
-        setVideos(dummyData);
+        const fetchVideos = async () => {
+            const response = await axios.get("/api/ad/info", {
+                headers: {
+                    memberId: 1,
+                },
+            });
+            if (response && response.data) {
+                setVideos(response.data);
+            } else {
+                console.error("Fail");
+            }
+        };
+        fetchVideos();
     }, []);
 
     const handleVideoClick = (video) => {
@@ -89,7 +77,7 @@ export default function Video() {
                                 />
                                 <div className={styles.textContainer}>
                                     <div className={styles.videoName}>
-                                        {video.videoName}
+                                        {video.thumbnailName}
                                     </div>
                                     <div className={styles.name}>
                                         {video.name}
