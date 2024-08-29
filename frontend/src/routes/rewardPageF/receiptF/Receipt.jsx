@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import styles from "./Receipt.module.css";
-import Navbar from "~components/navbar";
+import Navbar from "~components/Navbar";
 import { IoIosArrowBack } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
@@ -52,18 +52,18 @@ export default function Receipt() {
     const handleCapturePhoto = () => {
         const video = videoRef.current;
         const canvas = canvasRef.current;
-    
+
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
-    
+
         const context = canvas.getContext("2d");
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    
+
         const imageUrl = canvas.toDataURL("image/png");
         setUploadedImage(imageUrl);
         setIsCameraModalOpen(false);
-    
-        video.srcObject.getTracks().forEach(track => track.stop());
+
+        video.srcObject.getTracks().forEach((track) => track.stop());
     };
 
     return (
@@ -115,11 +115,18 @@ export default function Receipt() {
                 className={styles.modal}
                 overlayClassName={styles.overlay}
             >
-                <video ref={videoRef} className={styles.videoPreview} autoPlay />
-                <button onClick={handleCapturePhoto} className={styles.captureButton}>
+                <video
+                    ref={videoRef}
+                    className={styles.videoPreview}
+                    autoPlay
+                />
+                <button
+                    onClick={handleCapturePhoto}
+                    className={styles.captureButton}
+                >
                     찍기
                 </button>
-                <canvas ref={canvasRef} style={{ display: 'none' }} />
+                <canvas ref={canvasRef} style={{ display: "none" }} />
             </Modal>
         </div>
     );
