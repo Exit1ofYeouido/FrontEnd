@@ -1,9 +1,10 @@
 .modalOverlay {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    border-radius: 30px 30px 0px 0px;
     background: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
@@ -11,28 +12,94 @@
     z-index: 1000;
 }
 
-.modalContent {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+.logo{
+    width: 30%;
+    height: 30%;
 }
 
-.modalContent h2 {
+.correctText{
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.stockText{
+    font-size: 16px;
     margin-bottom: 20px;
 }
 
-.modalContent button {
+.goCompany{
+    margin-top: 10px;
     padding: 10px 20px;
-    background: #4CAF50;
-    color: white;
+    background: #F4F8F9;
+    color: #7E807F;
     border: none;
-    border-radius: 5px;
+    border-radius: 30px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
 }
 
-.modalContent button:hover {
-    background: #45a049;
+.confirm{
+    margin-top: 10px;
+    margin-left: 10px;
+    padding: 10px 20px;
+    background: #7740FE;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 14px;
 }
+
+.confirm:hover{
+    background-color: #5b1aff;
+}
+
+.goCompany:hover{
+    background-color: #eff9fc;
+}
+
+.companyName{
+    margin-left: 5px;
+    font-size: 18px;
+}
+
+.stockAmount{
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a2dff;
+}
+
+.company{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrongMessage{
+    background: white;
+    padding: 50px 50px;
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+}
+
+.correctMessage {
+    background: white;
+    padding: 40px 50px 15px 50px;
+    border-radius: 40px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: auto;
+}
+
