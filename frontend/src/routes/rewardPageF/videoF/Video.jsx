@@ -15,9 +15,12 @@ export default function Video() {
 
     useEffect(() => {
         const fetchVideos = async () => {
-            const response = await axios.get("/api/ad/info");
+            const response = await axios.get("/api/ad/info", {
+                headers: {
+                    memberId: 1,
+                },
+            });
             if (response && response.data) {
-                console.log(response.data);
                 setVideos(response.data);
             } else {
                 console.error("Fail");

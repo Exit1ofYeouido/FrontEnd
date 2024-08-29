@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Quiz.module.css";
 import { motion } from "framer-motion";
-import { IoMdClose } from "react-icons/io";
-import { FaChevronDown } from "react-icons/fa";
-
+import { FaAngleDown } from "react-icons/fa6";
 import axios from "axios";
 import Modal from "./QuizModal";
+import { useNavigate } from "react-router-dom";
 
 export default function Quiz({ onClose, mediaId, enterpriseName }) {
     const [answer, setAnswer] = useState(0);
@@ -13,11 +12,12 @@ export default function Quiz({ onClose, mediaId, enterpriseName }) {
     const [quizSectionList, setQuizSectionList] = useState([]);
     const [amount, setAmount] = useState(0.0);
     const [showModal, setShowModal] = useState(false);
+    const [isCorrect, setIsCorrect] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchVideos = async () => {
+        const fetchQuizData = async () => {
             const response = await axios.get(`/api/ad/${mediaId}/quiz`);
-            console.log(mediaId);
             if (response && response.data) {
                 setAnswer(response.data.answer);
                 setQuestion(response.data.question);
@@ -26,17 +26,26 @@ export default function Quiz({ onClose, mediaId, enterpriseName }) {
                 console.error("Fail");
             }
         };
-        fetchVideos();
-    }, []);
+        fetchQuizData();
+    }, [mediaId]);
 
     const getStock = async () => {
-        const response = await axios.post(`/api/ad/${mediaId}/quiz`, {
-            enterpriseName: enterpriseName,
-        });
+        const response = await axios.post(
+            `/api/ad/${mediaId}/quiz`,
+            {
+                enterpriseName: enterpriseName,
+            },
+            {
+                headers: {
+                    memberId: 1,
+                },
+            }
+        );
 
         if (response && response.data) {
             setAmount(response.data.amount);
             setShowModal(true);
+            setIsCorrect(true);
         } else {
             console.error("Fail");
         }
@@ -46,13 +55,24 @@ export default function Quiz({ onClose, mediaId, enterpriseName }) {
         if (selectedOptionIndex === answer) {
             getStock();
         } else {
-            setShowModal(false);
+            setIsCorrect(false);
+            setShowModal(true);
         }
+    };
+
+    const goVideo = () => {
+        setShowModal(false);
+        navigate("/reward/video");
     };
 
     const closeModal = () => {
         setShowModal(false);
     };
+
+    const goCompany = () => {
+        setShowModal(false);
+        navigate("/reward/video");
+    }
 
     return (
         <>
@@ -64,9 +84,9 @@ export default function Quiz({ onClose, mediaId, enterpriseName }) {
                 className={styles.container}
             >
                 <div className={styles.closeButton} onClick={onClose}>
-                    <FaChevronDown />
+                    <FaAngleDown />
                 </div>
-                <div className={styles.question}>{question}</div>
+                <div className={styles.question}>Q. {question}</div>
 
                 <div className={styles.selection}>
                     {quizSectionList.map((option, index) => (
@@ -85,6 +105,9 @@ export default function Quiz({ onClose, mediaId, enterpriseName }) {
                     onClose={closeModal}
                     enterpriseName={enterpriseName}
                     amount={amount}
+                    isCorrect={isCorrect}
+                    goVideo={goVideo}
+                    goCompany={goCompany}
                 />
             )}
         </>
