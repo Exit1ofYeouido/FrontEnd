@@ -7,6 +7,7 @@ import Navbar from "~components/Navbar";
 import { FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 import Slider from "@mui/material/Slider";
 import Quiz from "./Quiz";
+import QuizReplayModal from "./QuizReplayModal";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 
@@ -18,8 +19,8 @@ export default function VideoDetail() {
     const [isMuted, setIsMuted] = useState(false);
     const [volume, setVolume] = useState(10);
     const [isSliderVisible, setIsSliderVisible] = useState(false);
-    const [isQuizButtonVisible, setIsQuizButtonVisible] = useState(false);
     const [isQuizVisible, setIsQuizVisible] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState(false);
 
     const { video } = location.state || {};
     const videoOptions = {
@@ -31,6 +32,7 @@ export default function VideoDetail() {
             wmode: "opaque",
         },
     };
+
     useEffect(() => {
         const fetchVideos = async () => {
             const response = await axios.get(`/api/ad/${video.mediaId}`);
@@ -39,14 +41,9 @@ export default function VideoDetail() {
             } else {
                 console.error("Fail");
             }
-            const timer = setTimeout(() => {
-                setIsQuizButtonVisible(true);
-            }, 10000);
-
-            return () => clearTimeout(timer);
         };
         fetchVideos();
-    }, []);
+    }, [video.mediaId]);
 
     const handleVideoReady = (event) => {
         const ytPlayer = event.target;
@@ -54,8 +51,14 @@ export default function VideoDetail() {
         setPlayer(ytPlayer);
     };
 
-    const handleVideoEnd = (e) => {
-        e.target.stopVideo(0);
+    const handleVideoEnd = () => {
+        setIsModalVisible(true);
+    };
+
+    const handleReplay = () => {
+        player.seekTo(0);
+        player.playVideo();
+        setIsModalVisible(false);
     };
 
     const handleBack = () => {
@@ -92,10 +95,12 @@ export default function VideoDetail() {
 
     const handleQuizClick = () => {
         setIsQuizVisible(true);
+        setIsModalVisible(false);
     };
 
     const handleClose = () => {
         setIsQuizVisible(false);
+        setIsModalVisible(true);
     };
 
     return (
@@ -142,6 +147,7 @@ export default function VideoDetail() {
                             </div>
                         </div>
                     </div>
+
                     <div className={styles.videoInfo}>
                         <div className={styles.companyInfo}>
                             <div className={styles.company}>
@@ -158,14 +164,6 @@ export default function VideoDetail() {
                                 {video?.thumbnailName}
                             </div>
                         </div>
-                        {isQuizButtonVisible && (
-                            <button
-                                onClick={handleQuizClick}
-                                className={styles.quizButton}
-                            >
-                                퀴즈 풀기
-                            </button>
-                        )}
                     </div>
 
                     <AnimatePresence>
@@ -177,10 +175,22 @@ export default function VideoDetail() {
                                 transition={{ duration: 0.5, ease: "easeOut" }}
                                 className={styles.quizContainer}
                             >
-                                <Quiz onClose={handleClose} mediaId={video.mediaId} enterpriseName={video.name}/>
+                                <Quiz
+                                    onClose={handleClose}
+                                    mediaId={video.mediaId}
+                                    enterpriseName={video.name}
+                                />
                             </motion.div>
                         )}
                     </AnimatePresence>
+
+                    {isModalVisible && (
+                        <QuizReplayModal
+                            onQuiz={handleQuizClick}
+                            onReplay={handleReplay}
+                            onClose={() => setIsModalVisible(false)}
+                        />
+                    )}
                 </div>
             </div>
             <Navbar />
