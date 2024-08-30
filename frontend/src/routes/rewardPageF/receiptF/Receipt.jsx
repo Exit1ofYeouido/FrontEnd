@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import axios from "axios";
 import styles from "./Receipt.module.css";
 import Navbar from "~components/Navbar";
+import ReceiptGrid from "./ReceiptGrid";
 import { IoIosArrowBack } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -42,7 +43,6 @@ export default function Receipt() {
 
         setIsSubmitting(true);
 
-        
         const formData = new FormData();
         formData.append("receipt_img", selectedFile);
 
@@ -79,6 +79,10 @@ export default function Receipt() {
                     </div>
                     <div>영수증 인증</div>
                 </div>
+                <div className={styles.text}>
+                    현재는 아래 브랜드만 가능해요
+                </div>
+                <ReceiptGrid />
                 <div
                     className={styles.content}
                     onClick={handleUploadButtonClick}

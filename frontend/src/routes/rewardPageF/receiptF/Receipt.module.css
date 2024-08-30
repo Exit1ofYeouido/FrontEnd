@@ -5,6 +5,14 @@
     overflow-y: auto;
 }
 
+.text {
+    display: flex;
+    font-size: 18px;
+    font-weight: 600;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
 .topBar {
     display: flex;
     align-items: center;
@@ -13,7 +21,7 @@
     font-weight: 600;
     position: relative;
     width: 100%;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
 }
 
 .topBar .arrow {
@@ -29,6 +37,7 @@
     align-items: center;
     background-color: #f8f9fa;
     border-radius: 15px;
+    margin-top: 50px;
     padding: 20px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     cursor: pointer;
