@@ -1,0 +1,195 @@
+.container {
+    padding: 20px;
+    height: calc(100vh - 90px);
+    background-color: #fff;
+    overflow-y: auto;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 80px;
+}
+
+.info, .stock, .etc {
+    background-color: #EDF1FF;
+    height: auto;
+    padding: 20px;
+    border-radius: 20px;
+    margin-top: 30px;
+    box-shadow: 0 0px 3px rgba(0, 0, 0, 0.1);
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.logoAccount {
+    display: flex;
+    align-items: center;
+}
+
+.accountId {
+    margin-left: 10px;
+    font-weight: 600;
+}
+
+.accountLogo {
+    width: 30px;
+    height: 30px;
+}
+
+.arrowWrapper {
+    font-size: 24px;
+}
+
+.pointLogo{
+    width: 25px;
+    height: 25px;
+}
+
+.pointAsset{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.pointText{
+    margin-left: 15px;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.bottom{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.withdrawButton{
+    cursor: pointer;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #0046FF;
+    color: #fff;
+    border-radius: 10px;
+    border: none;
+}
+
+.stockTop{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+}
+
+.rate{
+    display: flex;
+}
+
+.myStockText{
+    font-size: 20px;
+}
+
+.rate1{
+    font-size: 20px;
+}
+
+.rate2{
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    color: #787878;
+    margin-left: 13px;
+}
+
+.percent{
+    margin-left: 3px;
+}
+
+.earningRatesList{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.earningRateItem{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    font-weight: 500;
+}
+
+.logo{
+    width: 70px;
+    height: 70px;
+}
+
+.enterpriseName{
+    margin-top: 3px;
+}
+
+.rateValue{
+    margin-top: 3px;
+}
+
+.moreButton{
+    cursor: pointer;
+    margin-top: 30px;
+    padding: 10px 20px;
+    background-color: #0046FF;
+    color: #fff;
+    border-radius: 10px;
+    border: none;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-around;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+
+.calendarIcon {
+    background-image: url("~assets/homepage/calendar.png");
+}
+
+.pointIcon {
+    background-image: url("~assets/homepage/point.png");
+}
+
+.useIcon {
+    background-image: url("~assets/homepage/use.svg");
+}
+
+.faqIcon {
+    background-image: url("~assets/homepage/faq.svg");
+}
+
+.actionItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.actionLabel {
+    margin-top: 5px;
+    text-align: center;
+    color: #7a7a7a;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
