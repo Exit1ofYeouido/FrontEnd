@@ -118,7 +118,7 @@ export default function VideoTutorial() {
                 {!(location.state && location.state.from == "home/useway") &&
                     currentSlide >= 0 && (
                         <div onClick={handleSkip} className={styles.button}>
-                            하룻동안 보지 않기
+                            다시 보지 않기
                         </div>
                     )}
                 {currentSlide < slides.length - 1 ? (
