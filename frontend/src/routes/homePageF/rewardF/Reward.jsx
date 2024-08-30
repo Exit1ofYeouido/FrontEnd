@@ -43,7 +43,7 @@ export default function Reward() {
                 <div className={styles.text}>
                     <div className={styles.itemTitle}>영수증 인증</div>
                     <div className={styles.description}>
-                        좋아하는 물품을 사고나서 해당 기업의 주식을 받을 수
+                        좋아하는 물품을 사고나서 <br></br>해당 기업의 주식을 받을 수
                         있어요!
                     </div>
                 </div>

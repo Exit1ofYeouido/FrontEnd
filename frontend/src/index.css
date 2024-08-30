@@ -14,10 +14,6 @@ body,
 #root {
     height: 100%;
     margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background-color: #f8f9fa;
     font-family: Pretendard-Regular;
     scrollbar-width: none;
@@ -29,13 +25,18 @@ body,
     height: 100vh;
     background-color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 
 @media (max-width: 480px) {
     .app-container {
         width: 100%;
-        margin: 0 10px;
         box-shadow: none;
     }
 }
