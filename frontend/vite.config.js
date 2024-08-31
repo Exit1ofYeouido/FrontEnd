@@ -9,7 +9,7 @@ export default defineConfig({
         host: true,
         proxy: {
             "/api": {
-                target: "http://13.124.197.8:8080",
+                target: "http://scbackend.kro.kr:8080",
                 changeOrigin: true,
                 secure: false,
             },
