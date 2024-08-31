@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styles from "./MyPage.module.css";
 import { motion } from "framer-motion";
-import axios from "axios";
 import accountLogo from "~assets/my/accountLogo.svg";
 import pointLogo from "~assets/my/point.svg";
 import { useNavigate } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
+import { myGetAll } from "~apis/myAPI/myApi";
 
 export default function MyPage() {
     const [data, setData] = useState(null);
@@ -14,8 +14,8 @@ export default function MyPage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`/api2/page/all`);
-                setData(response.data);
+                const data = await myGetAll();
+                setData(data);
             } catch (error) {
                 console.error(
                     "데이터를 가져오는 동안 오류가 발생했습니다:",

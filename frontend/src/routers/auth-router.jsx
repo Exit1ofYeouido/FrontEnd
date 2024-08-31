@@ -1,9 +1,14 @@
-import LoginSignUp from "../routes/loginPageF/LoginSignUp";
+import SignUp from "../routes/loginPageF/SignUp";
+import Login from "../routes/loginPageF/SignIn";
 
 const authRouter = [
     {
         path: "/login",
-        element: <LoginSignUp />,
+        element: <Login />,
+    },
+    {
+        path: "/signup",
+        element: <SignUp />,
     },
 ];
 

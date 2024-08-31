@@ -3,30 +3,24 @@ import styles from "./Video.module.css";
 import { IoIosArrowBack } from "react-icons/io";
 import Navbar from "~components/Navbar";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
-// import { videoList } from "~apis/rewardAPI/videoListApi";
+import { videoListApi } from "~apis/rewardAPI/videoApi";
 
 export default function Video() {
     const [videos, setVideos] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
 
-    // const dummyData = videoList();
-
     useEffect(() => {
-        const fetchVideos = async () => {
-            const response = await axios.get("/api/ad/info", {
-                headers: {
-                    memberId: 1,
-                },
-            });
-            if (response && response.data) {
-                setVideos(response.data);
-            } else {
-                console.error("Fail");
+        const loadVideos = async () => {
+            try {
+                const videoData = await videoListApi();
+                setVideos(videoData);
+            } catch (error) {
+                console.error("Failed to load videos:", error);
             }
         };
-        fetchVideos();
+
+        loadVideos();
     }, []);
 
     const handleVideoClick = (video) => {
