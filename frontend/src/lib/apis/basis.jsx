@@ -35,10 +35,15 @@ instance.interceptors.response.use(
 
             try {
                 const newToken = await refreshAccessToken();
-
-                originalRequest.headers.Authorization = `Bearer ${newToken}`;
-                return instance(originalRequest);
+                if (newToken) {
+                    originalRequest.headers.Authorization = `Bearer ${newToken}`;
+                    return instance(originalRequest);
+                } else {
+                    console.error("토큰 갱신 실패");
+                    return Promise.reject(error);
+                }
             } catch (tokenRefreshError) {
+                console.error("토큰 갱신 중 오류 발생", tokenRefreshError);
                 return Promise.reject(tokenRefreshError);
             }
         }
