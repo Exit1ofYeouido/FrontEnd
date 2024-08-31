@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import styles from "./SignUp.module.css";
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import Toast, { showToast } from "~components/Toast";
 
 export default function SignUp() {
     const {
@@ -38,7 +39,7 @@ export default function SignUp() {
         } else {
             if (step === 1) {
                 if (!isIdChecked) {
-                    alert("아이디 중복 검사를 해야 합니다.");
+                    showToast("error", "아이디 중복 검사를 해야 합니다.");
                 } else if (result) {
                     setStep(2);
                 } else {
@@ -46,7 +47,7 @@ export default function SignUp() {
                 }
             } else if (step === 2) {
                 if (!isPhoneVerified) {
-                    alert("휴대폰 인증을 완료해야 합니다.");
+                    showToast('error', '휴대폰 인증을 완료해야 합니다.');
                 } else if (result) {
                     setStep(3);
                 } else {
@@ -79,10 +80,10 @@ export default function SignUp() {
         const isValidId = true;
         if (isValidId) {
             setIsIdChecked(true);
-            alert("아이디가 사용 가능합니다.");
+            showToast("success", "아이디가 사용 가능합니다.");
         } else {
             setIsIdChecked(false);
-            alert("아이디가 중복되었습니다.");
+            showToast('error', '아이디가 중복되었습니다.');
         }
     };
 
@@ -90,15 +91,16 @@ export default function SignUp() {
         const isVerified = true;
         if (isVerified) {
             setIsPhoneVerified(true);
-            alert("휴대폰 인증이 완료되었습니다.");
+            showToast('success', '휴대폰 인증이 완료되었습니다.');
         } else {
             setIsPhoneVerified(false);
-            alert("휴대폰 인증에 실패했습니다.");
+            showToast('error', '휴대폰 인증에 실패했습니다.');
         }
     };
 
     return (
         <div className={styles.signUpWrapper}>
+            <Toast />
             <AnimatePresence mode="wait">
                 {step === 1 && (
                     <motion.div
