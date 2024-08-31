@@ -63,7 +63,7 @@ export default function MyPage() {
                     <div className={styles.pointText}>{data.totalPoint}점</div>
                 </div>
                 <div className={styles.bottom}>
-                    <button className={styles.withdrawButton}>출금하기</button>
+                    <button className={styles.withdrawButton} onClick={() => navigate("/my/point")}>출금하기</button>
                 </div>
             </div>
 
@@ -109,7 +109,7 @@ export default function MyPage() {
                 </div>
 
                 <div className={styles.bottom}>
-                    <button className={styles.moreButton}>더보기</button>
+                    <button className={styles.moreButton} onClick={() => navigate("/my/stock")}>더보기</button>
                 </div>
             </div>
 
@@ -125,7 +125,7 @@ export default function MyPage() {
                         <div
                             className={`${styles.icon} ${styles.calendarIcon}`}
                         ></div>
-                        <div className={styles.actionLabel}>출석체크</div>
+                        <div className={styles.actionLabel}>로그아웃</div>
                     </motion.div>
                     <motion.div
                         className={styles.actionItem}
@@ -136,7 +136,7 @@ export default function MyPage() {
                         <div
                             className={`${styles.icon} ${styles.pointIcon}`}
                         ></div>
-                        <div className={styles.actionLabel}>포인트 내역</div>
+                        <div className={styles.actionLabel}>공지사항</div>
                     </motion.div>
                     <motion.div
                         className={styles.actionItem}
@@ -147,7 +147,7 @@ export default function MyPage() {
                         <div
                             className={`${styles.icon} ${styles.useIcon}`}
                         ></div>
-                        <div className={styles.actionLabel}>이용방법</div>
+                        <div className={styles.actionLabel}>FAQ</div>
                     </motion.div>
                 </div>
             </div>
