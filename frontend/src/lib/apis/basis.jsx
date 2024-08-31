@@ -1,17 +1,18 @@
-// basis.jsx
 import axios from "axios";
-import { refreshAccessToken } from "./login/auth";
+import { refreshAccessToken } from "./loginAPI/auth";
 
 const instance = axios.create({
-    baseURL: import.meta.env.VITE_BASE_URL || "http://localhost:8080/api",
+    baseURL: "/api",
     headers: {
         "Content-Type": "application/json",
     },
+    withCredentials: true,
 });
 
 instance.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem("accessToken");
+        console.log(token);
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
