@@ -9,7 +9,7 @@ import Slider from "@mui/material/Slider";
 import Quiz from "./Quiz";
 import QuizReplayModal from "./QuizReplayModal";
 import { motion, AnimatePresence } from "framer-motion";
-import axios from "axios";
+import { videoDetailApi } from "~apis/rewardAPI/videoApi";
 
 export default function VideoDetail() {
     const navigate = useNavigate();
@@ -34,15 +34,15 @@ export default function VideoDetail() {
     };
 
     useEffect(() => {
-        const fetchVideos = async () => {
-            const response = await axios.get(`/api/ad/${video.mediaId}`);
-            if (response && response.data) {
-                setVideoId(response.data.uri);
-            } else {
-                console.error("Fail");
+        const fetchVideoDetail = async () => {
+            try {
+                const data = await videoDetailApi(video.mediaId);
+                setVideoId(data.uri);
+            } catch (error) {
+                console.error("Failed to fetch video details:", error);
             }
         };
-        fetchVideos();
+        fetchVideoDetail();
     }, [video.mediaId]);
 
     const handleVideoReady = (event) => {

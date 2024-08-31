@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import styles from "./Quiz.module.css";
 import { motion } from "framer-motion";
 import { FaAngleDown } from "react-icons/fa6";
-import axios from "axios";
 import Modal from "./QuizModal";
 import { useNavigate } from "react-router-dom";
+import { quizListApi, quizCorrectApi } from "~apis/rewardAPI/quizApi";
 
 export default function Quiz({ onClose, mediaId, enterpriseName }) {
     const [answer, setAnswer] = useState(0);
@@ -17,43 +17,30 @@ export default function Quiz({ onClose, mediaId, enterpriseName }) {
 
     useEffect(() => {
         const fetchQuizData = async () => {
-            const response = await axios.get(`/api/ad/${mediaId}/quiz`);
-            if (response && response.data) {
-                setAnswer(response.data.answer);
-                setQuestion(response.data.question);
-                setQuizSectionList(response.data.quizSectionList);
-            } else {
-                console.error("Fail");
+            try {
+                const data = await quizListApi(mediaId);
+                console.log(data.answer);
+                setAnswer(data.answer);
+                setQuestion(data.question);
+                setQuizSectionList(data.quizSectionList);
+            } catch (error) {
+                console.error("Failed to fetch quiz data:", error);
             }
         };
         fetchQuizData();
     }, [mediaId]);
 
-    const getStock = async () => {
-        const response = await axios.post(
-            `/api/ad/${mediaId}/quiz`,
-            {
-                enterpriseName: enterpriseName,
-            },
-            {
-                headers: {
-                    memberId: 1,
-                },
-            }
-        );
-
-        if (response && response.data) {
-            setAmount(response.data.amount);
-            setShowModal(true);
-            setIsCorrect(true);
-        } else {
-            console.error("Fail");
-        }
-    };
-
-    const handleOptionClick = (selectedOptionIndex) => {
+    const handleOptionClick = async (selectedOptionIndex) => {
         if (selectedOptionIndex === answer) {
-            getStock();
+            try {
+                const data = await quizCorrectApi(mediaId);
+                setAmount(data.amount);
+                setIsCorrect(true);
+            } catch (error) {
+                console.error("Failed to submit quiz answer:", error);
+                setIsCorrect(false);
+            }
+            setShowModal(true);
         } else {
             setIsCorrect(false);
             setShowModal(true);
@@ -72,7 +59,7 @@ export default function Quiz({ onClose, mediaId, enterpriseName }) {
     const goCompany = () => {
         setShowModal(false);
         navigate("/reward/video");
-    }
+    };
 
     return (
         <>
