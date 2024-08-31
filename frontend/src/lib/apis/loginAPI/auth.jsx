@@ -1,19 +1,15 @@
-// auth.jsx
-import instance from "./axiosInstance";
+import instance from "../basis";
+import { logout } from "./login";
 
 export const refreshAccessToken = async () => {
-    const refreshToken = localStorage.getItem("refreshToken");
-    if (!refreshToken) {
-        throw new Error("No refresh token available");
-    }
-
     try {
-        const response = await instance.post("/auth/refresh", {
-            token: refreshToken,
-        });
+        const response = await instance.post("/auth/reissue");
 
-        const { accessToken } = response.data;
-        localStorage.setItem("accessToken", accessToken);
+        const accessToken = response.headers["accessToken"];
+
+        if (accessToken) {
+            localStorage.setItem("accessToken", accessToken);
+        }
 
         return accessToken;
     } catch (error) {
@@ -22,20 +18,11 @@ export const refreshAccessToken = async () => {
             error.response?.data?.message || error.message
         );
 
-        if (
-            error.response?.data?.code === "REFRESH_TOKEN_EXPIRED" ||
-            error.response?.data?.message === "Refresh token expired"
-        ) {
+        if (error.response?.status === 401 || error.response?.status === 403) {
             logout();
-            throw new Error("Refresh token expired, please login again.");
+            throw new Error("세션이 만료되었습니다. 다시 로그인해주세요.");
         }
 
         throw error;
     }
-};
-
-export const logout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    window.location.href = "/login";
 };
