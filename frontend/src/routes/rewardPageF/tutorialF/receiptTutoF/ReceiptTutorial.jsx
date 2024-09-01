@@ -94,57 +94,69 @@ export default function ReceiptTutorial() {
     };
 
     return (
-        <div className={styles.container}>
-            <div className={styles.topBar}>
-                <div className={styles.arrow} onClick={handleBack}>
-                    <IoIosArrowBack />
-                </div>
-                <div>영수증 인증</div>
-            </div>
-
-            <motion.div
-                className={styles.slide}
-                key={currentSlide}
-                variants={variants}
-                initial={isFirstRender && currentSlide === 0 ? false : "enter"}
-                animate="center"
-                exit="exit"
-                transition={{
-                    x: { type: "spring", stiffness: 300, damping: 30 },
-                    opacity: { duration: 0.2 },
-                }}
-            >
-                <div className={styles.iconWrapper}>
-                    <img
-                        src={slides[currentSlide].icon}
-                        alt="Slide Icon"
-                        className={styles.icon}
-                    />
-                </div>
-                <div className={styles.textWrapper}>
-                    <div className={styles.description}>
-                        {slides[currentSlide].description}
+        <motion.div
+            key="tuto-form"
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+        >
+            <div className={styles.container}>
+                <div className={styles.topBar}>
+                    <div className={styles.arrow} onClick={handleBack}>
+                        <IoIosArrowBack />
                     </div>
+                    <div>영수증 인증</div>
                 </div>
-            </motion.div>
 
-            <div className={styles.controls}>
-                {!(location.state && location.state.from == "home/useway") &&
-                    currentSlide >= 0 && (
+                <motion.div
+                    className={styles.slide}
+                    key={currentSlide}
+                    variants={variants}
+                    initial={
+                        isFirstRender && currentSlide === 0 ? false : "enter"
+                    }
+                    animate="center"
+                    exit="exit"
+                    transition={{
+                        x: { type: "spring", stiffness: 300, damping: 30 },
+                        opacity: { duration: 0.2 },
+                    }}
+                >
+                    <div className={styles.iconWrapper}>
+                        <img
+                            src={slides[currentSlide].icon}
+                            alt="Slide Icon"
+                            className={styles.icon}
+                        />
+                    </div>
+                    <div className={styles.textWrapper}>
+                        <div className={styles.description}>
+                            {slides[currentSlide].description}
+                        </div>
+                    </div>
+                </motion.div>
+
+                <div className={styles.controls}>
+                    {!(
+                        location.state && location.state.from == "home/useway"
+                    ) &&
+                        currentSlide >= 0 && (
+                            <div onClick={handleSkip} className={styles.button}>
+                                다시 보지 않기
+                            </div>
+                        )}
+                    {currentSlide < slides.length - 1 ? (
+                        <div onClick={handleNext} className={styles.button}>
+                            다음
+                        </div>
+                    ) : (
                         <div onClick={handleSkip} className={styles.button}>
-                            다시 보지 않기
+                            영수증 인증 해볼까요?
                         </div>
                     )}
-                {currentSlide < slides.length - 1 ? (
-                    <div onClick={handleNext} className={styles.button}>
-                        다음
-                    </div>
-                ) : (
-                    <div onClick={handleSkip} className={styles.button}>
-                        영수증 인증 해볼까요?
-                    </div>
-                )}
+                </div>
             </div>
-        </div>
+        </motion.div>
     );
 }

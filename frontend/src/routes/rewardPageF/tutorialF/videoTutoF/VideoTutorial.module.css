@@ -6,6 +6,7 @@
     background: linear-gradient(164deg, #fff 0.02%, #ffeaeb 99.98%);
     padding: 20px;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .slide {
