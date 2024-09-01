@@ -105,17 +105,11 @@ input::placeholder {
     background-color: #3649c9;
 }
 
-.inputError {
+.inputErrorContainer {
     border: 1px solid rgb(250, 78, 78);
     box-shadow: 0 0 5px rgba(250, 78, 78, 0.5);
     border-radius: 8px;
     transition: border 0.3s ease, box-shadow 0.3s ease;
     outline: none;
-}
-
-.errorMessage {
-    color: red;
-    font-size: 12px;
-    margin-top: 5px;
-    margin-left: 3px;
+    
 }
