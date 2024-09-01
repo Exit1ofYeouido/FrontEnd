@@ -6,9 +6,13 @@ import pointLogo from "~assets/my/point.svg";
 import { useNavigate } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import { myGetAll } from "~apis/myAPI/myApi";
+import { logout } from "~apis/loginAPI/login";
+import { showToast } from "~components/Toast";
+import LogoutModal from "~components/LogoutModal";
 
 export default function MyPage() {
     const [data, setData] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -31,6 +35,30 @@ export default function MyPage() {
         return <div>Loading...</div>;
     }
 
+    const handleLogout = async () => {
+        const response = await logout();
+
+        if (response.success) {
+            showToast("success", "로그아웃이 성공적으로 완료되었습니다.");
+            navigate("/login");
+        } else {
+            console.error("로그아웃 중 문제가 발생했습니다:", response.error);
+        }
+    };
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const confirmLogout = () => {
+        closeModal();
+        handleLogout();
+    };
+
     const calculateProfitOrLoss = (earningRate, allCost) => {
         const rate = parseFloat(earningRate);
         const profitOrLoss = (rate / 100) * allCost;
@@ -48,7 +76,7 @@ export default function MyPage() {
             <div className={styles.container}>
                 <div className={styles.title}>마이페이지</div>
 
-                {/* 포인트부분이랑께 */}
+                {/* 포인트 부분 */}
                 <div className={styles.info}>
                     <div className={styles.top}>
                         <div className={styles.logoAccount}>
@@ -86,7 +114,7 @@ export default function MyPage() {
                     </div>
                 </div>
 
-                {/* 주식 부분이랑께 */}
+                {/* 주식 부분 */}
                 <div className={styles.stock}>
                     <div className={styles.stockTop}>
                         <div className={styles.myStockText}>내 주식</div>
@@ -137,47 +165,50 @@ export default function MyPage() {
                     </div>
                 </div>
 
-                {/* etc 부분이랑께 */}
+                {/* etc 부분 */}
                 <div className={styles.etc}>
                     <div className={styles.actions}>
                         <motion.div
                             className={styles.actionItem}
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
-                            onClick={() => navigate("/reward/attendance")}
+                            onClick={openModal}
                         >
                             <div
                                 className={`${styles.icon} ${styles.calendarIcon}`}
                             ></div>
-                            <div className={styles.actionLabel}>출석체크</div>
+                            <div className={styles.actionLabel}>로그아웃</div>
                         </motion.div>
                         <motion.div
                             className={styles.actionItem}
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
-                            onClick={() => navigate("/my/point")}
+                            onClick={() => navigate("/my/notice")}
                         >
                             <div
-                                className={`${styles.icon} ${styles.pointIcon}`}
+                                className={`${styles.icon} ${styles.noticeIcon}`}
                             ></div>
-                            <div className={styles.actionLabel}>
-                                포인트 내역
-                            </div>
+                            <div className={styles.actionLabel}>공지사항</div>
                         </motion.div>
                         <motion.div
                             className={styles.actionItem}
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
-                            onClick={() => navigate("/home/useway")}
+                            onClick={() => navigate("/my/faq")}
                         >
                             <div
-                                className={`${styles.icon} ${styles.useIcon}`}
+                                className={`${styles.icon} ${styles.faqIcon}`}
                             ></div>
-                            <div className={styles.actionLabel}>이용방법</div>
+                            <div className={styles.actionLabel}>FAQ</div>
                         </motion.div>
                     </div>
                 </div>
             </div>
+
+            {/* 로그아웃 모달 이랑께*/}
+            {isModalOpen && (
+                <LogoutModal onClose={closeModal} confirm={confirmLogout} />
+            )}
         </motion.div>
     );
 }
