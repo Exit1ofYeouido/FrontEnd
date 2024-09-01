@@ -3,24 +3,7 @@ import useMeasure from "react-use-measure";
 import { useTransition, animated as a } from "@react-spring/web";
 import shuffle from "lodash.shuffle";
 import styles from "./ReceiptGrid.module.css";
-import starbucks from "~assets/receipt_brand/starbucks.svg";
-import cgv from "~assets/receipt_brand/cgv.svg";
-import monami from "~assets/receipt_brand/monami.svg";
-
-const data = [
-    {
-        css: starbucks,
-        height: 200,
-    },
-    {
-        css: cgv,
-        height: 200,
-    },
-    {
-        css: monami,
-        height: 200,
-    },
-];
+import { enterpriseList } from "~apis/rewardAPI/receiptApi";
 
 function useMedia(queries, values, defaultValue) {
     const match = () =>
@@ -39,21 +22,39 @@ function useMedia(queries, values, defaultValue) {
 export default function ReceiptGrid() {
     const columns = useMedia(
         ["(min-width: 1500px)", "(min-width: 1000px)", "(min-width: 600px)"],
-        [3, 3, 3],
-        3
+        [4, 3, 2],
+        2
     );
 
     const [ref, { width: measuredWidth }] = useMeasure();
-    
     const width = measuredWidth > 0 ? Math.min(measuredWidth, 480) : 480;
 
-    const [items, setItems] = useState(data);
+    const [items, setItems] = useState([]);
 
     useEffect(() => {
-        const t = setInterval(() => setItems(shuffle), 3000);
-        return () => clearInterval(t);
+        const fetchEnterpriseData = async () => {
+            try {
+                const response = await enterpriseList();
+                const formattedData = response.enterprises.map((enterprise) => ({
+                    css: `https://stock-craft.s3.ap-northeast-2.amazonaws.com/receiptlogos/${encodeURIComponent(
+                        enterprise
+                    )}.svg`,
+                    height: 150,
+                }));
+                setItems(formattedData);
+            } catch (error) {
+                console.error("Error fetching enterprise data:", error);
+            }
+        };
+
+        fetchEnterpriseData();
     }, []);
 
+    useEffect(() => {
+        const t = setInterval(() => setItems((prevItems) => shuffle([...prevItems])), 3000);
+        return () => clearInterval(t);
+    }, []);
+    
     const [heights, gridItems] = useMemo(() => {
         let heights = new Array(columns).fill(0);
         let gridItems = items.map((child, i) => {

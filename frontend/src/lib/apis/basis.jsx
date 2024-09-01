@@ -1,12 +1,12 @@
-// basis.jsx
 import axios from "axios";
-import { refreshAccessToken } from "./login/auth";
+import { refreshAccessToken } from "./loginAPI/auth";
 
 const instance = axios.create({
-    baseURL: import.meta.env.VITE_BASE_URL || "http://localhost:8080/api",
+    baseURL: "/api",
     headers: {
         "Content-Type": "application/json",
     },
+    withCredentials: true,
 });
 
 instance.interceptors.request.use(
@@ -34,10 +34,15 @@ instance.interceptors.response.use(
 
             try {
                 const newToken = await refreshAccessToken();
-
-                originalRequest.headers.Authorization = `Bearer ${newToken}`;
-                return instance(originalRequest);
+                if (newToken) {
+                    originalRequest.headers.Authorization = `Bearer ${newToken}`;
+                    return instance(originalRequest);
+                } else {
+                    console.error("토큰 갱신 실패");
+                    return Promise.reject(error);
+                }
             } catch (tokenRefreshError) {
+                console.error("토큰 갱신 중 오류 발생", tokenRefreshError);
                 return Promise.reject(tokenRefreshError);
             }
         }

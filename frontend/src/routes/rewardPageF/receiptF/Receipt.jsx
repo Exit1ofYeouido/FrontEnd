@@ -5,6 +5,7 @@ import Navbar from "~components/Navbar";
 import ReceiptGrid from "./ReceiptGrid";
 import { IoIosArrowBack } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function Receipt() {
     const location = useLocation();
@@ -72,52 +73,60 @@ export default function Receipt() {
 
     return (
         <div>
-            <div className={styles.container}>
-                <div className={styles.topBar}>
-                    <div className={styles.arrow} onClick={handleBack}>
-                        <IoIosArrowBack />
-                    </div>
-                    <div>영수증 인증</div>
-                </div>
-                <div className={styles.text}>
-                    현재는 아래 브랜드만 가능해요
-                </div>
-                <ReceiptGrid />
-                <div
-                    className={styles.content}
-                    onClick={handleUploadButtonClick}
-                    style={{ cursor: "pointer" }}
-                >
-                    {uploadedImage ? (
-                        <img
-                            src={uploadedImage}
-                            alt="Captured"
-                            className={styles.imagePreview}
-                        />
-                    ) : (
-                        <div>
-                            <div>사진을 업로드 해주세요.</div>
-                            <div>업로드 하기</div>
+            <motion.div
+                key="tuto-form"
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+            >
+                <div className={styles.container}>
+                    <div className={styles.topBar}>
+                        <div className={styles.arrow} onClick={handleBack}>
+                            <IoIosArrowBack />
                         </div>
-                    )}
-                </div>
-                <div className={styles.bottomBar}>
-                    <input
-                        type="file"
-                        accept="image/jpeg, image/png"
-                        onChange={handleFileUpload}
-                        ref={fileInputRef}
-                        style={{ display: "none" }}
-                    />
-                    <button
-                        onClick={handleImageSubmit}
-                        className={styles.submitButton}
-                        disabled={isSubmitting}
+                        <div>영수증 인증</div>
+                    </div>
+                    <div className={styles.text}>
+                        현재는 아래 브랜드만 가능해요
+                    </div>
+                    <ReceiptGrid />
+                    <div
+                        className={styles.content}
+                        onClick={handleUploadButtonClick}
+                        style={{ cursor: "pointer" }}
                     >
-                        {isSubmitting ? "제출 중..." : "사진 제출"}
-                    </button>
+                        {uploadedImage ? (
+                            <img
+                                src={uploadedImage}
+                                alt="Captured"
+                                className={styles.imagePreview}
+                            />
+                        ) : (
+                            <div>
+                                <div>사진을 업로드 해주세요.</div>
+                                <div>업로드 하기</div>
+                            </div>
+                        )}
+                    </div>
+                    <div className={styles.bottomBar}>
+                        <input
+                            type="file"
+                            accept="image/jpeg, image/png"
+                            onChange={handleFileUpload}
+                            ref={fileInputRef}
+                            style={{ display: "none" }}
+                        />
+                        <button
+                            onClick={handleImageSubmit}
+                            className={styles.submitButton}
+                            disabled={isSubmitting}
+                        >
+                            {isSubmitting ? "제출 중..." : "사진 제출"}
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </motion.div>
             <Navbar />
         </div>
     );
