@@ -164,15 +164,11 @@
 }
 
 .calendarIcon {
-    background-image: url("~assets/homepage/calendar.png");
+    background-image: url("~assets/my/logout.svg");
 }
 
-.pointIcon {
-    background-image: url("~assets/homepage/point.png");
-}
-
-.useIcon {
-    background-image: url("~assets/homepage/use.svg");
+.noticeIcon {
+    background-image: url("~assets/my/notice.svg");
 }
 
 .faqIcon {
