@@ -13,9 +13,11 @@ export default function SignUp() {
         formState: { errors },
         trigger,
         clearErrors,
+        setValue,
     } = useForm({
         shouldFocusError: false,
     });
+
     const [step, setStep] = useState(1);
     const [shakeKey, setShakeKey] = useState(0);
     const [isIdChecked, setIsIdChecked] = useState(false);
@@ -47,10 +49,8 @@ export default function SignUp() {
                 }
             } else if (step === 2) {
                 if (!isPhoneVerified) {
-                    showToast('error', '휴대폰 인증을 완료해야 합니다.');
-                } else if (result) {
-                    setStep(3);
-                } else {
+                    showToast("error", "휴대폰 인증을 완료해야 합니다.");
+                } else if(!result) {
                     setShakeKey((prev) => prev + 1);
                 }
             }
@@ -70,7 +70,12 @@ export default function SignUp() {
         transition: { duration: 0.3, ease: "easeInOut" },
     };
 
-    const handleInputChange = (fieldName) => {
+    const handleInputChange = (fieldName, value) => {
+        if (/\s/.test(value)) {
+            showToast("error", "공백은 허용되지 않습니다.");
+            setValue(fieldName, value.trim());
+            return;
+        }
         if (errors[fieldName]) {
             clearErrors(fieldName);
         }
@@ -83,7 +88,7 @@ export default function SignUp() {
             showToast("success", "아이디가 사용 가능합니다.");
         } else {
             setIsIdChecked(false);
-            showToast('error', '아이디가 중복되었습니다.');
+            showToast("error", "아이디가 중복되었습니다.");
         }
     };
 
@@ -91,10 +96,10 @@ export default function SignUp() {
         const isVerified = true;
         if (isVerified) {
             setIsPhoneVerified(true);
-            showToast('success', '휴대폰 인증이 완료되었습니다.');
+            showToast("success", "휴대폰 인증이 완료되었습니다.");
         } else {
             setIsPhoneVerified(false);
-            showToast('error', '휴대폰 인증에 실패했습니다.');
+            showToast("error", "휴대폰 인증에 실패했습니다.");
         }
     };
 
@@ -134,7 +139,12 @@ export default function SignUp() {
                                         placeholder="아이디 입력"
                                         {...register("id", { required: true })}
                                         className={styles.idInput}
-                                        onChange={() => handleInputChange("id")}
+                                        onChange={(e) =>
+                                            handleInputChange(
+                                                "id",
+                                                e.target.value
+                                            )
+                                        }
                                     />
                                     <button
                                         type="button"
@@ -162,8 +172,11 @@ export default function SignUp() {
                                         required: true,
                                     })}
                                     className={styles.pwInput}
-                                    onChange={() =>
-                                        handleInputChange("password")
+                                    onChange={(e) =>
+                                        handleInputChange(
+                                            "password",
+                                            e.target.value
+                                        )
                                     }
                                 />
                             </motion.div>
@@ -185,8 +198,11 @@ export default function SignUp() {
                                             required: true,
                                         })}
                                         className={styles.nameInput}
-                                        onChange={() =>
-                                            handleInputChange("name")
+                                        onChange={(e) =>
+                                            handleInputChange(
+                                                "name",
+                                                e.target.value
+                                            )
                                         }
                                     />
                                 </div>
@@ -223,8 +239,11 @@ export default function SignUp() {
                                             })}
                                             maxLength={6}
                                             className={styles.birthInput}
-                                            onChange={() =>
-                                                handleInputChange("birthdate")
+                                            onChange={(e) =>
+                                                handleInputChange(
+                                                    "birthdate",
+                                                    e.target.value
+                                                )
                                             }
                                         />
                                         <div className={styles.dod}>-</div>
@@ -242,8 +261,11 @@ export default function SignUp() {
                                             })}
                                             maxLength={1}
                                             className={styles.genderInput}
-                                            onChange={() =>
-                                                handleInputChange("genderDigit")
+                                            onChange={(e) =>
+                                                handleInputChange(
+                                                    "genderDigit",
+                                                    e.target.value
+                                                )
                                             }
                                         />
                                         <div className={styles.maskedValue}>
@@ -318,8 +340,11 @@ export default function SignUp() {
                                             required: true,
                                         })}
                                         className={styles.phoneInput}
-                                        onChange={() =>
-                                            handleInputChange("phone")
+                                        onChange={(e) =>
+                                            handleInputChange(
+                                                "phone",
+                                                e.target.value
+                                            )
                                         }
                                     />
                                     <button
@@ -351,9 +376,10 @@ export default function SignUp() {
                                         {...register("phoneVerification", {
                                             required: true,
                                         })}
-                                        onChange={() =>
+                                        onChange={(e) =>
                                             handleInputChange(
-                                                "phoneVerification"
+                                                "phoneVerification",
+                                                e.target.value
                                             )
                                         }
                                     />
@@ -380,7 +406,12 @@ export default function SignUp() {
                                     placeholder="stockcraft@pda.com"
                                     {...register("email", { required: true })}
                                     className={styles.emailInput}
-                                    onChange={() => handleInputChange("email")}
+                                    onChange={(e) =>
+                                        handleInputChange(
+                                            "email",
+                                            e.target.value
+                                        )
+                                    }
                                 />
                             </motion.div>
                             <div className={styles.buttonGroup}>
