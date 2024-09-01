@@ -61,7 +61,10 @@ export default function MyPage() {
                                 {data.accountId}
                             </div>
                         </div>
-                        <IoIosArrowForward className={styles.arrowWrapper} />
+                        <IoIosArrowForward
+                            className={styles.arrowWrapper}
+                            onClick={() => navigate("/my/point")}
+                        />
                     </div>
                     <div className={styles.pointAsset}>
                         <img
@@ -74,7 +77,10 @@ export default function MyPage() {
                         </div>
                     </div>
                     <div className={styles.bottom}>
-                        <button className={styles.withdrawButton}>
+                        <button
+                            className={styles.withdrawButton}
+                            onClick={() => navigate("/my/point")}
+                        >
                             출금하기
                         </button>
                     </div>
@@ -122,11 +128,16 @@ export default function MyPage() {
                     </div>
 
                     <div className={styles.bottom}>
-                        <button className={styles.moreButton}>더보기</button>
+                        <button
+                            className={styles.moreButton}
+                            onClick={() => navigate("/my/stock")}
+                        >
+                            더보기
+                        </button>
                     </div>
                 </div>
 
-                {/* 주식 부분이랑께 */}
+                {/* etc 부분이랑께 */}
                 <div className={styles.etc}>
                     <div className={styles.actions}>
                         <motion.div

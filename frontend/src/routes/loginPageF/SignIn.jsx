@@ -5,25 +5,55 @@ import styles from "./SignIn.module.css";
 import Logo from "../../assets/logo2.svg";
 import classNames from "classnames";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 export default function SignIn() {
     const {
         register,
         handleSubmit,
         formState: { errors },
+        setError,
+        trigger,
+        clearErrors,
     } = useForm({
         shouldFocusError: false,
     });
     const navigate = useNavigate();
+    const [shakeKey, setShakeKey] = useState(0);
+
+    const shakeAnimation = {
+        x: [0, -5, 5, -5, 5, 0],
+        transition: { duration: 0.3, ease: "easeInOut" },
+    };
+
+    const handleClick = async () => {
+        const result = await trigger(["loginId", "loginPassword"]);
+
+        if (!result) {
+            setShakeKey((prev) => prev + 1);
+            return;
+        }
+    };
 
     const onSubmitLogin = async (data) => {
         try {
-            await login(data.loginId, data.loginPassword);
-            navigate("/home");
+            const trimmedData = {
+                loginId: data.loginId.trim(),
+                loginPassword: data.loginPassword.trim(),
+            };
+
+            const result = await login(
+                trimmedData.loginId,
+                trimmedData.loginPassword
+            );
+            if (!result.error) {
+                navigate("/home");
+            }
         } catch (error) {
             alert(error.message);
         }
     };
+
 
     return (
         <div className={styles.wrapper}>
@@ -48,38 +78,41 @@ export default function SignIn() {
                     </span>
                 </div>
                 <form onSubmit={handleSubmit(onSubmitLogin)}>
-                    <div className={styles.idForm}>
+                    <motion.div
+                        key={`loginId-${shakeKey}`}
+                        animate={errors.loginId ? shakeAnimation : {}}
+                        className={classNames(styles.idForm, {
+                            [styles.inputErrorContainer]: errors.loginId,
+                        })}
+                    >
                         <div className={styles.idText}>아이디</div>
                         <input
                             type="text"
-                            className={classNames(styles.loginId, {
-                                [styles.inputError]: errors.loginId,
-                            })}
+                            className={styles.loginId}
                             {...register("loginId", { required: true })}
                         />
-                        {errors.loginId && (
-                            <span className={styles.errorMessage}>
-                                아이디를 입력해주세요.
-                            </span>
-                        )}
-                    </div>
-                    <div className={styles.passwordForm}>
+                    </motion.div>
+
+                    <motion.div
+                        key={`loginPassword-${shakeKey}`}
+                        animate={errors.loginPassword ? shakeAnimation : {}}
+                        className={classNames(styles.passwordForm, {
+                            [styles.inputErrorContainer]: errors.loginPassword,
+                        })}
+                    >
                         <div className={styles.passwordText}>비밀번호</div>
                         <input
                             type="password"
-                            className={classNames(styles.loginPassword, {
-                                [styles.inputError]: errors.loginPassword,
-                            })}
+                            className={styles.loginPassword}
                             {...register("loginPassword", { required: true })}
                         />
-                        {errors.loginPassword && (
-                            <span className={styles.errorMessage}>
-                                비밀번호를 입력해주세요.
-                            </span>
-                        )}
-                    </div>
+                    </motion.div>
                     <div className={styles.button}>
-                        <button type="submit" className={styles.loginButton}>
+                        <button
+                            type="submit"
+                            className={styles.loginButton}
+                            onClick={handleClick}
+                        >
                             로그인
                         </button>
                     </div>

@@ -1,0 +1,224 @@
+.container {
+    padding: 20px;
+    background-color: #fff;
+    min-height: 100vh;
+    font-weight: 600;
+
+}
+
+.topBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 600;
+    position: relative;
+    width: 100%;
+}
+
+.topBar .arrow {
+    position: absolute;
+    left: 0px;
+    cursor: pointer;
+}
+
+.totalStock {
+    position: relative;
+    margin-top: 30px;
+    height: auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.totalStock div:first- {
+    font-size: 20px;
+}
+
+.totalStock div:nth-child(2) {
+    margin-top: 10px;
+    font-size: 30px;
+}
+
+.totalStock div:nth-child(3) {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.sellButton {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.sellButton:hover {
+    background-color: #0056b3;
+}
+
+.stockContainer {
+    margin-top: 10px;
+    height: auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/*.activeTab {
+    color: #000;
+    font-weight: bold;
+    border-bottom: 2px solid #000;
+}
+
+.underline {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #000;
+    border-radius: 2px;
+} */
+
+.tabs {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+    width: fit-content;
+    margin-left: 0;
+}
+
+.tabButton {
+    flex: 1;
+    padding: 10px 15px;
+    text-align: center;
+    font-size: 1rem;
+    cursor: pointer;
+    position: relative;
+    color: #c0c0c0;
+    transition: color 0.3s, font-weight 0.3s;
+}
+
+.activeTab {
+    color: #000;
+    font-weight: bold;
+}
+
+.underline {
+    position: absolute;
+    bottom: -1.5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #000;
+    border-radius: 2px;
+}
+
+.totalCount {
+    padding: 10px 0;
+    font-size: 1rem;
+    color: #666;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+}
+
+.stocksList {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.stockCard {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.stockCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.stockLogo {
+    max-width: 50px;
+    margin-bottom: 15px;
+}
+
+.stockName {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.stockQuantity,
+.stockValue {
+    font-size: 1rem;
+    color: #777;
+}
+
+.transactionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.transaction {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.transaction:hover {
+    background-color: #f9f9f9;
+}
+
+.transactionDate {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.transactionStockName {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.transactionType {
+    font-size: 1rem;
+    color: #007bff;
+}
+
+.detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.redText {
+    color: #ff0000;
+}
+
+.blueText {
+    color: #007bff;
+}

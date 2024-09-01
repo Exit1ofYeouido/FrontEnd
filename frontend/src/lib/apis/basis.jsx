@@ -29,7 +29,7 @@ instance.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
 
-        if (error.response.status === 401 && !originalRequest._retry) {
+        if (error.response.status === 403 && !originalRequest._retry) {
             originalRequest._retry = true;
 
             try {
@@ -45,18 +45,6 @@ instance.interceptors.response.use(
                 console.error("토큰 갱신 중 오류 발생", tokenRefreshError);
                 return Promise.reject(tokenRefreshError);
             }
-        }
-
-        if (error.response.status >= 400 && error.response.status < 500) {
-            console.error(
-                "클라이언트 오류:",
-                error.response.data?.message || "요청이 실패했습니다."
-            );
-        } else if (error.response.status >= 500) {
-            console.error(
-                "서버 오류:",
-                error.response.data?.message || "서버에 문제가 발생했습니다."
-            );
         }
 
         return Promise.reject(error);
