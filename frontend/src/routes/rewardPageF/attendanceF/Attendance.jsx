@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Attendance.module.css";
 import { IoIosArrowBack } from "react-icons/io";
 import { motion } from "framer-motion";
@@ -31,6 +31,7 @@ import day24 from "~assets/attendance/day24.svg";
 import day25 from "~assets/attendance/day25.svg";
 import complete from "~assets/attendance/complete.svg";
 import { useNavigate } from "react-router-dom";
+import { attendance, attendanceCheck } from "~apis/rewardAPI/attendanceApi";
 
 const images = [
     day1,
@@ -61,25 +62,41 @@ const images = [
 ];
 
 export default function Attendance() {
-    const [month] = useState(8);
-    const [attendCount, setAttendCount] = useState(9);
-    const [company] = useState("아디다스");
-    const [amount] = useState(0.02);
+    const [month, setMonth] = useState(0);
+    const [attendCount, setAttendCount] = useState(0);
+    const [company, setCompany] = useState("");
+    const [amount, setAmount] = useState(0.0);
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-    const [isFirstRender, setIsFirstRender] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
 
-    const handleAttendance = () => {
-        if (attendCount < images.length) {
-            const newAttendCount = attendCount + 1;
-            setAttendCount(newAttendCount);
-            setIsButtonDisabled(true);
-            setIsFirstRender(false);
+    useEffect(() => {
+        const fetchAttendance = async () => {
+            try {
+                const data = await attendance();
+                setMonth(data.month);
+                setAttendCount(data.attendCount);
+                setIsButtonDisabled(data.checked);
+            } catch (error) {
+                console.error("Error fetching attendance:", error);
+            }
+        };
 
-            if (newAttendCount % 5 === 0) {
+        fetchAttendance();
+    }, []);
+
+    const handleAttendance = async () => {
+        try {
+            const data = await attendanceCheck();
+            if (data.hasReward) {
+                setCompany(data.reward.enterpriseName);
+                setAmount(data.reward.amount);
                 setShowModal(true);
             }
+            setAttendCount((prevCount) => prevCount + 1);
+            setIsButtonDisabled(true);
+        } catch (error) {
+            console.error("Error submitting attendance:", error);
         }
     };
 
@@ -89,6 +106,11 @@ export default function Attendance() {
 
     const handleCloseModal = () => {
         setShowModal(false);
+    };
+
+    const goCompany = () => {
+        setShowModal(false);
+        navigate("/reward/video");
     };
 
     return (
@@ -125,20 +147,7 @@ export default function Attendance() {
                     <div className={styles.calendarWrapper}>
                         <div className={styles.calendar}>
                             {images.map((image, index) => (
-                                <motion.div
-                                    key={index}
-                                    className={styles.day}
-                                    animate={
-                                        !isFirstRender &&
-                                        index === attendCount - 1
-                                            ? {
-                                                  scale: [1, 1.2, 1],
-                                                  rotate: [0, 15, -15, 0],
-                                                  transition: { duration: 0.4 },
-                                              }
-                                            : {}
-                                    }
-                                >
+                                <motion.div key={index} className={styles.day}>
                                     <img
                                         src={
                                             index < attendCount
@@ -164,10 +173,9 @@ export default function Attendance() {
                     </motion.button>
                 </div>
             </motion.div>
-            <Modal show={showModal} onClose={handleCloseModal}>
-                <div className={styles.companyName}>{company}</div>
-                <div className={styles.amount}>{amount}주가 도착했어요!</div>
-            </Modal>
+            {showModal && (
+                <Modal onClose={handleCloseModal} company={company} amount={amount} goCompany={goCompany}/>
+            )}
             <Navbar />
         </div>
     );
