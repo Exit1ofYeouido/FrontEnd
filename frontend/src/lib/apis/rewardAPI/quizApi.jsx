@@ -11,20 +11,14 @@ export const quizListApi = async (mediaId) => {
     }
 };
 
-export const quizCorrectApi = async (mediaId) => {
+export const quizCorrectApi = async (mediaId, enterpriseName) => {
     try {
         const state = store.getState();
         const memberId = state.memberId.memberId;
 
-        const response = await instance.post(
-            `/api/ad/${mediaId}/quiz`,
-            {},
-            {
-                headers: {
-                    memberId: memberId,
-                },
-            }
-        );
+        const response = await instance.post(`/reward/ad/${mediaId}/quiz`, {
+            enterpriseName: enterpriseName,
+        });
 
         return response.data;
     } catch (error) {
