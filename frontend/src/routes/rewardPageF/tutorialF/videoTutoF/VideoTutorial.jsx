@@ -2,15 +2,16 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import styles from "./VideoTutorial.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import shot1 from "~assets/tutorial/video/shot1.svg";
-import shot2 from "~assets/tutorial/video/shot2.svg";
-import shot3 from "~assets/tutorial/video/shot3.svg";
+import quiz from "~assets/tutorial/video/quiz.json";
+import video from "~assets/tutorial/video/video.json";
+import stock from "~assets/tutorial/video/stock.json";
 import { IoIosArrowBack } from "react-icons/io";
+import Lottie from "lottie-react";
 
 const slides = [
     {
         id: 1,
-        icon: shot1,
+        animationData: video,
         description: (
             <>
                 원하는 영상을 선택 후 <br />
@@ -20,12 +21,12 @@ const slides = [
     },
     {
         id: 2,
-        icon: shot2,
+        animationData: quiz,
         description: <>영상에 대한 퀴즈를 풀어보세요</>,
     },
     {
         id: 3,
-        icon: shot3,
+        animationData: stock,
         description: (
             <>
                 해당 기업의 주식을 <br />
@@ -110,10 +111,16 @@ export default function VideoTutorial() {
                     }}
                 >
                     <div className={styles.iconWrapper}>
-                        <img
-                            src={slides[currentSlide].icon}
-                            alt="Slide Icon"
-                            className={styles.icon}
+                        <Lottie
+                            animationData={slides[currentSlide].animationData}
+                            loop={true}
+                            className={`${styles.icon} ${
+                                currentSlide === 0
+                                    ? styles.slide1
+                                    : currentSlide === 1
+                                    ? styles.slide2
+                                    : styles.slide3
+                            }`}
                         />
                     </div>
                     <div className={styles.textWrapper}>

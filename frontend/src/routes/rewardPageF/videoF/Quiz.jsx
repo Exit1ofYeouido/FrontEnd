@@ -5,6 +5,9 @@ import { FaAngleDown } from "react-icons/fa6";
 import Modal from "./QuizModal";
 import { useNavigate } from "react-router-dom";
 import { quizListApi, quizCorrectApi } from "~apis/rewardAPI/quizApi";
+import Lottie from "lottie-react";
+import errorAnimation from "~assets/reward/wrong.json";
+import correctAnimation from "~assets/reward/correct.json";
 
 export default function Quiz({ onClose, mediaId, enterpriseName }) {
     const [answer, setAnswer] = useState(0);
@@ -13,6 +16,8 @@ export default function Quiz({ onClose, mediaId, enterpriseName }) {
     const [amount, setAmount] = useState(0.0);
     const [showModal, setShowModal] = useState(false);
     const [isCorrect, setIsCorrect] = useState(null);
+    const [showErrorAnimation, setShowErrorAnimation] = useState(false);
+    const [showCorrectAnimation, setShowCorrectAnimation] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -35,14 +40,21 @@ export default function Quiz({ onClose, mediaId, enterpriseName }) {
             try {
                 const data = await quizCorrectApi(mediaId, enterpriseName);
                 setAmount(data.amount);
+                setShowCorrectAnimation(true);
                 setIsCorrect(true);
             } catch (error) {
                 console.error("Failed to submit quiz answer:", error);
                 setIsCorrect(false);
             }
-            setShowModal(true);
         } else {
-            setIsCorrect(false);
+            setShowErrorAnimation(true);
+        }
+    };
+
+    const handleAnimationComplete = () => {
+        setShowErrorAnimation(false);
+        setShowCorrectAnimation(false);
+        if (isCorrect) {
             setShowModal(true);
         }
     };
@@ -87,12 +99,31 @@ export default function Quiz({ onClose, mediaId, enterpriseName }) {
                     ))}
                 </div>
             </motion.div>
+            {showErrorAnimation && (
+                <div className={styles.errorAnimation}>
+                    <Lottie
+                        animationData={errorAnimation}
+                        loop={false}
+                        speed={1}
+                        onComplete={handleAnimationComplete}
+                    />
+                </div>
+            )}
+            {showCorrectAnimation && (
+                <div className={styles.correctAnimation}>
+                    <Lottie
+                        animationData={correctAnimation}
+                        loop={false}
+                        speed={0.5}
+                        onComplete={handleAnimationComplete}
+                    />
+                </div>
+            )}
             {showModal && (
                 <Modal
                     onClose={closeModal}
                     enterpriseName={enterpriseName}
                     amount={amount}
-                    isCorrect={isCorrect}
                     goVideo={goVideo}
                     goCompany={goCompany}
                 />

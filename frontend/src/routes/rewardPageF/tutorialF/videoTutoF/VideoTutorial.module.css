@@ -40,8 +40,13 @@
 }
 
 .icon {
-    max-width: 230px;
-    height: auto;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.slide3 {
+    max-width: 200px;
 }
 
 .title {

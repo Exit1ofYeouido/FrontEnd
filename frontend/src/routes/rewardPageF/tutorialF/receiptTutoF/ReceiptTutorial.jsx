@@ -2,16 +2,17 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import styles from "./ReceiptTutorial.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import shot1 from "~assets/tutorial/receipt/shot1.svg";
-import shot2 from "~assets/tutorial/receipt/shot2.svg";
-import shot3 from "~assets/tutorial/receipt/shot3.svg";
-import shot4 from "~assets/tutorial/receipt/shot4.svg";
+import shopping from "~assets/tutorial/receipt/shopping.json";
+import camera from "~assets/tutorial/receipt/camera.json";
+import receipt from "~assets/tutorial/receipt/receipt.json";
+import stock from "~assets/tutorial/video/stock.json";
 import { IoIosArrowBack } from "react-icons/io";
+import Lottie from "lottie-react";
 
 const slides = [
     {
         id: 1,
-        icon: shot1,
+        animationData: shopping,
         description: (
             <>
                 좋아하는 브랜드의 물품을 <br />
@@ -21,7 +22,7 @@ const slides = [
     },
     {
         id: 2,
-        icon: shot2,
+        animationData: camera,
         description: (
             <>
                 물품을 구매하고 <br />
@@ -31,7 +32,7 @@ const slides = [
     },
     {
         id: 3,
-        icon: shot3,
+        animationData: receipt,
         description: (
             <>
                 찍은 영수증을 <br />
@@ -41,7 +42,7 @@ const slides = [
     },
     {
         id: 4,
-        icon: shot4,
+        animationData: stock,
         description: (
             <>
                 해당 기업의 주식을 <br />
@@ -124,10 +125,16 @@ export default function ReceiptTutorial() {
                     }}
                 >
                     <div className={styles.iconWrapper}>
-                        <img
-                            src={slides[currentSlide].icon}
-                            alt="Slide Icon"
-                            className={styles.icon}
+                        <Lottie
+                            animationData={slides[currentSlide].animationData}
+                            loop={true}
+                            className={`${styles.icon} ${
+                                currentSlide === 0
+                                    ? styles.slide1
+                                    : currentSlide === 1
+                                    ? styles.slide2
+                                    : styles.slide3
+                            }`}
                         />
                     </div>
                     <div className={styles.textWrapper}>

@@ -13,6 +13,7 @@
 }
 
 .modalContent {
+    position: relative;
     background: white;
     padding: 20px 40px;
     border-radius: 30px;
@@ -20,37 +21,37 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.logo{
+.logo {
     width: 30%;
     height: 30%;
 }
 
-.correctText{
+.correctText {
     font-size: 24px;
     font-weight: 600;
 }
 
-.stockText{
+.stockText {
     font-size: 16px;
     margin-bottom: 20px;
 }
 
-.goCompany{
+.goCompany {
     margin-top: 10px;
     padding: 10px 20px;
-    background: #F4F8F9;
-    color: #7E807F;
+    background: #f4f8f9;
+    color: #7e807f;
     border: none;
     border-radius: 30px;
     cursor: pointer;
     font-size: 14px;
 }
 
-.confirm{
+.confirm {
     margin-top: 10px;
     margin-left: 10px;
     padding: 10px 20px;
-    background: #7740FE;
+    background: #7740fe;
     color: white;
     border: none;
     border-radius: 30px;
@@ -58,26 +59,26 @@
     font-size: 14px;
 }
 
-.confirm:hover{
+.confirm:hover {
     background-color: #5b1aff;
 }
 
-.goCompany:hover{
+.goCompany:hover {
     background-color: #eff9fc;
 }
 
-.companyName{
+.companyName {
     margin-left: 5px;
     font-size: 18px;
 }
 
-.stockAmount{
+.stockAmount {
     font-size: 20px;
     font-weight: 600;
     color: #1a2dff;
 }
 
-.company{
+.company {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -90,3 +91,17 @@
     margin-top: auto;
 }
 
+.animationWrapper {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 300px;
+    z-index: 1;
+}
+
+.congratulationAnimation {
+    width: 100%;
+    height: 100%;
+}
