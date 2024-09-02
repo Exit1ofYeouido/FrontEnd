@@ -1,5 +1,7 @@
 import React from "react";
 import styles from "./AttendanceModal.module.css";
+import Lottie from "lottie-react";
+import congratulationAnimation from "~assets/reward/congratulation.json";
 
 export default function AttendanceModal({
     onClose,
@@ -10,6 +12,13 @@ export default function AttendanceModal({
     return (
         <div className={styles.modalOverlay}>
             <div className={styles.modalContent}>
+                <div className={styles.animationWrapper}>
+                    <Lottie
+                        animationData={congratulationAnimation}
+                        loop={true}
+                        className={styles.congratulationAnimation}
+                    />
+                </div>
                 <div className={styles.company}>
                     <img
                         src={`https://stock-craft.s3.ap-northeast-2.amazonaws.com/logos/${encodeURIComponent(

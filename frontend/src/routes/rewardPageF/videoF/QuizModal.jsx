@@ -1,28 +1,33 @@
 import React, { useEffect } from "react";
-
+import { motion } from "framer-motion";
 import styles from "./QuizModal.module.css";
+import Lottie from "lottie-react";
+import congratulationAnimation from "~assets/reward/congratulation.json";
 
 export default function QuizModal({
     onClose,
     enterpriseName,
     amount,
-    isCorrect,
     goVideo,
     goCompany,
 }) {
-    useEffect(() => {
-        if (!isCorrect) {
-            const timer = setTimeout(() => {
-                onClose();
-            }, 1500);
-
-            return () => clearTimeout(timer);
-        }
-    }, [isCorrect, onClose]);
     return (
         <div className={styles.modalOverlay}>
-            <div className={styles.modalContent}>
-                {isCorrect ? (
+            <motion.div
+                className={styles.modalContentAni}
+                initial={{ y: "100vh", opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: "100vh", opacity: 0 }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+            >
+                <div className={styles.modalContent}>
+                    <div className={styles.animationWrapper}>
+                        <Lottie
+                            animationData={congratulationAnimation}
+                            loop={true}
+                            className={styles.congratulationAnimation}
+                        />
+                    </div>
                     <div className={styles.correctMessage}>
                         <div className={styles.correctText}>정답이에요!</div>
                         <div className={styles.company}>
@@ -56,15 +61,8 @@ export default function QuizModal({
                             </button>
                         </div>
                     </div>
-                ) : (
-                    <>
-                        <div className={styles.wrongMessage}>
-                            <div>틀렸습니다!</div>
-                            <div>다시 풀어보세요.</div>
-                        </div>
-                    </>
-                )}
-            </div>
+                </div>
+            </motion.div>
         </div>
     );
 }

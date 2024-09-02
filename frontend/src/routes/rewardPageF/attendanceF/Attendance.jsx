@@ -85,16 +85,22 @@ export default function Attendance() {
         fetchAttendance();
     }, []);
 
+    // useEffect(() => {
+    //     if (company && amount) {
+    //         setShowModal(true);
+    //     }
+    // }, [company, amount]);
+
     const handleAttendance = async () => {
         try {
             const data = await attendanceCheck();
+            setAttendCount((prevCount) => prevCount + 1);
+            setIsButtonDisabled(true);
             if (data.hasReward) {
                 setCompany(data.reward.enterpriseName);
                 setAmount(data.reward.amount);
                 setShowModal(true);
             }
-            setAttendCount((prevCount) => prevCount + 1);
-            setIsButtonDisabled(true);
         } catch (error) {
             console.error("Error submitting attendance:", error);
         }
@@ -174,7 +180,13 @@ export default function Attendance() {
                 </div>
             </motion.div>
             {showModal && (
-                <Modal onClose={handleCloseModal} company={company} amount={amount} goCompany={goCompany}/>
+                
+                <Modal
+                    onClose={handleCloseModal}
+                    company={company}
+                    amount={amount}
+                    goCompany={goCompany}
+                />
             )}
             <Navbar />
         </div>
