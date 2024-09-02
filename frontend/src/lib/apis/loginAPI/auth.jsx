@@ -1,4 +1,3 @@
-// refreshAccessToken.js
 import axios from "axios";
 import { logout } from "./login";
 

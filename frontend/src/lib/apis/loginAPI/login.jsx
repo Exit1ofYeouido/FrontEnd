@@ -8,8 +8,8 @@ export const logout = async () => {
         await instance.post("/auth/logout");
 
         localStorage.removeItem("accessToken");
-        showToast("success", "로그아웃되었습니다.");
-        window.location.href = "/login";
+
+        return { success: true };
     } catch (error) {
         console.error(
             "Logout failed:",
