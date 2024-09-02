@@ -5,6 +5,7 @@ import styles from "./SignUp.module.css";
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import Toast, { showToast } from "~components/Toast";
+import { idCheck, sendAuth, verifyCode } from "~apis/loginAPI/signup";
 
 export default function SignUp() {
     const {
@@ -14,6 +15,7 @@ export default function SignUp() {
         trigger,
         clearErrors,
         setValue,
+        getValues,
     } = useForm({
         shouldFocusError: false,
     });
@@ -81,9 +83,13 @@ export default function SignUp() {
         }
     };
 
-    const checkId = () => {
-        const isValidId = true;
-        if (isValidId) {
+    const checkId = async () => {
+
+        const id = getValues("id");
+        console.log(id);
+        const isValidId = await idCheck(id);
+        console.log(isValidId);
+        if (!isValidId) {
             setIsIdChecked(true);
             showToast("success", "아이디가 사용 가능합니다.");
         } else {
@@ -92,17 +98,37 @@ export default function SignUp() {
         }
     };
 
-    const verifyPhone = () => {
-        const isVerified = true;
-        if (isVerified) {
-            setIsPhoneVerified(true);
-            showToast("success", "휴대폰 인증이 완료되었습니다.");
+    const verifyPhone = async () => {
+        const phoneNumber = getValues("phone");
+
+        const isVerified = await sendAuth(phoneNumber);
+
+        if (isVerified == "인증번호를 발송하였습니다.") {
+            showToast("success", "인증번호를 발송하였습니다.");
         } else {
-            setIsPhoneVerified(false);
-            showToast("error", "휴대폰 인증에 실패했습니다.");
+            showToast("error", "인증번호 발송에 실패하였습니다.");
         }
     };
 
+    const verifyPhoneCode = async () => {
+        const phoneNumber = getValues("phone");
+        const code = getValues("phoneVerification");
+        console.log(phoneNumber);
+        console.log(code);
+        const isVerified = await verifyCode(phoneNumber, code);
+        console.log(isVerified);
+        if (isVerified == "인증번호 확인이 정상 완료되었습니다.") {
+            showToast("success", "인증이 완료되었습니다.");
+        } else {
+            showToast("error", "인증에 실패하였습니다.");
+        }
+    };
+
+
+
+
+    // setIsPhoneVerified(true);
+    // setIsPhoneVerified(false);
     return (
         <div className={styles.signUpWrapper}>
             <Toast />
@@ -386,6 +412,7 @@ export default function SignUp() {
                                     <button
                                         type="button"
                                         className={styles.authCheckButton}
+                                        onClick={verifyPhoneCode}
                                     >
                                         인증 확인
                                     </button>
