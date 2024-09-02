@@ -5,6 +5,12 @@ import styles from "./SignUp.module.css";
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import Toast, { showToast } from "~components/Toast";
+import {
+    idCheck,
+    sendAuth,
+    verifyCode,
+    userSignUp,
+} from "~apis/loginAPI/signup";
 
 export default function SignUp() {
     const {
@@ -14,6 +20,7 @@ export default function SignUp() {
         trigger,
         clearErrors,
         setValue,
+        getValues,
     } = useForm({
         shouldFocusError: false,
     });
@@ -26,12 +33,12 @@ export default function SignUp() {
 
     const handleNextStep = async () => {
         const result = await trigger([
-            "id",
-            "password",
+            "memberName",
+            "memberPassword",
             "name",
-            "birthdate",
-            "genderDigit",
-            "phone",
+            "birth",
+            "sex",
+            "phoneNumber",
             "phoneVerification",
             "email",
         ]);
@@ -49,8 +56,8 @@ export default function SignUp() {
                 }
             } else if (step === 2) {
                 if (!isPhoneVerified) {
-                    showToast("error", "휴대폰 인증을 완료해야 합니다.");
-                } else if(!result) {
+                    // showToast("error", "휴대폰 인증을 완료해야 합니다.");
+                } else if (!result) {
                     setShakeKey((prev) => prev + 1);
                 }
             }
@@ -61,10 +68,28 @@ export default function SignUp() {
         setStep(1);
     };
 
-    const onSubmitSignUp = (data) => {
-        console.log(data);
-    };
+    const onSubmitSignUp = async (data) => {
+        if (!isPhoneVerified) {
+            showToast("error", "휴대폰 인증이 완료되지 않았습니다.");
+            return;
+        }
 
+        const { phoneVerification, ...filteredData } = data;
+
+        try {
+            const response = await userSignUp(filteredData);
+
+            if (response.success) {
+                showToast("success", "회원가입에 성공하였습니다.");
+                navigate("/login");
+            } else {
+                showToast("error", response.message);
+            }
+        } catch (error) {
+            showToast("error", "회원가입 중 오류가 발생했습니다.");
+            console.error("Sign-up error:", error);
+        }
+    };
     const shakeAnimation = {
         x: [0, -5, 5, -5, 5, 0],
         transition: { duration: 0.3, ease: "easeInOut" },
@@ -81,25 +106,46 @@ export default function SignUp() {
         }
     };
 
-    const checkId = () => {
-        const isValidId = true;
-        if (isValidId) {
+    const checkId = async () => {
+        const id = getValues("memberName");
+        const response = await idCheck(id);
+
+        if (response.error) {
+            showToast("error", response.message);
+            setIsIdChecked(false);
+        } else if (response === false) {
             setIsIdChecked(true);
-            showToast("success", "아이디가 사용 가능합니다.");
+            showToast("success", "사용 가능한 아이디 입니다.");
         } else {
             setIsIdChecked(false);
-            showToast("error", "아이디가 중복되었습니다.");
+            showToast("error", "중복된 아이디 입니다.");
         }
     };
 
-    const verifyPhone = () => {
-        const isVerified = true;
-        if (isVerified) {
-            setIsPhoneVerified(true);
-            showToast("success", "휴대폰 인증이 완료되었습니다.");
+    const verifyPhone = async () => {
+        const phoneNumber = getValues("phoneNumber");
+
+        const response = await sendAuth(phoneNumber);
+
+        if (response) {
+            showToast("success", "인증번호를 발송하였습니다.");
         } else {
+            showToast("error", "인증번호 발송에 실패하였습니다.");
+        }
+    };
+
+    const verifyPhoneCode = async () => {
+        const phoneNumber = getValues("phoneNumber");
+        const code = getValues("phoneVerification");
+
+        const response = await verifyCode(phoneNumber, code);
+
+        if (response) {
+            showToast("success", "인증이 완료되었습니다.");
+            setIsPhoneVerified(true);
+        } else {
+            showToast("error", "인증에 실패하였습니다.");
             setIsPhoneVerified(false);
-            showToast("error", "휴대폰 인증에 실패했습니다.");
         }
     };
 
@@ -126,22 +172,26 @@ export default function SignUp() {
                         <br />
                         <form>
                             <motion.div
-                                key={`id-${shakeKey}`}
+                                key={`memberName-${shakeKey}`}
                                 className={`${styles.idForm} ${
-                                    errors.id ? styles.inputError : ""
+                                    errors.memberName ? styles.inputError : ""
                                 }`}
-                                animate={errors.id ? shakeAnimation : {}}
+                                animate={
+                                    errors.memberName ? shakeAnimation : {}
+                                }
                             >
                                 <div className={styles.idInfoText}>아이디</div>
                                 <div className={styles.idInputGroup}>
                                     <input
                                         type="text"
-                                        placeholder="아이디 입력"
-                                        {...register("id", { required: true })}
+                                        placeholder="아이디 4글자 이상"
+                                        {...register("memberName", {
+                                            required: true,
+                                        })}
                                         className={styles.idInput}
                                         onChange={(e) =>
                                             handleInputChange(
-                                                "id",
+                                                "memberName",
                                                 e.target.value
                                             )
                                         }
@@ -156,11 +206,15 @@ export default function SignUp() {
                                 </div>
                             </motion.div>
                             <motion.div
-                                key={`password-${shakeKey}`}
+                                key={`memberPassword-${shakeKey}`}
                                 className={`${styles.passwordForm} ${
-                                    errors.password ? styles.inputError : ""
+                                    errors.memberPassword
+                                        ? styles.inputError
+                                        : ""
                                 }`}
-                                animate={errors.password ? shakeAnimation : {}}
+                                animate={
+                                    errors.memberPassword ? shakeAnimation : {}
+                                }
                             >
                                 <div className={styles.pwInfoText}>
                                     비밀번호
@@ -168,13 +222,13 @@ export default function SignUp() {
                                 <input
                                     type="password"
                                     placeholder="비밀번호 입력"
-                                    {...register("password", {
+                                    {...register("memberPassword", {
                                         required: true,
                                     })}
                                     className={styles.pwInput}
                                     onChange={(e) =>
                                         handleInputChange(
-                                            "password",
+                                            "memberPassword",
                                             e.target.value
                                         )
                                     }
@@ -210,12 +264,12 @@ export default function SignUp() {
                             <motion.div
                                 key={`birth-${shakeKey}`}
                                 className={`${styles.birth} ${
-                                    errors.birthdate || errors.genderDigit
+                                    errors.birth || errors.sex
                                         ? styles.inputError
                                         : ""
                                 }`}
                                 animate={
-                                    errors.birthdate || errors.genderDigit
+                                    errors.birth || errors.sex
                                         ? shakeAnimation
                                         : {}
                                 }
@@ -228,7 +282,7 @@ export default function SignUp() {
                                         <input
                                             type="text"
                                             placeholder="생년월일"
-                                            {...register("birthdate", {
+                                            {...register("birth", {
                                                 required:
                                                     "생년월일 6자리를 입력해주세요.",
                                                 pattern: {
@@ -241,7 +295,7 @@ export default function SignUp() {
                                             className={styles.birthInput}
                                             onChange={(e) =>
                                                 handleInputChange(
-                                                    "birthdate",
+                                                    "birth",
                                                     e.target.value
                                                 )
                                             }
@@ -250,7 +304,7 @@ export default function SignUp() {
                                         <input
                                             type="text"
                                             placeholder="0"
-                                            {...register("genderDigit", {
+                                            {...register("sex", {
                                                 required:
                                                     "성별 코드 1자리를 입력해주세요.",
                                                 pattern: {
@@ -263,7 +317,7 @@ export default function SignUp() {
                                             className={styles.genderInput}
                                             onChange={(e) =>
                                                 handleInputChange(
-                                                    "genderDigit",
+                                                    "sex",
                                                     e.target.value
                                                 )
                                             }
@@ -323,11 +377,13 @@ export default function SignUp() {
                         <br />
                         <form onSubmit={handleSubmit(onSubmitSignUp)}>
                             <motion.div
-                                key={`phone-${shakeKey}`}
+                                key={`phoneNumber-${shakeKey}`}
                                 className={`${styles.authInputGroup} ${
-                                    errors.phone ? styles.inputError : ""
+                                    errors.phoneNumber ? styles.inputError : ""
                                 }`}
-                                animate={errors.phone ? shakeAnimation : {}}
+                                animate={
+                                    errors.phoneNumber ? shakeAnimation : {}
+                                }
                             >
                                 <div className={styles.phoneInfoText}>
                                     휴대 전화번호
@@ -336,13 +392,13 @@ export default function SignUp() {
                                     <input
                                         type="text"
                                         placeholder="01012345678"
-                                        {...register("phone", {
+                                        {...register("phoneNumber", {
                                             required: true,
                                         })}
                                         className={styles.phoneInput}
                                         onChange={(e) =>
                                             handleInputChange(
-                                                "phone",
+                                                "phoneNumber",
                                                 e.target.value
                                             )
                                         }
@@ -386,6 +442,7 @@ export default function SignUp() {
                                     <button
                                         type="button"
                                         className={styles.authCheckButton}
+                                        onClick={verifyPhoneCode}
                                     >
                                         인증 확인
                                     </button>
