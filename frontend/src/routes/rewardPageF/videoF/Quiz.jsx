@@ -33,7 +33,7 @@ export default function Quiz({ onClose, mediaId, enterpriseName }) {
     const handleOptionClick = async (selectedOptionIndex) => {
         if (selectedOptionIndex === answer) {
             try {
-                const data = await quizCorrectApi(mediaId);
+                const data = await quizCorrectApi(mediaId, enterpriseName);
                 setAmount(data.amount);
                 setIsCorrect(true);
             } catch (error) {
