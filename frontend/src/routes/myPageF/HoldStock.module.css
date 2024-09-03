@@ -222,3 +222,10 @@
 .blueText {
     color: #007bff;
 }
+
+.noData {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.2rem;
+    color: #666;
+}

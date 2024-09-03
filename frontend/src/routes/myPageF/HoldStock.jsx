@@ -3,50 +3,11 @@ import { motion } from "framer-motion";
 import styles from "./HoldStock.module.css";
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { getHoldStock, getStockHistory, myGetAll } from "~apis/myAPI/myApi";
 
 export default function HoldStock() {
-    const dummyStocks = [
-        {
-            id: 1,
-            name: "아디다스",
-            logo: "https://via.placeholder.com/50",
-            quantity: 0.025,
-            value: 1500,
-        },
-        {
-            id: 2,
-            name: "삼성",
-            logo: "https://via.placeholder.com/50",
-            quantity: 0.025,
-            value: 5000,
-        },
-    ];
-
-    const dummyTransactions = [
-        {
-            id: 1,
-            date: "2024.08.20. 08:09 AM",
-            stockName: "이엠텍",
-            type: "매수",
-            quantity: 0.0025,
-        },
-        {
-            id: 2,
-            date: "2024.08.20. 08:09 AM",
-            stockName: "이엠텍",
-            type: "매도",
-            quantity: 0.0025,
-        },
-        {
-            id: 3,
-            date: "2024.08.20. 08:09 AM",
-            stockName: "이엠텍",
-            type: "매도",
-            quantity: 0.0025,
-        },
-    ];
-
     const [totalValue, setTotalValue] = useState(0);
+    const [earningRate, setEarningRate] = useState("0");
     const [stocks, setStocks] = useState([]);
     const [transactions, setTransactions] = useState([]);
     const [activeTab, setActiveTab] = useState("stocks");
@@ -57,18 +18,33 @@ export default function HoldStock() {
     };
 
     useEffect(() => {
-        const totalStockValue = dummyStocks.reduce(
-            (acc, stock) => acc + stock.value,
-            0
-        );
-        setTotalValue(totalStockValue);
-        setStocks(dummyStocks);
-        setTransactions(dummyTransactions);
+        const fetchData = async () => {
+            try {
+                const holdStockData = await getHoldStock();
+                const stockHistoryData = await getStockHistory();
+                const allData = await myGetAll();
+
+                setTotalValue(allData.allCost);
+                setEarningRate(allData.earningRate);
+                setStocks(holdStockData);
+                setTransactions(stockHistoryData);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
     }, []);
+
+    const calculateProfitOrLoss = (earningRate, allCost) => {
+        const rate = parseFloat(earningRate);
+        const profitOrLoss = (rate / 100) * allCost;
+        return Math.round(profitOrLoss);
+    };
 
     return (
         <motion.div
-            key="signin-form"
+            key="hold-stock"
             initial={{ opacity: 0, scale: 1 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1 }}
@@ -85,7 +61,10 @@ export default function HoldStock() {
                 <div className={styles.totalStock}>
                     <div>내 주식</div>
                     <div>{totalValue}원</div>
-                    <div>0원 (0.00%)</div>
+                    <div>
+                        {calculateProfitOrLoss(earningRate, totalValue)}
+                        원 ({earningRate}%)
+                    </div>
                     <button className={styles.sellButton}>판매하기</button>
                 </div>
 
@@ -130,7 +109,8 @@ export default function HoldStock() {
                             : transactions.length}{" "}
                         건
                     </div>
-                    {activeTab === "stocks" && (
+
+                    {activeTab === "stocks" && stocks.length > 0 ? (
                         <div className={styles.stocksList}>
                             {stocks.map((stock) => (
                                 <div
@@ -149,13 +129,20 @@ export default function HoldStock() {
                                         {stock.quantity} 주
                                     </div>
                                     <div className={styles.stockValue}>
-                                        (0.00)%
+                                        {stock.value}원 (0.00%)
                                     </div>
                                 </div>
                             ))}
                         </div>
+                    ) : (
+                        activeTab === "stocks" && (
+                            <div className={styles.noData}>
+                                보유 주식이 없습니다.
+                            </div>
+                        )
                     )}
-                    {activeTab === "transactions" && (
+
+                    {activeTab === "transactions" && transactions.length > 0 ? (
                         <div className={styles.transactionsList}>
                             {transactions.map((transaction) => (
                                 <div
@@ -194,6 +181,12 @@ export default function HoldStock() {
                                 </div>
                             ))}
                         </div>
+                    ) : (
+                        activeTab === "transactions" && (
+                            <div className={styles.noData}>
+                                거래 내역이 없습니다.
+                            </div>
+                        )
                     )}
                 </div>
             </div>
