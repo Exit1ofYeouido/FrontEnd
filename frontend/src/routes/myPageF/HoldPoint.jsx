@@ -3,35 +3,11 @@ import { motion } from "framer-motion";
 import styles from "./HoldPoint.module.css";
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { getPointStock, getPointHistory } from "~apis/myAPI/myApi";
 
 export default function HoldPoint() {
-    const dummyTransactions = [
-        {
-            id: 1,
-            date: "2024.08.20. 08:09 AM",
-            stockName: "포인트",
-            type: "획득",
-            quantity: 3000,
-        },
-        {
-            id: 2,
-            date: "2024.08.20. 08:09 AM",
-            stockName: "포인트",
-            type: "출금",
-            quantity: 2000,
-        },
-        {
-            id: 3,
-            date: "2024.08.20. 08:09 AM",
-            stockName: "포인트",
-            type: "획득",
-            quantity: 3000,
-        },
-    ];
-
-    const [totalValue, setTotalValue] = useState(200); // Total points shown in the image
+    const [totalValue, setTotalValue] = useState(0);
     const [transactions, setTransactions] = useState([]);
-    const [activeTab, setActiveTab] = useState("transactions");
     const navigate = useNavigate();
 
     const handleBack = () => {
@@ -39,12 +15,23 @@ export default function HoldPoint() {
     };
 
     useEffect(() => {
-        setTransactions(dummyTransactions);
+        const fetchData = async () => {
+            try {
+                const holdPointData = await getPointStock();
+                const stockHistoryData = await getPointHistory();
+                setTotalValue(holdPointData.point);
+                setTransactions(stockHistoryData);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
     }, []);
 
     return (
         <motion.div
-            key="signin-form"
+            key="hold-point"
             initial={{ opacity: 0, scale: 1 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1 }}
@@ -67,20 +54,13 @@ export default function HoldPoint() {
                 <div className={styles.stockContainer}>
                     <div className={styles.tabs}>
                         <div
-                            className={`${styles.tabButton} ${
-                                activeTab === "transactions"
-                                    ? styles.activeTab
-                                    : ""
-                            }`}
-                            onClick={() => setActiveTab("transactions")}
+                            className={`${styles.tabButton} ${styles.activeTab}`}
                         >
                             포인트 내역
-                            {activeTab === "transactions" && (
-                                <motion.div
-                                    className={styles.underline}
-                                    layoutId="underline"
-                                />
-                            )}
+                            <motion.div
+                                className={styles.underline}
+                                layoutId="underline"
+                            />
                         </div>
                     </div>
 
@@ -88,7 +68,7 @@ export default function HoldPoint() {
                         총 {transactions.length} 건
                     </div>
 
-                    {activeTab === "transactions" && (
+                    {transactions.length > 0 ? (
                         <div className={styles.transactionsList}>
                             {transactions.map((transaction) => (
                                 <div
@@ -108,13 +88,11 @@ export default function HoldPoint() {
                                             {transaction.type}
                                         </div>
                                         <div
-                                            className={`${
-                                                styles.transactionQuantity
-                                            } ${
+                                            className={
                                                 transaction.type === "획득"
                                                     ? styles.redText
                                                     : styles.blueText
-                                            }`}
+                                            }
                                         >
                                             {transaction.type === "획득"
                                                 ? "+"
@@ -124,6 +102,10 @@ export default function HoldPoint() {
                                     </div>
                                 </div>
                             ))}
+                        </div>
+                    ) : (
+                        <div className={styles.noTransactions}>
+                            내역이 없습니다
                         </div>
                     )}
                 </div>
