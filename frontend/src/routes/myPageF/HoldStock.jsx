@@ -24,7 +24,6 @@ export default function HoldStock() {
                 const holdStockData = await getHoldStock();
                 const stockHistoryData = await getStockHistory();
                 const allData = await myGetAll();
-
                 setTotalValue(allData.allCost);
                 setEarningRate(allData.earningRate);
                 setStocks(holdStockData);
@@ -168,12 +167,12 @@ export default function HoldStock() {
                                                     styles.stockQuantity
                                                 }
                                             >
-                                                {stock.quantity} 주
+                                                {stock.holdStockCount} 주
                                             </div>
                                             <div
                                                 className={styles.stockValue}
                                             >
-                                                {stock.value}원 (0.00%)
+                                                (0.00)원 ({stock.earningRate})
                                             </div>
                                         </div>
                                     ))}
@@ -204,7 +203,7 @@ export default function HoldStock() {
                                                         styles.transactionStockName
                                                     }
                                                 >
-                                                    {transaction.stockName}{" "}
+                                                    {transaction.name}{" "}
                                                     {transaction.type === "매수"
                                                         ? "획득"
                                                         : "판매"}
@@ -223,7 +222,7 @@ export default function HoldStock() {
                                                     "매수"
                                                         ? "+"
                                                         : "-"}
-                                                    {transaction.quantity} 주
+                                                    {transaction.amount} 주
                                                 </div>
                                             </div>
                                         </div>
