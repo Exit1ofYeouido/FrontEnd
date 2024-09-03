@@ -30,3 +30,22 @@ export const getStockHistory = async () => {
     }
 };
 
+export const getPointStock = async () => {
+    try {
+        const response = await instance.get(`/my/point`);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching all data:", error);
+        throw error;
+    }
+};
+
+export const getPointHistory = async () => {
+    try {
+        const response = await instance.get(`/my/point-history`);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching all data:", error);
+        throw error;
+    }
+};
