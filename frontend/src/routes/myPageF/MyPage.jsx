@@ -9,9 +9,14 @@ import { myGetAll } from "~apis/myAPI/myApi";
 import { logout } from "~apis/loginAPI/login";
 import { showToast } from "~components/Toast";
 import LogoutModal from "~components/LogoutModal";
+import LoadingPage from "~components/LoadingPage";
 
 export default function MyPage() {
-    const [data, setData] = useState(null);
+    const [accountId, setAccountId] = useState("");
+    const [totalPoint, setTotalPoint] = useState(0);
+    const [allCost, setAllCost] = useState(0);
+    const [earningRate, setEarningRate] = useState("0");
+    const [earningRates, setEarningRates] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -19,7 +24,11 @@ export default function MyPage() {
         const fetchData = async () => {
             try {
                 const data = await myGetAll();
-                setData(data);
+                setAccountId(data.accountId);
+                setTotalPoint(data.totalPoint);
+                setAllCost(data.allCost);
+                setEarningRate(data.earningRate);
+                setEarningRates(data.earningRates);
             } catch (error) {
                 console.error(
                     "데이터를 가져오는 동안 오류가 발생했습니다:",
@@ -30,10 +39,6 @@ export default function MyPage() {
 
         fetchData();
     }, []);
-
-    if (!data) {
-        return <div>Loading...</div>;
-    }
 
     const handleLogout = async () => {
         const response = await logout();
@@ -65,6 +70,10 @@ export default function MyPage() {
         return Math.round(profitOrLoss);
     };
 
+    if (!accountId) {
+        return <LoadingPage/>;
+    }
+
     return (
         <motion.div
             key="signin-form"
@@ -86,7 +95,7 @@ export default function MyPage() {
                                 className={styles.accountLogo}
                             />
                             <div className={styles.accountId}>
-                                {data.accountId}
+                                {accountId}
                             </div>
                         </div>
                         <IoIosArrowForward
@@ -101,7 +110,7 @@ export default function MyPage() {
                             className={styles.pointLogo}
                         />
                         <div className={styles.pointText}>
-                            {data.totalPoint}점
+                            {totalPoint}점
                         </div>
                     </div>
                     <div className={styles.bottom}>
@@ -119,24 +128,24 @@ export default function MyPage() {
                     <div className={styles.stockTop}>
                         <div className={styles.myStockText}>내 주식</div>
                         <div className={styles.rate}>
-                            <div className={styles.rate1}>{data.allCost}원</div>
+                            <div className={styles.rate1}>{allCost}원</div>
                             <div className={styles.rate2}>
                                 <span className={styles.won}>
                                     {calculateProfitOrLoss(
-                                        data.earningRate,
-                                        data.allCost
+                                        earningRate,
+                                        allCost
                                     )}
                                     원
                                 </span>
                                 <span className={styles.percent}>
-                                    ({data.earningRate}%)
+                                    ({earningRate}%)
                                 </span>
                             </div>
                         </div>
                     </div>
 
                     <div className={styles.earningRatesList}>
-                        {data.earningRates.map((rate, index) => (
+                        {earningRates.map((rate, index) => (
                             <div key={index} className={styles.earningRateItem}>
                                 <img
                                     src={`https://stock-craft.s3.ap-northeast-2.amazonaws.com/logos/${encodeURIComponent(
@@ -205,7 +214,7 @@ export default function MyPage() {
                 </div>
             </div>
 
-            {/* 로그아웃 모달 이랑께*/}
+            {/* 로그아웃 모달 */}
             {isModalOpen && (
                 <LogoutModal onClose={closeModal} confirm={confirmLogout} />
             )}
