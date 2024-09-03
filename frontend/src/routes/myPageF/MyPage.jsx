@@ -9,6 +9,7 @@ import { myGetAll } from "~apis/myAPI/myApi";
 import { logout } from "~apis/loginAPI/login";
 import { showToast } from "~components/Toast";
 import LogoutModal from "~components/LogoutModal";
+import LoadingPage from "~components/LoadingPage";
 
 export default function MyPage() {
     const [accountId, setAccountId] = useState("");
@@ -70,7 +71,7 @@ export default function MyPage() {
     };
 
     if (!accountId) {
-        return <div>Loading...</div>;
+        return <LoadingPage/>;
     }
 
     return (
