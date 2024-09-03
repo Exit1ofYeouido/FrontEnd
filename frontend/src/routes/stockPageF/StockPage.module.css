@@ -1,0 +1,140 @@
+.container {
+    padding: 20px;
+    background-color: #ffffff;
+    height: calc(100vh - 90px);
+    overflow-y: auto;
+}
+
+.topBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 600;
+    position: relative;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.searchContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    transition: box-shadow 0.3s ease;
+    position: absolute;
+    z-index: 1000;
+}
+
+.search {
+    width: 80%;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    background-color: #fff;
+}
+
+.searchInput {
+    width: 90%;
+    padding: 15px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+}
+
+.searchsearch {
+    margin-top: 80px;
+}
+
+.suggestions {
+    width: 96%;
+    overflow-y: auto;
+    border: none;
+    outline: none;
+    background-color: #fff;
+    border-radius: 4px;
+    z-index: 1000;
+    margin-bottom: 10px;
+    max-height: 200px;
+    margin-left: 5px;
+}
+
+.suggestionItem {
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.suggestionItem:hover {
+    background-color: #f0f0f0;
+}
+
+.selected {
+    background-color: #e0e0e0;
+}
+
+.list {
+    position: relative;
+    top: 100px;
+}
+
+.header {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 50px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.totalCard {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stockCard {
+    width: 80%;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 30px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stockInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.stockName {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+}
+
+.stockCode {
+    font-size: 14px;
+    color: #aaa;
+}
+
+.stockDetails {
+    display: flex;
+    align-items: center;
+}
+
+.stockChange {
+    font-size: 14px;
+    color: red;
+    font-weight: bold;
+}
+
+.stockPrice {
+    margin-left: 10px;
+    font-size: 16px;
+    color: #000;
+}
