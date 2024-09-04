@@ -15,7 +15,6 @@ export default function Asset() {
         const fetchData = async () => {
             try {
                 const data = await getHome();
-                console.log(data);
                 setPoint(data.totalPoint);
                 setStock(data.totalStock);
                 setAsset(data.totalAssets);

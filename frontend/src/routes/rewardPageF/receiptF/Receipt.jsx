@@ -67,19 +67,20 @@ export default function Receipt() {
     const handleConfirm = async () => {
         try {
             const receiptRequestData = {
-                name: receiptData.name,
+                storeName: receiptData.storeName,
                 price: receiptData.price,
                 dealTime: receiptData.dealTime,
-                confirmNum: receiptData.confirmNum,
-                imgUri: receiptData.imgUri,
+                approvalNum: receiptData.approvalNum,
+                imgURL: receiptData.imgURL,
+                enterpriseName: receiptData.enterpriseName,
             };
 
-            const rewardResponse = await uploadReward(receiptRequestData);
+            const rewardResponse = await getReward(receiptRequestData);
             setIsModalOpen(false);
 
             showToast(
                 "success",
-                `영수증이 확인되었습니다! 리워드: ${rewardResponse.reward.name}, 금액: ${rewardResponse.reward.amount}`
+                `영수증이 확인되었습니다! 리워드: ${rewardResponse.name}, 금액: ${rewardResponse.amount}`
             );
         } catch (error) {
             console.error("리워드 요청 중 오류 발생:", error);

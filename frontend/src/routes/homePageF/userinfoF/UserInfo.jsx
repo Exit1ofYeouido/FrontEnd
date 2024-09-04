@@ -2,13 +2,16 @@ import React from "react";
 import { motion } from "framer-motion";
 import styles from "./UserInfo.module.css";
 import { useNavigate } from "react-router-dom";
+import { store } from "~store/store";
 
 export default function UserInfo() {
     const navigate = useNavigate();
+    const state = store.getState();
+    const loginId = state.memberId.loginId;
 
     return (
         <div className={styles.container}>
-            <div className={styles.name}>양진혁 님</div>
+            <div className={styles.name}>{loginId}님</div>
             <div className={styles.separator}></div>
             <div className={styles.actions}>
                 <motion.div

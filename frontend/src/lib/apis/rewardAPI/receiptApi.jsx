@@ -31,7 +31,7 @@ export const uploadReceipt = async (formData) => {
 
 export const getReward = async (receiptData) => {
     try {
-        const response = await instance.post(`/reward/receipt`, receiptData); 
+        const response = await instance.post(`/reward/receipt/`, receiptData); 
         return response.data;
     } catch (error) {
         console.error("Error submitting receipt for reward:", error);

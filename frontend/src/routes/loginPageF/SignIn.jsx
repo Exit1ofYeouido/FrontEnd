@@ -5,6 +5,8 @@ import styles from "./SignIn.module.css";
 import Logo from "../../assets/logo2.svg";
 import classNames from "classnames";
 import { motion } from "framer-motion";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "~store/memberIdSlice";
 import { useState } from "react";
 
 export default function SignIn() {
@@ -19,6 +21,7 @@ export default function SignIn() {
         shouldFocusError: false,
     });
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [shakeKey, setShakeKey] = useState(0);
 
     const shakeAnimation = {
@@ -46,14 +49,16 @@ export default function SignIn() {
                 trimmedData.loginId,
                 trimmedData.loginPassword
             );
+            console.log(result);
+
             if (!result.error) {
+                dispatch(setCredentials({ loginId: trimmedData.loginId }));
                 navigate("/home");
             }
         } catch (error) {
             alert(error.message);
         }
     };
-
 
     return (
         <div className={styles.wrapper}>

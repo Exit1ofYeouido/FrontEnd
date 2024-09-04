@@ -70,6 +70,7 @@
     cursor: pointer;
     border-radius: 5px;
     width: 50%;
+    margin-left: 10px;
 }
 
 .click{
