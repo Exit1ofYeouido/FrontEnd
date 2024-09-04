@@ -1,0 +1,120 @@
+.faqContainer {
+    background: linear-gradient(to bottom, #e9f0f8, #ffffff);
+    padding: 3rem 1rem;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.pageWithNavbar {
+    padding-bottom: 110px; /* Navbar height (90px) + extra padding */
+}
+
+.faqContent {
+    max-width: 48rem;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    overflow-y: auto;
+    max-height: calc(100vh - 6rem - 110px);
+}
+
+.faqHeader {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.faqHeader svg {
+    color: #3b82f6;
+    margin: 0 auto;
+}
+
+.faqHeader h1 {
+    font-size: 30px;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.faqHeader p {
+    color: #6b7280;
+}
+
+.faqList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.faqItem {
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 0.5rem;
+}
+
+.faqQuestion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 600;
+    color: #374151;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem 0;
+    transition: color 0.3s ease;
+}
+
+.faqQuestion svg {
+    color: #3b82f6;
+}
+
+.faqQuestion .icon {
+    transition: transform 0.3s ease;
+}
+
+.faqQuestion .icon.rotate {
+    transform: rotate(180deg);
+}
+
+.faqAnswer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+    opacity: 0;
+}
+
+.faqAnswer.open {
+    max-height: 100px; /* Adjust this value based on your content */
+    opacity: 1;
+    margin-top: 0.5rem;
+}
+
+.faqAnswer p {
+    margin: 0;
+    padding-left: 1rem;
+    border-left: 2px solid #93c5fd;
+    color: #4b5563;
+    font-size: 12px;
+}
+.faqFooter {
+    margin-top: 1rem;
+    font-size: 13px;
+    text-align: center;
+}
+
+.faqFooter p {
+    color: #6b7280;
+    margin-bottom: 0.3rem;
+}
+
+.faqFooter a {
+    color: #3b82f6;
+    text-decoration: none;
+}
+
+.faqFooter a:hover {
+    text-decoration: underline;
+}
