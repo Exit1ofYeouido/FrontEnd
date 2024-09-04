@@ -1,11 +1,13 @@
 import React, { useRef, useState } from "react";
-import axios from "axios";
 import styles from "./Receipt.module.css";
 import Navbar from "~components/Navbar";
 import ReceiptGrid from "./ReceiptGrid";
 import { IoIosArrowBack } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { uploadReceipt, getReward } from "~apis/rewardAPI/receiptApi";
+import Modal from "./ReceiptModal";
+import Toast, { showToast } from "~components/Toast";
 
 export default function Receipt() {
     const location = useLocation();
@@ -14,6 +16,8 @@ export default function Receipt() {
     const [uploadedImage, setUploadedImage] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [receiptData, setReceiptData] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleBack = () => {
         if (location.state && location.state.from) {
@@ -38,37 +42,54 @@ export default function Receipt() {
 
     const handleImageSubmit = async () => {
         if (!selectedFile) {
-            alert("먼저 이미지를 업로드해주세요.");
+            showToast("error", "먼저 이미지를 업로드해주세요.");
             return;
         }
 
         setIsSubmitting(true);
 
         const formData = new FormData();
-        formData.append("receipt_img", selectedFile);
+        formData.append("receiptImg", selectedFile);
 
         try {
-            const response = await axios.post(
-                "https://your-api-endpoint.com/upload",
-                formData,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                }
-            );
-
-            if (response.status === 200) {
-                alert("이미지가 성공적으로 제출되었습니다!");
-            } else {
-                alert("이미지 제출에 실패했습니다.");
-            }
+            const response = await uploadReceipt(formData);
+            setReceiptData(response);
+            setIsModalOpen(true);
+            showToast("success", "이미지가 성공적으로 제출되었습니다!");
         } catch (error) {
             console.error("이미지 제출 중 오류 발생:", error);
-            alert("이미지를 제출하는 동안 오류가 발생했습니다.");
+            showToast("error", "이미지를 제출하는 동안 오류가 발생했습니다.");
         } finally {
             setIsSubmitting(false);
         }
+    };
+
+    const handleConfirm = async () => {
+        try {
+            const receiptRequestData = {
+                name: receiptData.name,
+                price: receiptData.price,
+                dealTime: receiptData.dealTime,
+                confirmNum: receiptData.confirmNum,
+                imgUri: receiptData.imgUri,
+            };
+
+            const rewardResponse = await uploadReward(receiptRequestData);
+            setIsModalOpen(false);
+
+            showToast(
+                "success",
+                `영수증이 확인되었습니다! 리워드: ${rewardResponse.reward.name}, 금액: ${rewardResponse.reward.amount}`
+            );
+        } catch (error) {
+            console.error("리워드 요청 중 오류 발생:", error);
+            showToast("error", "리워드 요청 중 오류가 발생했습니다.");
+        }
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+        showToast("error", "영수증 확인을 취소했습니다.");
     };
 
     return (
@@ -125,6 +146,13 @@ export default function Receipt() {
                             {isSubmitting ? "제출 중..." : "사진 제출"}
                         </button>
                     </div>
+                    {isModalOpen && (
+                        <Modal
+                            receiptData={receiptData}
+                            onConfirm={handleConfirm}
+                            onCancel={handleCancel}
+                        />
+                    )}
                 </div>
             </motion.div>
             <Navbar />
