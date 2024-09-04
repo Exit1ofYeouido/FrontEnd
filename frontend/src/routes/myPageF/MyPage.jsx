@@ -66,12 +66,13 @@ export default function MyPage() {
 
     const calculateProfitOrLoss = (earningRate, allCost) => {
         const rate = parseFloat(earningRate);
-        const profitOrLoss = (rate / 100) * allCost;
+        const originalCost = allCost / (1 + rate / 100);
+        const profitOrLoss = allCost - originalCost;
         return Math.round(profitOrLoss);
     };
 
     if (!accountId) {
-        return <LoadingPage/>;
+        return <LoadingPage />;
     }
 
     return (
@@ -94,9 +95,7 @@ export default function MyPage() {
                                 alt="Account Logo"
                                 className={styles.accountLogo}
                             />
-                            <div className={styles.accountId}>
-                                {accountId}
-                            </div>
+                            <div className={styles.accountId}>{accountId}</div>
                         </div>
                         <IoIosArrowForward
                             className={styles.arrowWrapper}
@@ -109,9 +108,7 @@ export default function MyPage() {
                             alt="point Logo"
                             className={styles.pointLogo}
                         />
-                        <div className={styles.pointText}>
-                            {totalPoint}점
-                        </div>
+                        <div className={styles.pointText}>{totalPoint}점</div>
                     </div>
                     <div className={styles.bottom}>
                         <button
@@ -130,14 +127,30 @@ export default function MyPage() {
                         <div className={styles.rate}>
                             <div className={styles.rate1}>{allCost}원</div>
                             <div className={styles.rate2}>
-                                <span className={styles.won}>
+                                <span
+                                    className={styles.won}
+                                    style={{
+                                        color:
+                                            calculateProfitOrLoss(
+                                                earningRate,
+                                                allCost
+                                            ) < 0
+                                                ? "#ff0000"
+                                                : "#007bff",
+                                    }}
+                                >
                                     {calculateProfitOrLoss(
                                         earningRate,
                                         allCost
                                     )}
                                     원
                                 </span>
-                                <span className={styles.percent}>
+                                <span
+                                    className={styles.percent}
+                                    style={{
+                                        color: earningRate < 0 ? "#ff0000" : "#007bff",
+                                    }}
+                                >
                                     ({earningRate}%)
                                 </span>
                             </div>

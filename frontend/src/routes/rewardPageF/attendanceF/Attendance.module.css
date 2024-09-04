@@ -114,30 +114,49 @@
     font-size: 18px;
     font-weight: 500;
 }
-/* @media (max-width: 480px) {
+
+@media (max-height: 880px) {
+    .attendanceTitle{
+        font-size: 22px;
+        margin-bottom: 40px;
+    }
+    .dayImage{
+        width: 90%;
+    }
     .attendanceBox {
-        padding: 8px 16px;
+        padding: 10px 16px;
         font-size: 16px;
         height: 35px;
     }
 
-    .calendarWrapper {
-        height: 350px;
-        margin-bottom: 15px;
-    }
-
-    .attendanceButton {
-        padding: 8px 16px;
-        width: 140px;
-        font-size: 14px;
-    }
-
-    .attendanceTitle {
+    .attendanceMonth {
         font-size: 18px;
     }
-
-    .topBar {
-        font-size: 14px;
-        margin-bottom: 10px;
+    
+    .attendanceDay {
+        font-size: 22px;
     }
-} */
+}
+
+@media (max-height: 830px) {
+    .attendanceTitle{
+        font-size: 20px;
+        margin-bottom: 30px;
+    }
+    .dayImage{
+        width: 80%;
+    }
+    .attendanceBox {
+        padding: 8px 12px;
+        font-size: 16px;
+        height: 35px;
+    }
+
+    .attendanceMonth {
+        font-size: 18px;
+    }
+    
+    .attendanceDay {
+        font-size: 22px;
+    }
+}
