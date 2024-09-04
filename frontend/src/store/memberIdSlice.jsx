@@ -3,19 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 const memberIdSlice = createSlice({
     name: "memberId",
     initialState: {
-        memberId: null,
-        accessToken: null,
+        loginId: null,
     },
     reducers: {
         setCredentials: (state, action) => {
-            const { token } = action.payload;
-            const decodedToken = JSON.parse(atob(token.split(".")[1]));
-            state.memberId = decodedToken.memberId;
-            state.accessToken = token;
+            const { loginId } = action.payload;
+            state.loginId = loginId;
         },
         clearCredentials: (state) => {
-            state.memberId = null;
-            state.accessToken = null;
+            state.loginId = null; 
         },
     },
 });

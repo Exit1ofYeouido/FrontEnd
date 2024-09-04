@@ -29,6 +29,8 @@ export default function HoldStock() {
                 setStocks(holdStockData);
                 setTransactions(stockHistoryData);
                 setIsFirstRender(false);
+                console.log(holdStockData);
+                console.log(stockHistoryData);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -39,7 +41,8 @@ export default function HoldStock() {
 
     const calculateProfitOrLoss = (earningRate, allCost) => {
         const rate = parseFloat(earningRate);
-        const profitOrLoss = (rate / 100) * allCost;
+        const originalCost = allCost / (1 + rate / 100);
+        const profitOrLoss = allCost - originalCost;
         return Math.round(profitOrLoss);
     };
 
@@ -83,9 +86,24 @@ export default function HoldStock() {
                 <div className={styles.totalStock}>
                     <div>내 주식</div>
                     <div>{totalValue}원</div>
-                    <div>
-                        {calculateProfitOrLoss(earningRate, totalValue)}
-                        원 ({earningRate}%)
+                    <div
+                        style={{
+                            color:
+                                calculateProfitOrLoss(earningRate, totalValue) <
+                                0
+                                    ? "#ff0000"
+                                    : "#007bff",
+                        }}
+                    >
+                        {calculateProfitOrLoss(earningRate, totalValue)}원 (
+                        <span
+                            style={{
+                                color: earningRate < 0 ? "#ff0000" : "#007bff",
+                            }}
+                        >
+                            {earningRate}%
+                        </span>
+                        )
                     </div>
                     <button className={styles.sellButton}>판매하기</button>
                 </div>
@@ -136,7 +154,11 @@ export default function HoldStock() {
                         key={activeTab}
                         className={styles.slide}
                         variants={variants}
-                        initial={isFirstRender && activeTab === "stocks" ? false : "enter"}
+                        initial={
+                            isFirstRender && activeTab === "stocks"
+                                ? false
+                                : "enter"
+                        }
                         animate="center"
                         exit="exit"
                         transition={{
@@ -153,26 +175,22 @@ export default function HoldStock() {
                                             className={styles.stockCard}
                                         >
                                             <img
-                                                src={stock.logo}
+                                                src={`https://stock-craft.s3.ap-northeast-2.amazonaws.com/logos/${encodeURIComponent(
+                                                    stock.name
+                                                )}.svg`}
                                                 alt={`${stock.name} 로고`}
                                                 className={styles.stockLogo}
                                             />
-                                            <div
-                                                className={styles.stockName}
-                                            >
+                                            <div className={styles.stockName}>
                                                 {stock.name}
                                             </div>
                                             <div
-                                                className={
-                                                    styles.stockQuantity
-                                                }
+                                                className={styles.stockQuantity}
                                             >
                                                 {stock.holdStockCount} 주
                                             </div>
-                                            <div
-                                                className={styles.stockValue}
-                                            >
-                                                (0.00)원 ({stock.earningRate})
+                                            <div className={styles.stockValue}>
+                                                0.00원 ({stock.earningRate})
                                             </div>
                                         </div>
                                     ))}
@@ -190,39 +208,49 @@ export default function HoldStock() {
                                             key={transaction.id}
                                             className={styles.transaction}
                                         >
-                                            <div
-                                                className={
-                                                    styles.transactionDate
-                                                }
-                                            >
-                                                {transaction.date}
-                                            </div>
-                                            <div className={styles.detail}>
+                                            <div>
+                                                <img
+                                                    src={`https://stock-craft.s3.ap-northeast-2.amazonaws.com/logos/${encodeURIComponent(
+                                                        transaction.name
+                                                    )}.svg`}
+                                                    alt={`${transaction.name} 로고`}
+                                                    className={styles.stockLogo}
+                                                />
                                                 <div
                                                     className={
-                                                        styles.transactionStockName
+                                                        styles.transactionDate
                                                     }
                                                 >
-                                                    {transaction.name}{" "}
-                                                    {transaction.type === "매수"
-                                                        ? "획득"
-                                                        : "판매"}
+                                                    {transaction.date}
                                                 </div>
-                                                <div
-                                                    className={`${
-                                                        styles.transactionQuantity
-                                                    } ${
-                                                        transaction.type ===
+                                                <div className={styles.detail}>
+                                                    <div
+                                                        className={
+                                                            styles.transactionStockName
+                                                        }
+                                                    >
+                                                        {transaction.name}{" "}
+                                                        {transaction.type ===
                                                         "매수"
-                                                            ? styles.redText
-                                                            : styles.blueText
-                                                    }`}
-                                                >
-                                                    {transaction.type ===
-                                                    "매수"
-                                                        ? "+"
-                                                        : "-"}
-                                                    {transaction.amount} 주
+                                                            ? "획득"
+                                                            : "판매"}
+                                                    </div>
+                                                    <div
+                                                        className={`${
+                                                            styles.transactionQuantity
+                                                        } ${
+                                                            transaction.type ===
+                                                            "매수"
+                                                                ? styles.redText
+                                                                : styles.blueText
+                                                        }`}
+                                                    >
+                                                        {transaction.type ===
+                                                        "매수"
+                                                            ? "+"
+                                                            : "-"}
+                                                        {transaction.amount} 주
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

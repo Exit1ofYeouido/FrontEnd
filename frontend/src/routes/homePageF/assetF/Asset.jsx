@@ -15,7 +15,6 @@ export default function Asset() {
         const fetchData = async () => {
             try {
                 const data = await getHome();
-                console.log(data);
                 setPoint(data.totalPoint);
                 setStock(data.totalStock);
                 setAsset(data.totalAssets);
@@ -35,6 +34,15 @@ export default function Asset() {
         return new Intl.NumberFormat().format(number);
     };
 
+    const calculateProfitOrLoss = (earningRate, allCost) => {
+        const rate = parseFloat(earningRate);
+        const originalCost = allCost / (1 + rate / 100);
+        const profitOrLoss = allCost - originalCost;
+        return Math.round(profitOrLoss);
+    };
+
+    const profitOrLoss = calculateProfitOrLoss(earningRate, asset);
+
     return (
         <div className={styles.info}>
             <div className={styles.title}>내 자산</div>
@@ -49,8 +57,11 @@ export default function Asset() {
                     더보기
                 </motion.div>
             </div>
-            <div className={styles.earningRate}>
-                0원 ({earningRate}%)
+            <div
+                className={styles.earningRate}
+                style={{ color: profitOrLoss < 0 ? "#ff0000" : "#007bff" }}
+            >
+                {profitOrLoss}원 ({earningRate}%)
             </div>
             <div className={styles.line}></div>
             <div className={styles.subInfo}>
