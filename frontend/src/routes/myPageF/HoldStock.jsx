@@ -43,6 +43,11 @@ export default function HoldStock() {
         return Math.round(profitOrLoss);
     };
 
+    const formatDateTime = (dateString) => {
+        const [year, month, day, hour, minute] = dateString.split("-");
+        return `${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분`;
+    };
+
     const handleTabChange = async (tab) => {
         if (tab !== activeTab) {
             setActiveTab(tab);
@@ -254,7 +259,9 @@ export default function HoldStock() {
                                                         styles.transactionDate
                                                     }
                                                 >
-                                                    {transaction.date}
+                                                    {formatDateTime(
+                                                        transaction.date
+                                                    )}
                                                 </div>
                                                 <div className={styles.detail}>
                                                     <div
@@ -264,7 +271,7 @@ export default function HoldStock() {
                                                     >
                                                         {transaction.name}{" "}
                                                         {transaction.type ===
-                                                        "입금"
+                                                        "in"
                                                             ? "획득"
                                                             : "판매"}
                                                     </div>
@@ -273,13 +280,13 @@ export default function HoldStock() {
                                                             styles.transactionQuantity
                                                         } ${
                                                             transaction.type ===
-                                                            "입금"
+                                                            "in"
                                                                 ? styles.redText
                                                                 : styles.blueText
                                                         }`}
                                                     >
                                                         {transaction.type ===
-                                                        "입금"
+                                                        "in"
                                                             ? "+"
                                                             : "-"}
                                                         {transaction.amount} 주
@@ -315,7 +322,9 @@ export default function HoldStock() {
                                                         styles.transactionDate
                                                     }
                                                 >
-                                                    {unsettled.date}
+                                                    {formatDateTime(
+                                                        unsettled.date
+                                                    )}
                                                 </div>
                                                 <div className={styles.detail}>
                                                     <div

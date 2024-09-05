@@ -22,7 +22,7 @@ function useMedia(queries, values, defaultValue) {
 export default function ReceiptGrid() {
     const columns = useMedia(
         ["(min-width: 1500px)", "(min-width: 1000px)", "(min-width: 600px)"],
-        [4, 3, 2],
+        [3, 2, 1],
         2
     );
 
