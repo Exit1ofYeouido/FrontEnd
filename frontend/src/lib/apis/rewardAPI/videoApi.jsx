@@ -1,5 +1,5 @@
 import instance from "../basis";
-import { store } from "~store/store";
+import store from "~store/store";
 
 export const videoListApi = async () => {
     try {
