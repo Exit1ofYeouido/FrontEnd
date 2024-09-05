@@ -7,15 +7,23 @@ import receiptIcon from "~assets/homepage/receipt.svg";
 import videoIcon from "~assets/homepage/video.svg";
 import { IoIosArrowForward } from "react-icons/io";
 import Navbar from "~components/Navbar";
+import { getTutorialCheck } from "~apis/myAPI/myApi";
 
-const RewardItem = ({ icon, title, description, navigateTo, tutoChecked }) => {
+const RewardItem = ({ icon, title, description, navigateTo, type }) => {
     const navigate = useNavigate();
 
-    const handleNavigation = () => {
+    const handleNavigation = async () => {
+        if (type === "출첵") {
+            navigate(navigateTo);
+            return;
+        }
+
+        const result = await getTutorialCheck(type);
+
         if (
             (navigateTo === "/reward/video" ||
                 navigateTo === "/reward/receipt") &&
-            !tutoChecked
+            !result.tutoChecked
         ) {
             navigate(`${navigateTo}tutorial`, { state: { from: "reward" } });
         } else {
@@ -44,8 +52,6 @@ const RewardItem = ({ icon, title, description, navigateTo, tutoChecked }) => {
 };
 
 export default function RewardPage() {
-    const [tutoChecked] = useState(false);
-
     return (
         <div>
             <div className={styles.container}>
@@ -65,14 +71,14 @@ export default function RewardPage() {
                             title="출석 체크"
                             description="출석을 통해 랜덤 주식을 받을 수 있어요!"
                             navigateTo="/reward/attendance"
-                            tutoChecked={tutoChecked}
+                            type="출첵"
                         />
                         <RewardItem
                             icon={videoIcon}
                             title="기업 광고 시청"
                             description="내가 원하는 기업 광고를 재미있게 시청하고 주식 받자!"
                             navigateTo="/reward/video"
-                            tutoChecked={tutoChecked}
+                            type="광고"
                         />
                         <RewardItem
                             icon={receiptIcon}
@@ -84,7 +90,7 @@ export default function RewardPage() {
                                 </>
                             }
                             navigateTo="/reward/receipt"
-                            tutoChecked={tutoChecked}
+                            type="영수증"
                         />
                     </div>
                 </motion.div>

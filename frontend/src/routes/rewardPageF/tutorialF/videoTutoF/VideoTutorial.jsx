@@ -7,6 +7,7 @@ import video from "~assets/tutorial/video/video.json";
 import stock from "~assets/tutorial/video/stock.json";
 import { IoIosArrowBack } from "react-icons/io";
 import Lottie from "lottie-react";
+import { tutorialNoLook } from "~apis/myAPI/myApi";
 
 const slides = [
     {
@@ -37,6 +38,7 @@ const slides = [
 ];
 
 export default function VideoTutorial() {
+    const [type] = useState("광고");
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isFirstRender, setIsFirstRender] = useState(true);
     const navigate = useNavigate();
@@ -59,6 +61,11 @@ export default function VideoTutorial() {
         } else {
             navigate("/reward");
         }
+    };
+
+    const handleNoLook = async () => {
+        const result = await tutorialNoLook(type);
+        navigate("/reward/video");
     };
 
     const handleSkip = () => {
@@ -135,7 +142,10 @@ export default function VideoTutorial() {
                         location.state && location.state.from == "home/useway"
                     ) &&
                         currentSlide >= 0 && (
-                            <div onClick={handleSkip} className={styles.button}>
+                            <div
+                                onClick={handleNoLook}
+                                className={styles.button}
+                            >
                                 다시 보지 않기
                             </div>
                         )}

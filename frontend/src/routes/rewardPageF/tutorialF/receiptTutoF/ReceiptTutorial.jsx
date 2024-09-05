@@ -8,6 +8,7 @@ import receipt from "~assets/tutorial/receipt/receipt.json";
 import stock from "~assets/tutorial/video/stock.json";
 import { IoIosArrowBack } from "react-icons/io";
 import Lottie from "lottie-react";
+import { tutorialNoLook } from "~apis/myAPI/myApi";
 
 const slides = [
     {
@@ -66,6 +67,11 @@ export default function ReceiptTutorial() {
             setCurrentSlide(currentSlide + 1);
         }
     };
+
+    const handleNoLook = async () => {
+        const result = await tutorialNoLook("영수증");
+        navigate("/reward/receipt");
+    }
 
     const handleSkip = () => {
         navigate("/reward/receipt");
@@ -149,7 +155,7 @@ export default function ReceiptTutorial() {
                         location.state && location.state.from == "home/useway"
                     ) &&
                         currentSlide >= 0 && (
-                            <div onClick={handleSkip} className={styles.button}>
+                            <div onClick={handleNoLook} className={styles.button}>
                                 다시 보지 않기
                             </div>
                         )}
