@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import styles from "./UserInfo.module.css";
 import { useNavigate } from "react-router-dom";
-import { store } from "~store/store";
+import { useSelector } from "react-redux";
 
 export default function UserInfo() {
     const navigate = useNavigate();
-    const state = store.getState();
-    const loginId = state.memberId.loginId;
+    const loginId = useSelector((state) => state.memberId.loginId);
+
+    useEffect(() => {
+        if (!loginId) {
+            navigate("/login");
+        }
+    }, [loginId, navigate]);
 
     return (
         <div className={styles.container}>

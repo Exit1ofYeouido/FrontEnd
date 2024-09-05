@@ -1,5 +1,5 @@
 import instance from "../basis";
-import { store } from "~store/store";
+import store from "~store/store";
 import { setCredentials } from "~store/memberIdSlice";
 import { showToast } from "~components/Toast";
 

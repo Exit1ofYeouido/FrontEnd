@@ -49,3 +49,26 @@ export const getPointHistory = async () => {
         throw error;
     }
 };
+
+export const getTutorialCheck = async (type) => {
+    try {
+        const response = await instance.get(`/my/page/check`, {
+            params: { type },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching all data:", error);
+        throw error;
+    }
+};
+
+export const tutorialNoLook = async (type) => {
+    try {
+        const response = await instance.post(`/my/page/notuto?type=${type}`);
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching all data:", error);
+        throw error;
+    }
+};
