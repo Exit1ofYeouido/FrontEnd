@@ -1,0 +1,68 @@
+.layoutWrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.layout {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+}
+
+.layout::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(248, 251, 255, 0.7);
+    z-index: 1;
+}
+
+.animatedElement {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 2;
+    background: linear-gradient(145deg, #ffd700, #ffec80);
+    box-shadow:
+            inset 2px 2px 5px #ccac00,
+            inset -2px -2px 5px #ffff00,
+            2px 2px 5px rgba(0, 0, 0, 0.1);
+    animation: falling forwards;
+}
+
+.coinFront, .coinBack {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #b8860b;
+}
+
+.coinBack {
+    transform: rotateY(180deg);
+}
+
+@keyframes falling {
+    0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateY(0) rotate(720deg);
+        opacity: 0.8;
+    }
+}
