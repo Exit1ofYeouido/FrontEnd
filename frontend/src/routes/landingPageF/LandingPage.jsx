@@ -13,11 +13,11 @@ export default function LandingPage() {
     return (
         <div className={styles.container}>
             <img src={Logo} alt="Logo" className={styles.logo}/>
-            <h1 className={styles.title}>소소한 주식, 큰 혜택으로</h1>
+            <h1 className={styles.title}>소수점 주식 리워드, 스탁크래프트 </h1>
             <p className={styles.description}>
-                소수점 주식을 모아 투자하세요.
+                광고, 영수증 인증을 통해 소수점 주식을 받아요
                 <br/>
-                작은 금액으로 시작하는 스마트한 앱테크!
+                클릭 몇 번으로 간단히 주주가 되어보세요!
             </p>
             <button className={styles.button} onClick={goLogin}>
                 시작하기
