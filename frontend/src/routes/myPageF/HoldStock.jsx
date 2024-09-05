@@ -29,8 +29,8 @@ export default function HoldStock() {
                 setStocks(holdStockData);
                 setTransactions(stockHistoryData);
                 setIsFirstRender(false);
-                console.log(holdStockData);
-                console.log(stockHistoryData);
+                console.log(stocks);
+                console.log(transactions);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -187,7 +187,7 @@ export default function HoldStock() {
                                             <div
                                                 className={styles.stockQuantity}
                                             >
-                                                {stock.holdStockCount} 주
+                                                {stock.holdStockCount.toFixed(6)} 주
                                             </div>
                                             <div className={styles.stockValue}>
                                                 0.00원 ({stock.earningRate})
@@ -231,7 +231,7 @@ export default function HoldStock() {
                                                     >
                                                         {transaction.name}{" "}
                                                         {transaction.type ===
-                                                        "매수"
+                                                        "입금"
                                                             ? "획득"
                                                             : "판매"}
                                                     </div>
@@ -240,13 +240,13 @@ export default function HoldStock() {
                                                             styles.transactionQuantity
                                                         } ${
                                                             transaction.type ===
-                                                            "매수"
+                                                            "입금"
                                                                 ? styles.redText
                                                                 : styles.blueText
                                                         }`}
                                                     >
                                                         {transaction.type ===
-                                                        "매수"
+                                                        "입금"
                                                             ? "+"
                                                             : "-"}
                                                         {transaction.amount} 주

@@ -3,21 +3,30 @@ import styles from "./StockPage.module.css";
 import { motion } from "framer-motion";
 import stockData from "./stocks.json";
 import { IoMdSearch } from "react-icons/io";
+import { getStock } from "~apis/stockAPI/getStockApi";
+import { useNavigate } from "react-router-dom";
 
 export default function StockPage() {
+    const [stocks, setStocks] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const [selectedIndex, setSelectedIndex] = useState(-1);
     const suggestionRefs = useRef([]);
     const [isSuggestionsVisible, setIsSuggestionsVisible] = useState(true);
+    const navigate = useNavigate();
 
-    const stocks = [
-        { name: "이엠텍", code: "00800", change: "▲5,000", price: "80000원" },
-        { name: "이엠텍", code: "00800", change: "▲5,000", price: "80000원" },
-        { name: "이엠텍", code: "00800", change: "▲5,000", price: "80000원" },
-        { name: "이엠텍", code: "00800", change: "▲5,000", price: "80000원" },
-        { name: "이엠텍", code: "00800", change: "▲5,000", price: "80000원" },
-    ];
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await getStock();
+                setStocks(response);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const handleSearchChange = (e) => {
         const value = e.target.value;
@@ -147,28 +156,39 @@ export default function StockPage() {
                 </div>
 
                 <div className={styles.list}>
-                    <div className={styles.header}>수익률 상위 종목</div>
+                    <div className={styles.header}>종목 목록</div>
                     <div className={styles.totalCard}>
-                        {stocks.map((stock, index) => (
-                            <div key={index} className={styles.stockCard}>
-                                <div className={styles.stockInfo}>
-                                    <div className={styles.stockName}>
-                                        {stock.name}
+                        {stocks.length > 0 &&
+                            stocks.slice(0, 5).map((stock, index) => (
+                                <div
+                                    key={index}
+                                    className={styles.stockCard}
+                                    onClick={() =>
+                                        navigate("/stock/chart", {
+                                            state: {
+                                                stockCode: stock.stockCode,
+                                            },
+                                        })
+                                    }
+                                >
+                                    <div className={styles.stockInfo}>
+                                        <div className={styles.stockName}>
+                                            {stock.stockName}
+                                        </div>
+                                        <div className={styles.stockCode}>
+                                            {stock.stockCode}
+                                        </div>
                                     </div>
-                                    <div className={styles.stockCode}>
-                                        {stock.code}
+                                    <div className={styles.stockDetails}>
+                                        <div className={styles.stockChange}>
+                                            {stock.previousPrice}
+                                        </div>
+                                        <div className={styles.stockPrice}>
+                                            {stock.stockPrice}
+                                        </div>
                                     </div>
                                 </div>
-                                <div className={styles.stockDetails}>
-                                    <div className={styles.stockChange}>
-                                        {stock.change}
-                                    </div>
-                                    <div className={styles.stockPrice}>
-                                        {stock.price}
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
+                            ))}
                     </div>
                 </div>
             </div>

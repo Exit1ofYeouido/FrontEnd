@@ -13,7 +13,6 @@
     font-weight: 600;
     position: relative;
     width: 100%;
-    margin-bottom: 30px;
 }
 
 .searchContainer {
@@ -77,6 +76,7 @@
 .list {
     position: relative;
     top: 100px;
+    height: auto;
 }
 
 .header {
@@ -104,6 +104,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 30px;
 }
 
 .stockInfo {
@@ -137,4 +138,227 @@
     margin-left: 10px;
     font-size: 16px;
     color: #000;
+}
+
+@media (max-height: 890px) {
+    .stockCard {
+        height: 25px;
+    }
+}
+
+@media (max-height: 870px) {
+    .searchInput {
+        width: 80%;
+        padding: 13px;
+        font-size: 14px;
+    }
+
+    .stockCard {
+        height: 20px;
+    }
+
+    .searchsearch {
+        margin-top: 70px;
+    }
+}
+
+@media (max-height: 870px) {
+    .searchInput {
+        width: 80%;
+        padding: 13px;
+        font-size: 13px;
+    }
+
+    .stockCard {
+        height: 18px;
+    }
+
+    .searchsearch {
+        margin-top: 60px;
+    }
+}
+
+@media (max-height: 830px) {
+    .searchInput {
+        width: 80%;
+        padding: 13px;
+        font-size: 12px;
+    }
+
+    .stockCard {
+        height: 16px;
+    }
+
+    .searchsearch {
+        margin-top: 50px;
+    }
+
+    .stockName {
+        font-size: 16px;
+    }
+
+    .stockCode {
+        font-size: 12px;
+    }
+
+    .stockChange {
+        font-size: 12px;
+    }
+
+    .stockPrice {
+        font-size: 14px;
+    }
+}
+
+@media (max-height: 800px) {
+    .searchInput {
+        width: 70%;
+        padding: 11px;
+        font-size: 12px;
+    }
+
+    .stockCard {
+        height: 16px;
+    }
+
+    .searchsearch {
+        margin-top: 40px;
+    }
+
+    .stockName {
+        font-size: 16px;
+    }
+
+    .stockCode {
+        font-size: 12px;
+    }
+
+    .stockChange {
+        font-size: 12px;
+    }
+
+    .stockPrice {
+        font-size: 14px;
+    }
+
+    .header {
+        margin-top: 40px;
+    }
+}
+
+@media (max-height: 780px) {
+    .searchInput {
+        width: 70%;
+        padding: 11px;
+        font-size: 12px;
+    }
+
+    .stockCard {
+        height: 13px;
+    }
+
+    .searchsearch {
+        margin-top: 30px;
+    }
+
+    .stockName {
+        font-size: 15px;
+    }
+
+    .stockCode {
+        font-size: 11px;
+    }
+
+    .stockChange {
+        font-size: 11px;
+    }
+
+    .stockPrice {
+        font-size: 13px;
+    }
+
+    .header {
+        margin-top: 30px;
+    }
+}
+
+@media (max-height: 750px) {
+    .searchInput {
+        width: 70%;
+        padding: 11px;
+        font-size: 12px;
+    }
+
+    .stockCard {
+        height: 10px;
+    }
+
+    .searchsearch {
+        margin-top: 30px;
+    }
+
+    .stockName {
+        font-size: 15px;
+    }
+
+    .stockCode {
+        font-size: 11px;
+    }
+
+    .stockChange {
+        font-size: 11px;
+    }
+
+    .stockPrice {
+        font-size: 13px;
+    }
+
+    .header {
+        margin-top: 10px;
+    }
+
+    .list {
+        top: 80px;
+    }
+}
+
+
+@media (max-height: 720px) {
+    .searchInput {
+        width: 70%;
+        padding: 11px;
+        font-size: 12px;
+    }
+
+    .stockCard {
+        height: 8px;
+    }
+
+    .searchsearch {
+        margin-top: 30px;
+    }
+
+    .stockName {
+        font-size: 14px;
+    }
+
+    .stockCode {
+        font-size: 10px;
+    }
+
+    .stockChange {
+        font-size: 10px;
+    }
+
+    .stockPrice {
+        font-size: 12px;
+    }
+
+    .header {
+        margin-top: 10px;
+    }
+
+    .list {
+        top: 60px;
+    }
 }

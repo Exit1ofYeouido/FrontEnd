@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import styles from "./ChartPage.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { getStockPrice, getStockChart } from "~apis/stockAPI/getStockApi";
+
 import {
     LineChart,
     Line,
@@ -13,210 +15,37 @@ import {
 
 export default function ChartPage() {
     const navigate = useNavigate();
-    const [activePeriod, setActivePeriod] = useState("1w");
+    const [activePeriod, setActivePeriod] = useState("1W");
+    const [stocksPrice, setStocksPrice] = useState({});
+    const [stocksChart, setStocksChart] = useState([]);
+    const location = useLocation();
+    const { stockCode } = location.state || {};
 
-    const data = {
-        stockName: "SK하이닉스",
-        stockCode: "000660",
-        stockPrice: 170800,
-        availableAmount: 0.25,
-        previousPrice: "-2900",
-        previousRate: "-1.67",
-        stockPriceList: [
-            {
-                date: "2024-09-03",
-                price: 170100,
-            },
-            {
-                date: "2024-09-03",
-                price: 170800,
-            },
-            {
-                date: "2024-09-03",
-                price: 170600,
-            },
-            {
-                date: "2024-09-03",
-                price: 170300,
-            },
-            {
-                date: "2024-09-03",
-                price: 170200,
-            },
-            {
-                date: "2024-09-02",
-                price: 170800,
-            },
-            {
-                date: "2024-08-30",
-                price: 173700,
-            },
-            {
-                date: "2024-08-29",
-                price: 169700,
-            },
-            {
-                date: "2024-09-03",
-                price: 170100,
-            },
-            {
-                date: "2024-09-03",
-                price: 170800,
-            },
-            {
-                date: "2024-09-03",
-                price: 170600,
-            },
-            {
-                date: "2024-09-03",
-                price: 170300,
-            },
-            {
-                date: "2024-09-03",
-                price: 170200,
-            },
-            {
-                date: "2024-09-02",
-                price: 170800,
-            },
-            {
-                date: "2024-08-30",
-                price: 173700,
-            },
-            {
-                date: "2024-08-29",
-                price: 169700,
-            },
-            {
-                date: "2024-09-03",
-                price: 170100,
-            },
-            {
-                date: "2024-09-03",
-                price: 170800,
-            },
-            {
-                date: "2024-09-03",
-                price: 170600,
-            },
-            {
-                date: "2024-09-03",
-                price: 170300,
-            },
-            {
-                date: "2024-09-03",
-                price: 170200,
-            },
-            {
-                date: "2024-09-02",
-                price: 170800,
-            },
-            {
-                date: "2024-08-30",
-                price: 173700,
-            },
-            {
-                date: "2024-08-29",
-                price: 169700,
-            },
-            {
-                date: "2024-09-03",
-                price: 170100,
-            },
-            {
-                date: "2024-09-03",
-                price: 170800,
-            },
-            {
-                date: "2024-09-03",
-                price: 170600,
-            },
-            {
-                date: "2024-09-03",
-                price: 170300,
-            },
-            {
-                date: "2024-09-03",
-                price: 170200,
-            },
-            {
-                date: "2024-09-02",
-                price: 170800,
-            },
-            {
-                date: "2024-08-30",
-                price: 173700,
-            },
-            {
-                date: "2024-08-29",
-                price: 169700,
-            },
-            {
-                date: "2024-09-03",
-                price: 170100,
-            },
-            {
-                date: "2024-09-03",
-                price: 170800,
-            },
-            {
-                date: "2024-09-03",
-                price: 170600,
-            },
-            {
-                date: "2024-09-03",
-                price: 170300,
-            },
-            {
-                date: "2024-09-03",
-                price: 170200,
-            },
-            {
-                date: "2024-09-02",
-                price: 170800,
-            },
-            {
-                date: "2024-08-30",
-                price: 173700,
-            },
-            {
-                date: "2024-08-29",
-                price: 169700,
-            },
-            {
-                date: "2024-09-03",
-                price: 170100,
-            },
-            {
-                date: "2024-09-03",
-                price: 170800,
-            },
-            {
-                date: "2024-09-03",
-                price: 170600,
-            },
-            {
-                date: "2024-09-03",
-                price: 170300,
-            },
-            {
-                date: "2024-09-03",
-                price: 170200,
-            },
-            {
-                date: "2024-09-02",
-                price: 170800,
-            },
-            {
-                date: "2024-08-30",
-                price: 173700,
-            },
-            {
-                date: "2024-08-29",
-                price: 169700,
-            },
-        ],
-    };
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const price = await getStockPrice(stockCode);
+                setStocksPrice(price);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const chart = await getStockChart(stockCode, activePeriod);
+                setStocksChart(chart.stockPriceList);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+    }, [activePeriod]);
 
     const handleBack = () => {
         navigate("/stock");
@@ -227,21 +56,23 @@ export default function ChartPage() {
         setActivePeriod(period);
     };
 
-    const isNegative = data.previousPrice.startsWith("-");
+    const isNegative = stocksPrice.previousPrice
+        ? stocksPrice.previousPrice.startsWith("-")
+        : false;
 
     const formatNumber = (number) => {
         return new Intl.NumberFormat().format(number);
     };
 
-    const prices = data.stockPriceList.map((item) => item.price);
+    const prices = stocksChart.map((item) => item.price);
     const minPrice = Math.min(...prices);
     const maxPrice = Math.max(...prices);
 
-    const maxPriceIndex = data.stockPriceList.findIndex(
+    const maxPriceIndex = stocksChart.findIndex(
         (item) => item.price === maxPrice
     );
 
-    const minPriceIndex = data.stockPriceList.findIndex(
+    const minPriceIndex = stocksChart.findIndex(
         (item) => item.price === minPrice
     );
 
@@ -256,11 +87,15 @@ export default function ChartPage() {
 
             <div className={styles.info}>
                 <div className={styles.stockNameGroup}>
-                    <div className={styles.stockName}>{data.stockName}</div>
-                    <div className={styles.stockCode}>{data.stockCode}</div>
+                    <div className={styles.stockName}>
+                        {stocksPrice.stockName}
+                    </div>
+                    <div className={styles.stockCode}>
+                        {stocksPrice.stockCode}
+                    </div>
                 </div>
                 <div className={styles.stockPrice}>
-                    {formatNumber(data.stockPrice)}
+                    {formatNumber(stocksPrice.stockPrice)}
                 </div>
                 <div
                     className={
@@ -271,10 +106,10 @@ export default function ChartPage() {
                 >
                     <div className={styles.previousDay}>전날보다</div>
                     <div className={styles.previousPrice}>
-                        {formatNumber(data.previousPrice)}원
+                        {formatNumber(stocksPrice.previousPrice)}원
                     </div>
                     <div className={styles.previousRate}>
-                        ({data.previousRate}%)
+                        ({stocksPrice.previousRate}%)
                     </div>
                 </div>
             </div>
@@ -282,7 +117,7 @@ export default function ChartPage() {
             <div className={styles.chartContainer}>
                 <ResponsiveContainer>
                     <LineChart
-                        data={data.stockPriceList}
+                        data={stocksChart}
                         margin={{ top: 70, right: 10, left: -55, bottom: 0 }}
                     >
                         <XAxis dataKey="date" tick={false} axisLine={false} />{" "}
@@ -317,7 +152,7 @@ export default function ChartPage() {
                             strokeWidth={3}
                             dot={(dotProps) => {
                                 const { index, cx, cy } = dotProps;
-                                if (index === data.stockPriceList.length - 1) {
+                                if (index === stocksChart.length - 1) {
                                     return (
                                         <circle
                                             key={`dot-${index}`}
@@ -383,43 +218,42 @@ export default function ChartPage() {
             <div className={styles.tabs}>
                 <div
                     className={`${styles.tabButton} ${
-                        activePeriod === "1w" ? styles.activeTab : ""
+                        activePeriod === "1W" ? styles.activeTab : ""
                     }`}
-                    onClick={() => handlePeriodChange("1w")}
+                    onClick={() => handlePeriodChange("1W")}
                 >
                     1주
                 </div>
                 <div
                     className={`${styles.tabButton} ${
-                        activePeriod === "1m" ? styles.activeTab : ""
+                        activePeriod === "1M" ? styles.activeTab : ""
                     }`}
-                    onClick={() => handlePeriodChange("1m")}
+                    onClick={() => handlePeriodChange("1M")}
                 >
                     1달
                 </div>
                 <div
                     className={`${styles.tabButton} ${
-                        activePeriod === "3m" ? styles.activeTab : ""
+                        activePeriod === "3M" ? styles.activeTab : ""
                     }`}
-                    onClick={() => handlePeriodChange("3m")}
+                    onClick={() => handlePeriodChange("3M")}
                 >
                     3달
                 </div>
                 <div
                     className={`${styles.tabButton} ${
-                        activePeriod === "1y" ? styles.activeTab : ""
+                        activePeriod === "1Y" ? styles.activeTab : ""
                     }`}
-                    onClick={() => handlePeriodChange("1y")}
+                    onClick={() => handlePeriodChange("1Y")}
                 >
                     1년
                 </div>
             </div>
-            
+
             <div>내 주식</div>
-            
-            
+
             <div>
-                {data.availableAmount > 0 ? (
+                {stocksPrice.availableAmount > 0 ? (
                     <div className={styles.buttonGroup}>
                         <button className={styles.sellButton}>판매</button>
                         <button className={styles.buyButton}>구매</button>
