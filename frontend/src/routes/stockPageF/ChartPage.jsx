@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import styles from "./ChartPage.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getStockPrice, getStockChart } from "~apis/stockAPI/getStockApi";
-
 import {
     LineChart,
     Line,
@@ -20,6 +19,25 @@ export default function ChartPage() {
     const [stocksChart, setStocksChart] = useState([]);
     const location = useLocation();
     const { stockCode } = location.state || {};
+    const chartRef = useRef(null); // 차트 컨테이너 참조 생성
+
+    const [containerWidth, setContainerWidth] = useState(0);
+
+    useEffect(() => {
+        // 차트 컨테이너의 너비를 설정
+        const updateContainerWidth = () => {
+            if (chartRef.current) {
+                setContainerWidth(chartRef.current.offsetWidth); // 컨테이너의 너비 가져오기
+            }
+        };
+
+        updateContainerWidth(); // 초기 설정
+        window.addEventListener("resize", updateContainerWidth); // 리사이즈 시 업데이트
+
+        return () => {
+            window.removeEventListener("resize", updateContainerWidth); // 리스너 제거
+        };
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -52,7 +70,6 @@ export default function ChartPage() {
     };
 
     const handlePeriodChange = (period) => {
-        console.log(period);
         setActivePeriod(period);
     };
 
@@ -71,10 +88,12 @@ export default function ChartPage() {
     const maxPriceIndex = stocksChart.findIndex(
         (item) => item.price === maxPrice
     );
-
     const minPriceIndex = stocksChart.findIndex(
         (item) => item.price === minPrice
     );
+
+    const reversedMaxPriceIndex = stocksChart.length - 1 - maxPriceIndex;
+    const reversedMinPriceIndex = stocksChart.length - 1 - minPriceIndex;
 
     return (
         <div className={styles.container}>
@@ -114,13 +133,14 @@ export default function ChartPage() {
                 </div>
             </div>
 
-            <div className={styles.chartContainer}>
-                <ResponsiveContainer>
+            <div className={styles.chartContainer} ref={chartRef}>
+                <ResponsiveContainer width="100%" height={300}>
                     <LineChart
-                        data={stocksChart}
-                        margin={{ top: 70, right: 10, left: -55, bottom: 0 }}
+                        data={stocksChart.slice().reverse()}
+                        margin={{ top: 0, right: 10, left: -55, bottom: 0 }}
+                        clipPath={false}
                     >
-                        <XAxis dataKey="date" tick={false} axisLine={false} />{" "}
+                        <XAxis dataKey="date" tick={false} axisLine={false} />
                         <YAxis
                             domain={["dataMin - 500", "dataMax + 500"]}
                             tick={false}
@@ -152,6 +172,13 @@ export default function ChartPage() {
                             strokeWidth={3}
                             dot={(dotProps) => {
                                 const { index, cx, cy } = dotProps;
+                                const margin = 10;
+
+                                // 텍스트가 화면 밖으로 나가지 않도록 조정
+                                const isTextOverflowingRight =
+                                    cx + 100 > containerWidth - margin;
+                                const isTextTooLeft = cx - 100 < margin;
+
                                 if (index === stocksChart.length - 1) {
                                     return (
                                         <circle
@@ -163,7 +190,7 @@ export default function ChartPage() {
                                         />
                                     );
                                 }
-                                if (index === maxPriceIndex) {
+                                if (index === reversedMaxPriceIndex) {
                                     return (
                                         <>
                                             <circle
@@ -174,7 +201,13 @@ export default function ChartPage() {
                                                 fill="blue"
                                             />
                                             <text
-                                                x={cx + 10}
+                                                x={
+                                                    isTextOverflowingRight
+                                                        ? cx - 100 // 오른쪽 경계를 넘으면 왼쪽으로 이동
+                                                        : isTextTooLeft
+                                                        ? cx + 10 // 왼쪽 경계를 넘으면 오른쪽으로 이동
+                                                        : cx + 10
+                                                }
                                                 y={cy - 10}
                                                 fill="blue"
                                                 fontSize={12}
@@ -186,7 +219,7 @@ export default function ChartPage() {
                                         </>
                                     );
                                 }
-                                if (index === minPriceIndex) {
+                                if (index === reversedMinPriceIndex) {
                                     return (
                                         <>
                                             <circle
@@ -197,7 +230,13 @@ export default function ChartPage() {
                                                 fill="red"
                                             />
                                             <text
-                                                x={cx + 10}
+                                                x={
+                                                    isTextOverflowingRight
+                                                        ? cx - 100 // 오른쪽 경계를 넘으면 왼쪽으로 이동
+                                                        : isTextTooLeft
+                                                        ? cx + 10 // 왼쪽 경계를 넘으면 오른쪽으로 이동
+                                                        : cx + 10
+                                                }
                                                 y={cy + 15}
                                                 fill="red"
                                                 fontSize={12}
