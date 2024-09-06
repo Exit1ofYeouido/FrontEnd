@@ -113,7 +113,7 @@
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
     position: relative;
-    z-index: 10000;
+    z-index: 1000;
 }
 
 .tabButton {

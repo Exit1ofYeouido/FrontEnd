@@ -3,7 +3,7 @@ import styles from "./StockPage.module.css";
 import { motion } from "framer-motion";
 import stockData from "./stocks.json";
 import { IoMdSearch } from "react-icons/io";
-import { getStock } from "~apis/stockAPI/getStockApi";
+import { getStock, getSearchStock } from "~apis/stockAPI/getStockApi";
 import { useNavigate } from "react-router-dom";
 
 export default function StockPage() {
@@ -47,14 +47,32 @@ export default function StockPage() {
         }
     };
 
-    const handleSuggestionClick = (suggestion) => {
+    const handleSuggestionClick = async (suggestion) => {
         setSearchTerm(suggestion.stock_name);
         setSuggestions([]);
         setSelectedIndex(-1);
         setIsSuggestionsVisible(false);
+
+        try {
+            const searchResults = await getSearchStock(suggestion.stock_name);
+            setStocks(searchResults);
+        } catch (error) {
+            console.error("Error fetching stock details:", error);
+        }
     };
 
-    const handleKeyDown = (e) => {
+    const handleSearch = async (searchTerm) => {
+        if (searchTerm) {
+            try {
+                const searchResults = await getSearchStock(searchTerm);
+                setStocks(searchResults);
+            } catch (error) {
+                console.error("Error fetching search results:", error);
+            }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        }
+    };
+
+    const handleKeyDown = async (e) => {
         if (e.key === "ArrowDown") {
             setSelectedIndex((prevIndex) =>
                 Math.min(prevIndex + 1, suggestions.length - 1)
@@ -64,6 +82,8 @@ export default function StockPage() {
         } else if (e.key === "Enter") {
             if (selectedIndex >= 0 && suggestions[selectedIndex]) {
                 handleSuggestionClick(suggestions[selectedIndex]);
+            } else {
+                await handleSearch(searchTerm);
             }
         }
     };
@@ -111,7 +131,7 @@ export default function StockPage() {
                     <div>종목 검색</div>
                 </div>
                 <div className={styles.searchsearch}>
-                    {/* <IoMdSearch className={styles.searchIcon}/> */}
+                    <IoMdSearch className={styles.searchIcon} />
                     <div className={styles.searchContainer}>
                         <div className={styles.search} onBlur={handleBlur}>
                             <input

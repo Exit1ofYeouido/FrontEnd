@@ -65,7 +65,6 @@ export const getTutorialCheck = async (type) => {
 export const tutorialNoLook = async (type) => {
     try {
         const response = await instance.post(`/my/page/notuto?type=${type}`);
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error("Error fetching all data:", error);

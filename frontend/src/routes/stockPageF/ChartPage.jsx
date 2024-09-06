@@ -3,6 +3,8 @@ import { IoIosArrowBack } from "react-icons/io";
 import styles from "./ChartPage.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getStockPrice, getStockChart } from "~apis/stockAPI/getStockApi";
+import { sellStock } from "~apis/stockAPI/sellStockApi";
+import SellModal from "./SellModal";
 import {
     LineChart,
     Line,
@@ -19,7 +21,8 @@ export default function ChartPage() {
     const [stocksChart, setStocksChart] = useState([]);
     const location = useLocation();
     const { stockCode } = location.state || {};
-    const chartRef = useRef(null); // 차트 컨테이너 참조 생성
+    const [showSellModal, setShowSellModal] = useState(false);
+    const chartRef = useRef(null);
 
     const [containerWidth, setContainerWidth] = useState(0);
 
@@ -27,15 +30,15 @@ export default function ChartPage() {
         // 차트 컨테이너의 너비를 설정
         const updateContainerWidth = () => {
             if (chartRef.current) {
-                setContainerWidth(chartRef.current.offsetWidth); // 컨테이너의 너비 가져오기
+                setContainerWidth(chartRef.current.offsetWidth);
             }
         };
 
-        updateContainerWidth(); // 초기 설정
-        window.addEventListener("resize", updateContainerWidth); // 리사이즈 시 업데이트
+        updateContainerWidth();
+        window.addEventListener("resize", updateContainerWidth);
 
         return () => {
-            window.removeEventListener("resize", updateContainerWidth); // 리스너 제거
+            window.removeEventListener("resize", updateContainerWidth);
         };
     }, []);
 
@@ -67,6 +70,29 @@ export default function ChartPage() {
 
     const handleBack = () => {
         navigate("/stock");
+    };
+
+    const handleSellClick = () => {
+        setShowSellModal(true);
+    };
+
+    const closeSellModal = () => {
+        setShowSellModal(false);
+    };
+
+    const handleSell = async (quantity) => {
+        try {
+            console.log(stockCode);
+            console.log(stocksPrice.stockName); 
+            console.log(quantity);
+            await sellStock(stockCode, stocksPrice.stockName, quantity);
+
+            setShowSellModal(false);
+            alert("판매가 완료되었습니다.");
+        } catch (error) {
+            console.error("판매 실패:", error);
+            alert("판매 중 오류가 발생했습니다.");
+        }
     };
 
     const handlePeriodChange = (period) => {
@@ -174,7 +200,6 @@ export default function ChartPage() {
                                 const { index, cx, cy } = dotProps;
                                 const margin = 10;
 
-                                // 텍스트가 화면 밖으로 나가지 않도록 조정
                                 const isTextOverflowingRight =
                                     cx + 100 > containerWidth - margin;
                                 const isTextTooLeft = cx - 100 < margin;
@@ -203,9 +228,9 @@ export default function ChartPage() {
                                             <text
                                                 x={
                                                     isTextOverflowingRight
-                                                        ? cx - 100 // 오른쪽 경계를 넘으면 왼쪽으로 이동
+                                                        ? cx - 100
                                                         : isTextTooLeft
-                                                        ? cx + 10 // 왼쪽 경계를 넘으면 오른쪽으로 이동
+                                                        ? cx + 10
                                                         : cx + 10
                                                 }
                                                 y={cy - 10}
@@ -232,9 +257,9 @@ export default function ChartPage() {
                                             <text
                                                 x={
                                                     isTextOverflowingRight
-                                                        ? cx - 100 // 오른쪽 경계를 넘으면 왼쪽으로 이동
+                                                        ? cx - 100
                                                         : isTextTooLeft
-                                                        ? cx + 10 // 왼쪽 경계를 넘으면 오른쪽으로 이동
+                                                        ? cx + 10
                                                         : cx + 10
                                                 }
                                                 y={cy + 15}
@@ -294,7 +319,12 @@ export default function ChartPage() {
             <div>
                 {stocksPrice.availableAmount > 0 ? (
                     <div className={styles.buttonGroup}>
-                        <button className={styles.sellButton}>판매</button>
+                        <button
+                            className={styles.sellButton}
+                            onClick={handleSellClick}
+                        >
+                            판매
+                        </button>
                         <button className={styles.buyButton}>구매</button>
                     </div>
                 ) : (
@@ -303,6 +333,17 @@ export default function ChartPage() {
                     </div>
                 )}
             </div>
+
+            {showSellModal && (
+                <SellModal
+                    onClose={closeSellModal}
+                    stockName={stocksPrice.stockName}
+                    totalAmount={504}
+                    shareAmount={0.001672}
+                    fee={0}
+                    onSell={handleSell}
+                />
+            )}
         </div>
     );
 }
