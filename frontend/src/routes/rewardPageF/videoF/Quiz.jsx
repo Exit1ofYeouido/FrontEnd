@@ -18,7 +18,6 @@ export default function Quiz({ onClose, mediaId, enterpriseName }) {
     const [isCorrect, setIsCorrect] = useState(null);
     const [showErrorAnimation, setShowErrorAnimation] = useState(false);
     const [showCorrectAnimation, setShowCorrectAnimation] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(null)
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -37,7 +36,6 @@ export default function Quiz({ onClose, mediaId, enterpriseName }) {
     }, [mediaId]);
 
     const handleOptionClick = async (selectedOptionIndex) => {
-        setSelectedOption(selectedOptionIndex);
         if (selectedOptionIndex === answer) {
             try {
                 const data = await quizCorrectApi(mediaId, enterpriseName);
@@ -51,14 +49,6 @@ export default function Quiz({ onClose, mediaId, enterpriseName }) {
         } else {
             setShowErrorAnimation(true);
         }
-        setTimeout(() => {
-            setSelectedOption(null);
-            setShowErrorAnimation(false);
-            setShowCorrectAnimation(false);
-            if (isCorrect) {
-                setShowModal(true);
-            }
-        }, 1500);
     };
 
     const handleAnimationComplete = () => {
@@ -101,13 +91,7 @@ export default function Quiz({ onClose, mediaId, enterpriseName }) {
                     {quizSectionList.map((option, index) => (
                         <div
                             key={index + 1}
-                            className={`${styles.select} ${
-                                selectedOption === index + 1
-                                    ? isCorrect
-                                        ? styles.correct
-                                        : styles.incorrect
-                                    : ""
-                            }`}
+                            className={styles.select}
                             onClick={() => handleOptionClick(index + 1)}
                         >
                             {option}
@@ -117,26 +101,22 @@ export default function Quiz({ onClose, mediaId, enterpriseName }) {
             </motion.div>
             {showErrorAnimation && (
                 <div className={styles.errorAnimation}>
-                    <div className={styles.animationContent}>
-                        <Lottie
-                            animationData={errorAnimation}
-                            loop={false}
-                            speed={1}
-                        />
-                        <p>오답입니다. 다시 시도해보세요!</p>
-                    </div>
+                    <Lottie
+                        animationData={errorAnimation}
+                        loop={false}
+                        speed={1}
+                        onComplete={handleAnimationComplete}
+                    />
                 </div>
             )}
             {showCorrectAnimation && (
                 <div className={styles.correctAnimation}>
-                    <div className={styles.animationContent}>
-                        <Lottie
-                            animationData={correctAnimation}
-                            loop={false}
-                            speed={0.5}
-                        />
-                        <p>정답입니다! 축하합니다!</p>
-                    </div>
+                    <Lottie
+                        animationData={correctAnimation}
+                        loop={false}
+                        speed={0.5}
+                        onComplete={handleAnimationComplete}
+                    />
                 </div>
             )}
             {showModal && (
