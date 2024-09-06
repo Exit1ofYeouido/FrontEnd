@@ -9,15 +9,27 @@ const refreshInstance = axios.create({
     withCredentials: true,
 });
 
+refreshInstance.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem("accessToken");
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
 export const refreshAccessToken = async () => {
     try {
         const response = await refreshInstance.post("/auth/reissue");
 
-        const accessToken = response.headers["accessToken"];
+        const accessToken = response.headers["accsstoken"];
 
         if (!accessToken) {
-            console.error("토큰 갱신 실패");
-            logout();
+            console.error("토큰 시발 실패");
             return null;
         }
 

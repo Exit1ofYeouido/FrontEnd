@@ -1,5 +1,6 @@
 import axios from "axios";
 import { refreshAccessToken } from "./loginAPI/auth";
+import { logout } from "./loginAPI/login";
 
 const instance = axios.create({
     baseURL: "/api",
@@ -31,11 +32,9 @@ instance.interceptors.response.use(
 
         if (error.response.status === 403 && !originalRequest._retry) {
             originalRequest._retry = true;
-
             try {
                 const newToken = await refreshAccessToken();
                 if (newToken) {
-                    originalRequest.headers.Authorization = `Bearer ${newToken}`;
                     return instance(originalRequest);
                 } else {
                     console.error("토큰 갱신 실패");
