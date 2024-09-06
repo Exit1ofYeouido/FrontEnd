@@ -1,12 +1,46 @@
+.pageContainer {
+    min-height: 100vh;
+    background: linear-gradient(164deg, #fff 0.02%, #ffeaeb 99.98%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    max-width: 480px;
     height: 100vh;
-    background: linear-gradient(164deg, #fff 0.02%, #ffeaeb 99.98%);
+    max-height: 800px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 20px;
     box-sizing: border-box;
     overflow: hidden;
+}
+
+.topBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.topBarTitle {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.arrow {
+    position: absolute;
+    left: 20px;
+    cursor: pointer;
+    font-size: 24px;
+    color: #333;
 }
 
 .slide {
@@ -16,27 +50,11 @@
     text-align: center;
     flex-grow: 1;
     justify-content: center;
-    overflow: hidden;
-}
-
-.topBar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    font-weight: 600;
-    position: relative;
-    width: 100%;
-}
-
-.topBar .arrow {
-    position: absolute;
-    left: 0px;
-    cursor: pointer;
+    padding: 20px;
 }
 
 .iconWrapper {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .icon {
@@ -49,45 +67,67 @@
     max-width: 200px;
 }
 
-.title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
 .description {
     font-size: 22px;
     line-height: 1.5;
     font-weight: 500;
+    color: #333;
+}
+
+.progressBar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.progressDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    margin: 0 5px;
+    transition: background-color 0.3s ease;
+}
+
+.progressDot.active {
+    background-color: #ff6b6b;
 }
 
 .controls {
     width: 100%;
-    height: 65px;
-    background-color: #fff;
     display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
 }
 
 .button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+    flex: 1;
+    padding: 15px 0;
     font-size: 18px;
-    background-color: white;
-    cursor: pointer;
-    border: 0.5px solid #e0e0e0;
     font-weight: 500;
     text-align: center;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.button:first-child {
+    margin-right: 10px;
+}
+
+.primaryButton {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+.primaryButton:hover {
+    background-color: #ff5252;
 }
 
 @media (max-width: 480px) {
     .container {
-        width: calc(100vw - 20px);
-        max-width: 460px;
-    }
-
-    .icon {
-        width: calc(45vw);
+        border-radius: 0;
+        height: 100vh;
+        max-height: none;
     }
 }
