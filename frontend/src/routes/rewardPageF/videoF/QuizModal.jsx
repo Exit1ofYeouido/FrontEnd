@@ -5,12 +5,12 @@ import Lottie from "lottie-react";
 import congratulationAnimation from "~assets/reward/congratulation.json";
 
 export default function QuizModal({
-    onClose,
-    enterpriseName,
-    amount,
-    goVideo,
-    goCompany,
-}) {
+                                      onClose,
+                                      enterpriseName,
+                                      amount,
+                                      goVideo,
+                                      goCompany,
+                                  }) {
     return (
         <div className={styles.modalOverlay}>
             <motion.div
