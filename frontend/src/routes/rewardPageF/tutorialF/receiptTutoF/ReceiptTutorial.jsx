@@ -17,7 +17,7 @@ const slides = [
         description: (
             <>
                 좋아하는 브랜드의 물품을 <br />
-                구매해보세요
+                구매해 보세요
             </>
         ),
     },
@@ -58,6 +58,7 @@ export default function ReceiptTutorial() {
     const [isFirstRender, setIsFirstRender] = useState(true);
     const navigate = useNavigate();
     const location = useLocation();
+
     useEffect(() => {
         setIsFirstRender(false);
     }, []);
@@ -107,22 +108,26 @@ export default function ReceiptTutorial() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
+            className={styles.pageContainer}
         >
             <div className={styles.container}>
                 <div className={styles.topBar}>
-                    <div className={styles.arrow} onClick={handleBack}>
+                    <motion.div
+                        className={styles.arrow}
+                        onClick={handleBack}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                    >
                         <IoIosArrowBack />
-                    </div>
-                    <div>영수증 인증</div>
+                    </motion.div>
+                    <div className={styles.topBarTitle}>영수증 인증</div>
                 </div>
 
                 <motion.div
                     className={styles.slide}
                     key={currentSlide}
                     variants={variants}
-                    initial={
-                        isFirstRender && currentSlide === 0 ? false : "enter"
-                    }
+                    initial={isFirstRender && currentSlide === 0 ? false : "enter"}
                     animate="center"
                     exit="exit"
                     transition={{
@@ -134,39 +139,60 @@ export default function ReceiptTutorial() {
                         <Lottie
                             animationData={slides[currentSlide].animationData}
                             loop={true}
-                            className={`${styles.icon} ${
-                                currentSlide === 0
-                                    ? styles.slide1
-                                    : currentSlide === 1
-                                    ? styles.slide2
-                                    : styles.slide3
-                            }`}
+                            className={styles.icon}
                         />
                     </div>
                     <div className={styles.textWrapper}>
-                        <div className={styles.description}>
+                        <motion.div
+                            className={styles.description}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                        >
                             {slides[currentSlide].description}
-                        </div>
+                        </motion.div>
                     </div>
                 </motion.div>
 
+                <div className={styles.progressBar}>
+                    {slides.map((_, index) => (
+                        <div
+                            key={index}
+                            className={`${styles.progressDot} ${index === currentSlide ? styles.active : ''}`}
+                        />
+                    ))}
+                </div>
+
                 <div className={styles.controls}>
-                    {!(
-                        location.state && location.state.from == "home/useway"
-                    ) &&
+                    {!(location.state && location.state.from == "home/useway") &&
                         currentSlide >= 0 && (
-                            <div onClick={handleNoLook} className={styles.button}>
+                            <motion.div
+                                onClick={handleNoLook}
+                                className={styles.button}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
                                 다시 보지 않기
-                            </div>
+                            </motion.div>
                         )}
                     {currentSlide < slides.length - 1 ? (
-                        <div onClick={handleNext} className={styles.button}>
+                        <motion.div
+                            onClick={handleNext}
+                            className={`${styles.button} ${styles.primaryButton}`}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
                             다음
-                        </div>
+                        </motion.div>
                     ) : (
-                        <div onClick={handleSkip} className={styles.button}>
+                        <motion.div
+                            className={`${styles.button} ${styles.primaryButton}`}
+                            onClick={handleSkip}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
                             영수증 인증 해볼까요?
-                        </div>
+                        </motion.div>
                     )}
                 </div>
             </div>
