@@ -20,12 +20,16 @@ export const getHoldStock = async () => {
     }
 };
 
-export const getStockHistory = async () => {
+export const getStockHistory = async (page) => {
     try {
-        const response = await instance.get(`/my/stocks-history`);
+        const response = await instance.get(`/my/stocks-history`, {
+            params: {
+                index: page,
+            },
+        });
         return response.data;
     } catch (error) {
-        console.error("Error fetching all data:", error);
+        console.error("Error fetching stock history data:", error);
         throw error;
     }
 };
@@ -50,9 +54,14 @@ export const getPointStock = async () => {
     }
 };
 
-export const getPointHistory = async () => {
+export const getPointHistory = async (page) => {
     try {
-        const response = await instance.get(`/my/point-history`);
+        const response = await instance.get(`/my/point-history`, {
+            params: {
+                index: page,
+                size: 6,
+            },
+        });
         return response.data;
     } catch (error) {
         console.error("Error fetching all data:", error);
