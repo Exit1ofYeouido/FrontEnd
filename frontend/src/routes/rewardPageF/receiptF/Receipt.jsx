@@ -18,6 +18,7 @@ export default function Receipt() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [receiptData, setReceiptData] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [dragActive, setDragActive] = useState(false);
 
     const handleBack = () => {
         if (location.state && location.state.from) {
@@ -27,8 +28,7 @@ export default function Receipt() {
         }
     };
 
-    const handleFileUpload = (event) => {
-        const file = event.target.files[0];
+    const handleFileUpload = (file) => {
         if (file) {
             const imageUrl = URL.createObjectURL(file);
             setUploadedImage(imageUrl);
@@ -63,21 +63,8 @@ export default function Receipt() {
                 error.message ||
                 "Unknown Error";
 
-            if (status === 400) {
-                showToast("error", message);
-            } else if (status === 401) {
-                showToast("error", message);
-            } else if (status === 402) {
-                showToast("error", message);
-            } else if (status === 403) {
-                showToast("error", message);
-            } else if (status === 404) {
-                showToast("error", message);
-            } else if (status === 405) {
-                showToast("error", message);
-            } else {
-                showToast("error", message);
-            }
+            showToast("error", message);
+            setIsModalOpen(false);
         } finally {
             setIsSubmitting(false);
         }
@@ -109,21 +96,34 @@ export default function Receipt() {
                 error.message ||
                 "Unknown Error";
 
-            if (status === 406) {
-                showToast("error", message);
-            } else if (status === 407) {
-                showToast("error", message);
-            } else if (status === 408) {
-                showToast("error", message);
-            } else {
-                showToast("error", message);
-            }
+            showToast("error", message);
+            setIsModalOpen(false);
         }
     };
 
     const handleCancel = () => {
         setIsModalOpen(false);
         showToast("error", "영수증 확인을 취소했습니다.");
+    };
+
+    const handleDrag = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.type === "dragenter" || e.type === "dragover") {
+            setDragActive(true);
+        } else if (e.type === "dragleave") {
+            setDragActive(false);
+        }
+    };
+
+    const handleDrop = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setDragActive(false);
+        const file = e.dataTransfer.files[0];
+        if (file) {
+            handleFileUpload(file);
+        }
     };
 
     return (
@@ -149,7 +149,13 @@ export default function Receipt() {
                     <ReceiptGrid />
                     <div className={styles.uploadSection}>
                         <div
-                            className={styles.content}
+                            className={`${styles.content} ${
+                                dragActive ? styles.dragActive : ""
+                            }`}
+                            onDragEnter={handleDrag}
+                            onDragLeave={handleDrag}
+                            onDragOver={handleDrag}
+                            onDrop={handleDrop}
                             onClick={handleUploadButtonClick}
                         >
                             {uploadedImage ? (
@@ -160,21 +166,28 @@ export default function Receipt() {
                                 />
                             ) : (
                                 <div className={styles.uploadPlaceholder}>
-                                    <IoMdCloudUpload className={styles.uploadIcon} />
+                                    <IoMdCloudUpload
+                                        className={styles.uploadIcon}
+                                    />
                                     <div>영수증 업로드 하기</div>
+                                    <div>또는 여기로 파일을 드래그하세요</div>
                                 </div>
                             )}
                         </div>
                         <input
                             type="file"
                             accept="image/jpeg, image/png"
-                            onChange={handleFileUpload}
+                            onChange={(e) =>
+                                handleFileUpload(e.target.files[0])
+                            }
                             ref={fileInputRef}
                             style={{ display: "none" }}
                         />
                         <button
                             onClick={handleImageSubmit}
-                            className={`${styles.submitButton} ${isSubmitting ? styles.submitting : ''}`}
+                            className={`${styles.submitButton} ${
+                                isSubmitting ? styles.submitting : ""
+                            }`}
                             disabled={isSubmitting || !uploadedImage}
                         >
                             {isSubmitting ? "제출 중..." : "영수증 제출"}

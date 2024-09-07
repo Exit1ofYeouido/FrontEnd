@@ -48,6 +48,11 @@
     padding-bottom: 80px; /* 하단 여백 추가 */
 }
 
+.content.dragActive {
+    border: 2px dashed #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
 .text {
     font-size: 18px;
     font-weight: 600;
