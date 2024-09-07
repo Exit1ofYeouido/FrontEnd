@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { login } from "~apis/loginAPI/login";
 import styles from "./SignIn.module.css";
-import Logo from "../../assets/logo2.svg";
+import Logo from "../../assets/Logo.svg";
 import classNames from "classnames";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";

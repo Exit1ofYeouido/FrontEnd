@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import styles from "./Receipt.module.css";
 import Navbar from "~components/Navbar";
 import ReceiptGrid from "./ReceiptGrid";
-import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowBack, IoMdCloudUpload } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { uploadReceipt, getReward } from "~apis/rewardAPI/receiptApi";
@@ -94,44 +94,44 @@ export default function Receipt() {
     };
 
     return (
-        <div>
-            <motion.div
-                key="tuto-form"
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-            >
-                <div className={styles.container}>
-                    <div className={styles.topBar}>
-                        <div className={styles.arrow} onClick={handleBack}>
-                            <IoIosArrowBack />
-                        </div>
-                        <div>영수증 인증</div>
-                    </div>
+        <div className={styles.pageContainer}>
+            <div className={styles.topBar}>
+                <div className={styles.arrow} onClick={handleBack}>
+                    <IoIosArrowBack />
+                </div>
+                <div className={styles.title}>영수증 인증</div>
+            </div>
+            <div className={styles.contentWrapper}>
+                <motion.div
+                    className={styles.scrollableContent}
+                    key="tuto-form"
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                >
                     <div className={styles.text}>
                         현재는 아래 브랜드만 가능해요
                     </div>
                     <ReceiptGrid />
-                    <div
-                        className={styles.content}
-                        onClick={handleUploadButtonClick}
-                        style={{ cursor: "pointer" }}
-                    >
-                        {uploadedImage ? (
-                            <img
-                                src={uploadedImage}
-                                alt="Captured"
-                                className={styles.imagePreview}
-                            />
-                        ) : (
-                            <div>
-                                <div>사진을 업로드 해주세요.</div>
-                                <div>업로드 하기</div>
-                            </div>
-                        )}
-                    </div>
-                    <div className={styles.bottomBar}>
+                    <div className={styles.uploadSection}>
+                        <div
+                            className={styles.content}
+                            onClick={handleUploadButtonClick}
+                        >
+                            {uploadedImage ? (
+                                <img
+                                    src={uploadedImage}
+                                    alt="Captured"
+                                    className={styles.imagePreview}
+                                />
+                            ) : (
+                                <div className={styles.uploadPlaceholder}>
+                                    <IoMdCloudUpload className={styles.uploadIcon} />
+                                    <div>영수증 업로드 하기</div>
+                                </div>
+                            )}
+                        </div>
                         <input
                             type="file"
                             accept="image/jpeg, image/png"
@@ -141,21 +141,21 @@ export default function Receipt() {
                         />
                         <button
                             onClick={handleImageSubmit}
-                            className={styles.submitButton}
-                            disabled={isSubmitting}
+                            className={`${styles.submitButton} ${isSubmitting ? styles.submitting : ''}`}
+                            disabled={isSubmitting || !uploadedImage}
                         >
-                            {isSubmitting ? "제출 중..." : "사진 제출"}
+                            {isSubmitting ? "제출 중..." : "영수증 제출"}
                         </button>
                     </div>
-                    {isModalOpen && (
-                        <Modal
-                            receiptData={receiptData}
-                            onConfirm={handleConfirm}
-                            onCancel={handleCancel}
-                        />
-                    )}
-                </div>
-            </motion.div>
+                </motion.div>
+            </div>
+            {isModalOpen && (
+                <Modal
+                    receiptData={receiptData}
+                    onConfirm={handleConfirm}
+                    onCancel={handleCancel}
+                />
+            )}
             <Navbar />
         </div>
     );
