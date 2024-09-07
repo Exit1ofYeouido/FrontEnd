@@ -42,7 +42,7 @@ export const refreshAccessToken = async () => {
         );
 
         if (error.response?.status === 401 || error.response?.status === 403) {
-            logout();
+            window.location.href = "/login";
             throw new Error("세션이 만료되었습니다. 다시 로그인해주세요.");
         }
 

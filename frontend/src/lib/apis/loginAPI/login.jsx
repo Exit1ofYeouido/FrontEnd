@@ -5,7 +5,7 @@ import { showToast } from "~components/Toast";
 
 export const logout = async () => {
     try {
-        await instance.post("/auth/logout");
+        await refreshInstance.post("/auth/logout");
 
         localStorage.removeItem("accessToken");
         // window.location.href = "/login";
