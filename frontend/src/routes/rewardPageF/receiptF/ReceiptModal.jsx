@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import styles from "./ReceiptModal.module.css";
 
 export default function ReceiptModal({ receiptData, onConfirm, onCancel }) {
