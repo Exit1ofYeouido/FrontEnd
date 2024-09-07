@@ -5,6 +5,7 @@ import stockData from "./stocks.json";
 import { IoMdSearch } from "react-icons/io";
 import { getStock, getSearchStock } from "~apis/stockAPI/getStockApi";
 import { useNavigate } from "react-router-dom";
+import { FaCaretDown, FaCaretUp } from "react-icons/fa6";
 
 export default function StockPage() {
     const [stocks, setStocks] = useState([]);
@@ -65,10 +66,11 @@ export default function StockPage() {
         if (searchTerm) {
             try {
                 const searchResults = await getSearchStock(searchTerm);
+                console.log(searchResults);
                 setStocks(searchResults);
             } catch (error) {
                 console.error("Error fetching search results:", error);
-            }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+            }
         }
     };
 
@@ -131,9 +133,12 @@ export default function StockPage() {
                     <div>종목 검색</div>
                 </div>
                 <div className={styles.searchsearch}>
-                    <IoMdSearch className={styles.searchIcon} />
                     <div className={styles.searchContainer}>
                         <div className={styles.search} onBlur={handleBlur}>
+                            <IoMdSearch
+                                className={styles.searchIcon}
+                                onClick={() => handleSearch(searchTerm)}
+                            />
                             <input
                                 type="text"
                                 placeholder="종목 검색"
@@ -176,7 +181,7 @@ export default function StockPage() {
                 </div>
 
                 <div className={styles.list}>
-                    <div className={styles.header}>종목 목록</div>
+                    <div className={styles.header}>추천 종목 목록</div>
                     <div className={styles.totalCard}>
                         {stocks.length > 0 &&
                             stocks.slice(0, 5).map((stock, index) => (
@@ -200,11 +205,33 @@ export default function StockPage() {
                                         </div>
                                     </div>
                                     <div className={styles.stockDetails}>
-                                        <div className={styles.stockChange}>
-                                            {stock.previousPrice}
+                                        <div
+                                            className={
+                                                stock.previousPrice.startsWith(
+                                                    "-"
+                                                )
+                                                    ? styles.stockChangeNegative
+                                                    : styles.stockChangePositive
+                                            }
+                                        >
+                                            {stock.previousPrice.startsWith(
+                                                "-"
+                                            ) ? (
+                                                <>
+                                                    <FaCaretDown />
+                                                    {stock.previousPrice.slice(
+                                                        1
+                                                    )}{" "}
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <FaCaretUp />
+                                                    {stock.previousPrice}{" "}
+                                                </>
+                                            )}
                                         </div>
                                         <div className={styles.stockPrice}>
-                                            {stock.stockPrice}
+                                            {stock.stockPrice}원
                                         </div>
                                     </div>
                                 </div>

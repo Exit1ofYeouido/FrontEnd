@@ -153,7 +153,22 @@ export default function Attendance() {
                     <div className={styles.calendarWrapper}>
                         <div className={styles.calendar}>
                             {images.map((image, index) => (
-                                <motion.div key={index} className={styles.day}>
+                                <motion.div
+                                    key={index}
+                                    className={styles.day}
+                                    animate={
+                                        index === attendCount - 1
+                                            ? {
+                                                  scale: [1, 1.2, 1],
+                                                  rotate: [0, 10, -10, 0],
+                                              }
+                                            : {}
+                                    }
+                                    transition={{
+                                        duration: 0.4,
+                                        ease: "easeInOut",
+                                    }}
+                                >
                                     <img
                                         src={
                                             index < attendCount
@@ -180,7 +195,6 @@ export default function Attendance() {
                 </div>
             </motion.div>
             {showModal && (
-                
                 <Modal
                     onClose={handleCloseModal}
                     company={company}

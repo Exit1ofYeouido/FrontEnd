@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./SellModal.module.css";
 
-export default function SellModal({ onClose, stockName, totalAmount, shareAmount, fee, onSell }) {
-    const [quantity, setQuantity] = useState(shareAmount);
+export default function SellModal({
+    onClose,
+    stockName,
+    availableAmount,
+    onSell,
+    currentPrice,
+}) {
+    const [calculatedTotal, setCalculatedTotal] = useState(0);
+
+    useEffect(() => {
+        setCalculatedTotal((availableAmount * currentPrice).toFixed(0));
+    }, [availableAmount, currentPrice]);
 
     const handleSell = () => {
-        onSell(quantity);
+        onSell(availableAmount);
     };
 
     return (
@@ -13,7 +23,7 @@ export default function SellModal({ onClose, stockName, totalAmount, shareAmount
             <div className={styles.modalContent}>
                 <h2>{stockName}</h2>
                 <p className={styles.modalTitle}>판매 예약</p>
-                <p className={styles.subTitle}>오늘 오후 10시 30분 주문 예정</p>
+                <p className={styles.subTitle}>오늘 오후 3시 주문 예정</p>
 
                 <div className={styles.details}>
                     <div className={styles.row}>
@@ -21,34 +31,37 @@ export default function SellModal({ onClose, stockName, totalAmount, shareAmount
                         <span className={styles.value}>시장가</span>
                     </div>
                     <div className={styles.row}>
-                        <span>예상 수수료</span>
-                        <span className={styles.value}>{fee}원</span>
+                        <span>현재가</span>
+                        <span className={styles.value}>{currentPrice}원</span>
                     </div>
                     <div className={styles.row}>
                         <span>주문 수량</span>
-                        <input
-                            type="number"
-                            value={quantity}
-                            onChange={(e) => setQuantity(e.target.value)}
-                            className={styles.input}
-                            min="0"
-                            step="0.000001"
-                        />
+                        <span className={styles.value}>
+                            {availableAmount.toFixed(6)}주
+                        </span>{" "}
                     </div>
                     <div className={styles.row}>
                         <span>총 예상 주문 금액</span>
-                        <span className={styles.value}>{totalAmount}원</span>
+                        <span className={styles.value}>
+                            {calculatedTotal}원
+                        </span>
                     </div>
                 </div>
 
                 <div className={styles.footer}>
-                    <label className={styles.checkbox}>
-                        <input type="checkbox" /> 다음부터 인증 없이 거래하기
-                    </label>
-
                     <div className={styles.actions}>
-                        <button className={styles.cancelButton} onClick={onClose}>닫기</button>
-                        <button className={styles.sellButton} onClick={handleSell}>판매</button>
+                        <button
+                            className={styles.cancelButton}
+                            onClick={onClose}
+                        >
+                            닫기
+                        </button>
+                        <button
+                            className={styles.sellButton}
+                            onClick={handleSell}
+                        >
+                            판매
+                        </button>
                     </div>
                 </div>
             </div>

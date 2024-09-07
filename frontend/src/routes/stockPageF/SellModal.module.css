@@ -16,7 +16,7 @@
     background: #fff;
     padding: 20px;
     border-radius: 10px;
-    width: 90%;
+    width: 70%;
     max-width: 400px;
     text-align: center;
     z-index: 2000;
@@ -67,7 +67,8 @@ h2 {
 
 .actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    width: 100%;
 }
 
 .cancelButton {
@@ -77,6 +78,7 @@ h2 {
     border-radius: 5px;
     cursor: pointer;
     color: #333;
+    width: 100%;
 }
 
 .sellButton {
@@ -86,4 +88,6 @@ h2 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    width: 100%;
+    margin-left: 10px;
 }
