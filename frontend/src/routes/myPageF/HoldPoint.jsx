@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import styles from "./HoldPoint.module.css";
 import { IoIosArrowBack } from "react-icons/io";
@@ -8,27 +8,61 @@ import { getPointStock, getPointHistory } from "~apis/myAPI/myApi";
 export default function HoldPoint() {
     const [totalValue, setTotalValue] = useState(0);
     const [transactions, setTransactions] = useState([]);
+    const [page, setPage] = useState(0);
+    const [hasMore, setHasMore] = useState(true);
     const navigate = useNavigate();
+    const observer = useRef();
 
     const handleBack = () => {
         navigate("/my");
     };
 
+    const loadMoreTransactions = async (page) => {
+        try {
+            const stockHistoryData = await getPointHistory(page);
+            console.log(stockHistoryData);
+            setTransactions((prevTransactions) => [
+                ...prevTransactions,
+                ...stockHistoryData,
+            ]);
+            setHasMore(stockHistoryData.length === 6);
+        } catch (error) {
+            console.error(
+                "Error fetching data:",
+                error.response?.data || error.message
+            );
+        }
+    };
+
     useEffect(() => {
+        
         const fetchData = async () => {
             try {
                 const holdPointData = await getPointStock();
-                const stockHistoryData = await getPointHistory();
                 setTotalValue(holdPointData.point);
-                setTransactions(stockHistoryData);
-                console.log(stockHistoryData);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         };
-
         fetchData();
     }, []);
+
+    useEffect(() => {
+        loadMoreTransactions(page);
+    }, [page]);
+
+    const lastTransactionElementRef = useCallback(
+        (node) => {
+            if (observer.current) observer.current.disconnect();
+            observer.current = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && hasMore) {
+                    setPage((prevPage) => prevPage + 1);
+                }
+            });
+            if (node) observer.current.observe(node);
+        },
+        [hasMore]
+    );
 
     return (
         <motion.div
@@ -71,7 +105,7 @@ export default function HoldPoint() {
 
                     {transactions.length > 0 ? (
                         <div className={styles.transactionsList}>
-                            {transactions.map((transaction) => (
+                            {transactions.map((transaction, index) => (
                                 <div
                                     key={transaction.id}
                                     className={styles.transaction}
@@ -110,6 +144,7 @@ export default function HoldPoint() {
                                     </div>
                                 </div>
                             ))}
+                            <div ref={lastTransactionElementRef} />
                         </div>
                     ) : (
                         <div className={styles.noTransactions}>
