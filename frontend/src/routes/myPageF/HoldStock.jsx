@@ -12,6 +12,7 @@ export default function HoldStock() {
     const [transactions, setTransactions] = useState([]);
     const [activeTab, setActiveTab] = useState("stocks");
     const [isFirstRender, setIsFirstRender] = useState(true);
+    const [unsettledTransactions, setUnsettledTransactions] = useState([]);
     const navigate = useNavigate();
 
     const handleBack = () => {
@@ -22,15 +23,11 @@ export default function HoldStock() {
         const fetchData = async () => {
             try {
                 const holdStockData = await getHoldStock();
-                const stockHistoryData = await getStockHistory();
                 const allData = await myGetAll();
                 setTotalValue(allData.allCost);
                 setEarningRate(allData.earningRate);
                 setStocks(holdStockData);
-                setTransactions(stockHistoryData);
                 setIsFirstRender(false);
-                console.log(holdStockData);
-                console.log(stockHistoryData);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -46,9 +43,29 @@ export default function HoldStock() {
         return Math.round(profitOrLoss);
     };
 
-    const handleTabChange = (tab) => {
+    const formatDateTime = (dateString) => {
+        const [year, month, day, hour, minute] = dateString.split("-");
+        return `${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분`;
+    };
+
+    const handleTabChange = async (tab) => {
         if (tab !== activeTab) {
             setActiveTab(tab);
+            try {
+                if (tab === "stocks") {
+                    const holdStockData = await getHoldStock();
+                    setStocks(holdStockData);
+                } else if (tab === "transactions") {
+                    const stockHistoryData = await getStockHistory();
+                    setTransactions(stockHistoryData);
+                }
+                // else if (tab === "unsettled") {
+                //     const unsettledData = await getUnsettledTransactions();
+                //     setUnsettledTransactions(unsettledData);
+                // }
+            } catch (error) {
+                console.error("Error fetching data for tab:", error);
+            }
         }
     };
 
@@ -140,13 +157,31 @@ export default function HoldStock() {
                                 />
                             )}
                         </div>
+                        <div
+                            className={`${styles.tabButton} ${
+                                activeTab === "unsettled"
+                                    ? styles.activeTab
+                                    : ""
+                            }`}
+                            onClick={() => handleTabChange("unsettled")}
+                        >
+                            미체결 내역
+                            {activeTab === "unsettled" && (
+                                <motion.div
+                                    className={styles.underline}
+                                    layoutId="underline"
+                                />
+                            )}
+                        </div>
                     </div>
 
                     <div className={styles.totalCount}>
                         총{" "}
                         {activeTab === "stocks"
                             ? stocks.length
-                            : transactions.length}{" "}
+                            : activeTab === "transactions"
+                            ? transactions.length
+                            : unsettledTransactions.length}{" "}
                         건
                     </div>
 
@@ -187,7 +222,10 @@ export default function HoldStock() {
                                             <div
                                                 className={styles.stockQuantity}
                                             >
-                                                {stock.holdStockCount} 주
+                                                {stock.holdStockCount.toFixed(
+                                                    6
+                                                )}{" "}
+                                                주
                                             </div>
                                             <div className={styles.stockValue}>
                                                 0.00원 ({stock.earningRate})
@@ -221,7 +259,9 @@ export default function HoldStock() {
                                                         styles.transactionDate
                                                     }
                                                 >
-                                                    {transaction.date}
+                                                    {formatDateTime(
+                                                        transaction.date
+                                                    )}
                                                 </div>
                                                 <div className={styles.detail}>
                                                     <div
@@ -231,7 +271,7 @@ export default function HoldStock() {
                                                     >
                                                         {transaction.name}{" "}
                                                         {transaction.type ===
-                                                        "매수"
+                                                        "in"
                                                             ? "획득"
                                                             : "판매"}
                                                     </div>
@@ -240,13 +280,13 @@ export default function HoldStock() {
                                                             styles.transactionQuantity
                                                         } ${
                                                             transaction.type ===
-                                                            "매수"
+                                                            "in"
                                                                 ? styles.redText
                                                                 : styles.blueText
                                                         }`}
                                                     >
                                                         {transaction.type ===
-                                                        "매수"
+                                                        "in"
                                                             ? "+"
                                                             : "-"}
                                                         {transaction.amount} 주
@@ -259,6 +299,56 @@ export default function HoldStock() {
                             ) : (
                                 <div className={styles.noData}>
                                     거래 내역이 없습니다.
+                                </div>
+                            )
+                        ) : activeTab === "unsettled" ? (
+                            unsettledTransactions.length > 0 ? (
+                                <div className={styles.unsettledList}>
+                                    {unsettledTransactions.map((unsettled) => (
+                                        <div
+                                            key={unsettled.id}
+                                            className={styles.unsettled}
+                                        >
+                                            <div>
+                                                <img
+                                                    src={`https://stock-craft.s3.ap-northeast-2.amazonaws.com/logos/${encodeURIComponent(
+                                                        unsettled.name
+                                                    )}.svg`}
+                                                    alt={`${unsettled.name} 로고`}
+                                                    className={styles.stockLogo}
+                                                />
+                                                <div
+                                                    className={
+                                                        styles.transactionDate
+                                                    }
+                                                >
+                                                    {formatDateTime(
+                                                        unsettled.date
+                                                    )}
+                                                </div>
+                                                <div className={styles.detail}>
+                                                    <div
+                                                        className={
+                                                            styles.transactionStockName
+                                                        }
+                                                    >
+                                                        {unsettled.name} 미체결
+                                                    </div>
+                                                    <div
+                                                        className={
+                                                            styles.transactionQuantity
+                                                        }
+                                                    >
+                                                        {unsettled.amount} 주
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className={styles.noData}>
+                                    미체결 내역이 없습니다.
                                 </div>
                             )
                         ) : null}

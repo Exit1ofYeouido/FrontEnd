@@ -96,7 +96,9 @@
     position: relative;
     color: #c0c0c0;
     transition: color 0.3s, font-weight 0.3s;
+    white-space: nowrap;
 }
+
 
 .activeTab {
     color: #000;
@@ -184,7 +186,7 @@
 }
 
 .transactionDate {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
     color: #555;
     margin-bottom: 5px;
 }
@@ -221,3 +223,4 @@
     font-size: 1.2rem;
     color: #666;
 }
+

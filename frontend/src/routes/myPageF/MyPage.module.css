@@ -113,7 +113,8 @@
 
 .earningRatesList{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 20%;
     margin-top: 40px;
 }
 

@@ -57,8 +57,27 @@ export default function Receipt() {
             setIsModalOpen(true);
             showToast("success", "이미지가 성공적으로 제출되었습니다!");
         } catch (error) {
-            console.error("이미지 제출 중 오류 발생:", error);
-            showToast("error", "이미지를 제출하는 동안 오류가 발생했습니다.");
+            const status = error.response?.data?.status || "Unknown Status";
+            const message =
+                error.response?.data?.message ||
+                error.message ||
+                "Unknown Error";
+
+            if (status === 400) {
+                showToast("error", message);
+            } else if (status === 401) {
+                showToast("error", message);
+            } else if (status === 402) {
+                showToast("error", message);
+            } else if (status === 403) {
+                showToast("error", message);
+            } else if (status === 404) {
+                showToast("error", message);
+            } else if (status === 405) {
+                showToast("error", message);
+            } else {
+                showToast("error", message);
+            }
         } finally {
             setIsSubmitting(false);
         }
@@ -74,6 +93,7 @@ export default function Receipt() {
                 imgURL: receiptData.imgURL,
                 enterpriseName: receiptData.enterpriseName,
             };
+            console.log(receiptRequestData);
 
             const rewardResponse = await getReward(receiptRequestData);
             setIsModalOpen(false);
@@ -83,8 +103,21 @@ export default function Receipt() {
                 `영수증이 확인되었습니다! 리워드: ${rewardResponse.name}, 금액: ${rewardResponse.amount}`
             );
         } catch (error) {
-            console.error("리워드 요청 중 오류 발생:", error);
-            showToast("error", "리워드 요청 중 오류가 발생했습니다.");
+            const status = error.response?.data?.status || "Unknown Status";
+            const message =
+                error.response?.data?.message ||
+                error.message ||
+                "Unknown Error";
+
+            if (status === 406) {
+                showToast("error", message);
+            } else if (status === 407) {
+                showToast("error", message);
+            } else if (status === 408) {
+                showToast("error", message);
+            } else {
+                showToast("error", message);
+            }
         }
     };
 

@@ -8,17 +8,17 @@ export const logout = async () => {
         await instance.post("/auth/logout");
 
         localStorage.removeItem("accessToken");
-
+        // window.location.href = "/login";
+        // showToast(
+        //     "error",
+        //     "로그아웃 중 오류가 발생했습니다. 다시 시도해주세요."
+        // );
         return { success: true };
     } catch (error) {
         console.error(
             "Logout failed:",
             error.response?.data?.message || error.message
         );
-
-        localStorage.removeItem("accessToken");
-        showToast("error", "로그아웃 중 오류가 발생했습니다. 다시 시도해주세요.");
-        window.location.href = "/login";
     }
 };
 
@@ -28,7 +28,7 @@ export const login = async (id, password) => {
             memberName: id,
             memberPassword: password,
         });
-
+        
         const accessToken = response.headers["accesstoken"];
 
         if (accessToken) {
@@ -42,11 +42,17 @@ export const login = async (id, password) => {
         console.error("Error details:", error);
 
         if (error.response?.status === 401) {
+            console.log(error.response.data.message);
             showToast("error", "아이디 및 패스워드를 확인해주세요.");
-            return { error: "아이디 및 패스워드를 확인해주세요." };
+            return { error: "gdgd." };
         } else {
-            showToast("error", "로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
-            return { error: "로그인 중 오류가 발생했습니다. 다시 시도해주세요." };
+            showToast(
+                "error",
+                "로그인 중 오류가 발생했습니다. 다시 시도해주세요."
+            );
+            return {
+                error: "로그인 중 오류가 발생했습니다. 다시 시도해주세요.",
+            };
         }
     }
 };
