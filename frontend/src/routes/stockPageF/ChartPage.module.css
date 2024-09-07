@@ -84,7 +84,6 @@
     overflow: visible;
 }
 
-
 @keyframes pulse {
     0% {
         r: 5;
@@ -113,7 +112,7 @@
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
     position: relative;
-    z-index: 10000;
+    z-index: 1000;
 }
 
 .tabButton {
@@ -125,26 +124,30 @@
 }
 
 .buttonGroup {
+    position: fixed;
+    bottom: 110px;
+    width: 100%;
+    max-width: 480px;
     display: flex;
-    justify-content: space-around;
-    margin-top: 30px;
-    height: auto;
+    gap: 10px;
+    z-index: 999;
+    justify-content: flex-start;
 }
 
-.sellButton {
-    width: 100%;
+.sellButton,
+.buyButton {
+    width: 45%;
     font-size: 18px;
     background-color: #3182f7;
     color: #fff;
     border: none;
     padding: 15px;
     border-radius: 15px;
-    margin-right: 10px;
     cursor: pointer;
 }
 
-.buyButton {
-    width: 100%;
+.buyButton2{
+    width: 90%;
     font-size: 18px;
     background-color: #f04452;
     color: #fff;
@@ -154,13 +157,45 @@
     cursor: pointer;
 }
 
-@media (max-height: 800px) {
+.buyButton {
+    background-color: #f04452;
+}
+
+.myStock {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #666;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.row div:first-child {
+    color: #666;
+}
+
+.row div:last-child {
+    color: #333;
+}
+
+.profitRate {
+    color: #ff0000;
+    margin-left: 5px;
+}
+
+@media (max-height: 820px) {
     .buttonGroup {
         margin-top: 40px;
     }
     .chartContainer {
         height: 250px;
         margin-top: 10px;
+    }
+    .info {
+        margin-top: 60px;
     }
 }
 
@@ -171,9 +206,16 @@
     .chartContainer {
         margin-top: 5px;
     }
+    .sellButton,
+    .buyButton {
+        padding: 12px;
+    }
+    .info {
+        margin-top: 50px;
+    }
 }
 
-@media (max-height: 700px) {
+@media (max-height: 730px) {
     .buttonGroup {
         margin-top: 20px;
     }
@@ -189,8 +231,17 @@
     }
 
     .stockPrice {
-        font-size: 28px;
+        font-size: 26px;
     }
-
+    .tabButton {
+        font-size: 12px;
+    }
+    .info {
+        margin-top: 30px;
+    }
+    .previousPricePositive,
+    .previousPriceNegative {
+        font-size: 14px;
+        margin-top: 3px;
+    }
 }
-

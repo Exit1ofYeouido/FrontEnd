@@ -29,7 +29,6 @@ export const refreshAccessToken = async () => {
         const accessToken = response.headers["accsstoken"];
 
         if (!accessToken) {
-            console.error("토큰 시발 실패");
             return null;
         }
 
@@ -50,3 +49,5 @@ export const refreshAccessToken = async () => {
         throw error;
     }
 };
+
+export default refreshInstance;

@@ -1,4 +1,4 @@
-import instance from "../basis";
+import refreshInstance from "./auth";
 import store from "~store/store";
 import { setCredentials } from "~store/memberIdSlice";
 import { showToast } from "~components/Toast";
@@ -24,7 +24,7 @@ export const logout = async () => {
 
 export const login = async (id, password) => {
     try {
-        const response = await instance.post("/auth/login", {
+        const response = await refreshInstance.post("/auth/login", {
             memberName: id,
             memberPassword: password,
         });
@@ -44,7 +44,7 @@ export const login = async (id, password) => {
         if (error.response?.status === 401) {
             console.log(error.response.data.message);
             showToast("error", "아이디 및 패스워드를 확인해주세요.");
-            return { error: "gdgd." };
+            return { error: "에러" };
         } else {
             showToast(
                 "error",

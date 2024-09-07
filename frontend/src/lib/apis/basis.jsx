@@ -30,6 +30,13 @@ instance.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
 
+        if (error.response.status === 401) {
+            alert("접근 권한이 없습니다. 로그인해주세요.");
+            localStorage.removeItem("accessToken");
+            window.location.href = "/login";
+            return Promise.reject(error);
+        }
+
         if (error.response.status === 403 && !originalRequest._retry) {
             originalRequest._retry = true;
             try {

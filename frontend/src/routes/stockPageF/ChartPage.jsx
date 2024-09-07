@@ -3,6 +3,9 @@ import { IoIosArrowBack } from "react-icons/io";
 import styles from "./ChartPage.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getStockPrice, getStockChart } from "~apis/stockAPI/getStockApi";
+import { sellStock } from "~apis/stockAPI/sellStockApi";
+import SellModal from "./SellModal";
+import { showToast } from "~components/Toast";
 import {
     LineChart,
     Line,
@@ -19,23 +22,24 @@ export default function ChartPage() {
     const [stocksChart, setStocksChart] = useState([]);
     const location = useLocation();
     const { stockCode } = location.state || {};
-    const chartRef = useRef(null); // 차트 컨테이너 참조 생성
+    const [showSellModal, setShowSellModal] = useState(false);
+    const chartRef = useRef(null);
+    const [modalClosedTrigger, setModalClosedTrigger] = useState(false);
 
     const [containerWidth, setContainerWidth] = useState(0);
 
     useEffect(() => {
-        // 차트 컨테이너의 너비를 설정
         const updateContainerWidth = () => {
             if (chartRef.current) {
-                setContainerWidth(chartRef.current.offsetWidth); // 컨테이너의 너비 가져오기
+                setContainerWidth(chartRef.current.offsetWidth);
             }
         };
 
-        updateContainerWidth(); // 초기 설정
-        window.addEventListener("resize", updateContainerWidth); // 리사이즈 시 업데이트
+        updateContainerWidth();
+        window.addEventListener("resize", updateContainerWidth);
 
         return () => {
-            window.removeEventListener("resize", updateContainerWidth); // 리스너 제거
+            window.removeEventListener("resize", updateContainerWidth);
         };
     }, []);
 
@@ -50,7 +54,7 @@ export default function ChartPage() {
         };
 
         fetchData();
-    }, []);
+    }, [modalClosedTrigger]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -63,10 +67,32 @@ export default function ChartPage() {
         };
 
         fetchData();
-    }, [activePeriod]);
+    }, [activePeriod, modalClosedTrigger]);
 
     const handleBack = () => {
         navigate("/stock");
+    };
+
+    const handleSellClick = () => {
+        setShowSellModal(true);
+    };
+
+    const closeSellModal = () => {
+        setShowSellModal(false);
+    };
+
+    const handleSell = async (quantity) => {
+        try {
+            // await sellStock(stockCode, stocksPrice.stockName, quantity);
+
+            setShowSellModal(false);
+            setModalClosedTrigger((prev) => !prev);
+            console.log(modalClosedTrigger);
+            showToast("success", "판매예약이 완료되었습니다.");
+        } catch (error) {
+            console.error("판매 실패:", error);
+            showToast("error", "판매 중 오류가 발생했.습니다");
+        }
     };
 
     const handlePeriodChange = (period) => {
@@ -101,7 +127,6 @@ export default function ChartPage() {
                 <div className={styles.arrow} onClick={handleBack}>
                     <IoIosArrowBack />
                 </div>
-                <div>내 보유 주식</div>
             </div>
 
             <div className={styles.info}>
@@ -134,11 +159,10 @@ export default function ChartPage() {
             </div>
 
             <div className={styles.chartContainer} ref={chartRef}>
-                <ResponsiveContainer width="100%" height={300}>
+                <ResponsiveContainer width="100%" height="100%">
                     <LineChart
                         data={stocksChart.slice().reverse()}
-                        margin={{ top: 0, right: 10, left: -55, bottom: 0 }}
-                        clipPath={false}
+                        margin={{ top: 70, right: 10, left: -55, bottom: 0 }}
                     >
                         <XAxis dataKey="date" tick={false} axisLine={false} />
                         <YAxis
@@ -170,11 +194,11 @@ export default function ChartPage() {
                             dataKey="price"
                             stroke="#3B7FEE"
                             strokeWidth={3}
+                            animationDuration={400}
                             dot={(dotProps) => {
                                 const { index, cx, cy } = dotProps;
                                 const margin = 10;
 
-                                // 텍스트가 화면 밖으로 나가지 않도록 조정
                                 const isTextOverflowingRight =
                                     cx + 100 > containerWidth - margin;
                                 const isTextTooLeft = cx - 100 < margin;
@@ -192,7 +216,7 @@ export default function ChartPage() {
                                 }
                                 if (index === reversedMaxPriceIndex) {
                                     return (
-                                        <>
+                                        <g key={`max-price-${index}`}>
                                             <circle
                                                 key={`dot-${index}`}
                                                 cx={cx}
@@ -203,25 +227,26 @@ export default function ChartPage() {
                                             <text
                                                 x={
                                                     isTextOverflowingRight
-                                                        ? cx - 100 // 오른쪽 경계를 넘으면 왼쪽으로 이동
+                                                        ? cx - 100
                                                         : isTextTooLeft
-                                                        ? cx + 10 // 왼쪽 경계를 넘으면 오른쪽으로 이동
+                                                        ? cx + 10
                                                         : cx + 10
                                                 }
                                                 y={cy - 10}
                                                 fill="blue"
                                                 fontSize={12}
+                                                key={`text-max-${index}`}
                                             >
                                                 {`최고가: ${formatNumber(
                                                     maxPrice
                                                 )}원`}
                                             </text>
-                                        </>
+                                        </g>
                                     );
                                 }
                                 if (index === reversedMinPriceIndex) {
                                     return (
-                                        <>
+                                        <g key={`min-price-${index}`}>
                                             <circle
                                                 key={`dot-${index}`}
                                                 cx={cx}
@@ -232,20 +257,21 @@ export default function ChartPage() {
                                             <text
                                                 x={
                                                     isTextOverflowingRight
-                                                        ? cx - 100 // 오른쪽 경계를 넘으면 왼쪽으로 이동
+                                                        ? cx - 100
                                                         : isTextTooLeft
-                                                        ? cx + 10 // 왼쪽 경계를 넘으면 오른쪽으로 이동
+                                                        ? cx + 10
                                                         : cx + 10
                                                 }
                                                 y={cy + 15}
                                                 fill="red"
                                                 fontSize={12}
+                                                key={`text-min-${index}`}
                                             >
                                                 {`최저가: ${formatNumber(
                                                     minPrice
                                                 )}원`}
                                             </text>
-                                        </>
+                                        </g>
                                     );
                                 }
                                 return null;
@@ -289,20 +315,58 @@ export default function ChartPage() {
                 </div>
             </div>
 
-            <div>내 주식</div>
+            <div className={styles.myStock}>
+                <div className={styles.row}>
+                    <div>보유 수량</div>
+                    <div>
+                        {stocksPrice.availableAmount
+                            ? stocksPrice.availableAmount.toFixed(6)
+                            : "0.000000"}
+                        주
+                    </div>
+                </div>
+                <div className={styles.row}>
+                    <div>평가 금액</div>
+                    <div>
+                        {stocksPrice.availableAmount && stocksPrice.stockPrice
+                            ? `${formatNumber(
+                                  Math.floor(
+                                      stocksPrice.availableAmount *
+                                          stocksPrice.stockPrice
+                                  )
+                              )}원`
+                            : "0원"}
+                    </div>
+                </div>
+            </div>
 
             <div>
                 {stocksPrice.availableAmount > 0 ? (
                     <div className={styles.buttonGroup}>
-                        <button className={styles.sellButton}>판매</button>
+                        <button
+                            className={styles.sellButton}
+                            onClick={handleSellClick}
+                        >
+                            판매
+                        </button>
                         <button className={styles.buyButton}>구매</button>
                     </div>
                 ) : (
                     <div className={styles.buttonGroup}>
-                        <button className={styles.buyButton}>구매</button>
+                        <button className={styles.buyButton2}>구매</button>
                     </div>
                 )}
             </div>
+
+            {showSellModal && (
+                <SellModal
+                    onClose={closeSellModal}
+                    stockName={stocksPrice.stockName}
+                    availableAmount={stocksPrice.availableAmount}
+                    onSell={handleSell}
+                    currentPrice={stocksPrice.stockPrice}
+                />
+            )}
         </div>
     );
 }

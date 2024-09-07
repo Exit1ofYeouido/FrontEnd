@@ -21,6 +21,7 @@ export default function HoldPoint() {
                 const stockHistoryData = await getPointHistory();
                 setTotalValue(holdPointData.point);
                 setTransactions(stockHistoryData);
+                console.log(stockHistoryData);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -76,28 +77,35 @@ export default function HoldPoint() {
                                     className={styles.transaction}
                                 >
                                     <div className={styles.transactionDate}>
-                                        {transaction.date}
+                                        {transaction.createdAt}
                                     </div>
                                     <div className={styles.detail}>
-                                        <div
-                                            className={
-                                                styles.transactionStockName
-                                            }
-                                        >
-                                            {transaction.stockName}{" "}
-                                            {transaction.type}
+                                        <div className={styles.datailStock}>
+                                            <div
+                                                className={
+                                                    styles.transactionStockName
+                                                }
+                                            >
+                                                포인트
+                                                {transaction.type === "in"
+                                                    ? "획득"
+                                                    : "출금"}
+                                            </div>
+                                            <div
+                                                className={
+                                                    transaction.type === "in"
+                                                        ? styles.redText
+                                                        : styles.blueText
+                                                }
+                                            >
+                                                {transaction.type === "in"
+                                                    ? "+"
+                                                    : "-"}
+                                                {transaction.requestPoint} 원
+                                            </div>
                                         </div>
-                                        <div
-                                            className={
-                                                transaction.type === "획득"
-                                                    ? styles.redText
-                                                    : styles.blueText
-                                            }
-                                        >
-                                            {transaction.type === "획득"
-                                                ? "+"
-                                                : "-"}
-                                            {transaction.quantity} 원
+                                        <div>
+                                            잔액 : {transaction.resultPoint} 원
                                         </div>
                                     </div>
                                 </div>

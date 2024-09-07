@@ -41,7 +41,7 @@ export default function Asset() {
         return Math.round(profitOrLoss);
     };
 
-    const profitOrLoss = calculateProfitOrLoss(earningRate, asset);
+    const profitOrLoss = calculateProfitOrLoss(earningRate, stock);
 
     return (
         <div className={styles.info}>

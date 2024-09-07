@@ -3,7 +3,12 @@ import { motion } from "framer-motion";
 import styles from "./HoldStock.module.css";
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import { getHoldStock, getStockHistory, myGetAll } from "~apis/myAPI/myApi";
+import {
+    getHoldStock,
+    getStockHistory,
+    myGetAll,
+    getStockPendingHistory,
+} from "~apis/myAPI/myApi";
 
 export default function HoldStock() {
     const [totalValue, setTotalValue] = useState(0);
@@ -28,6 +33,7 @@ export default function HoldStock() {
                 setEarningRate(allData.earningRate);
                 setStocks(holdStockData);
                 setIsFirstRender(false);
+                console.log(holdStockData);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -58,15 +64,19 @@ export default function HoldStock() {
                 } else if (tab === "transactions") {
                     const stockHistoryData = await getStockHistory();
                     setTransactions(stockHistoryData);
+                } else if (tab === "unsettled") {
+                    const unsettledData = await getStockPendingHistory();
+                    setUnsettledTransactions(
+                        unsettledData.myStockSaleRequestResponseDtos
+                    );
                 }
-                // else if (tab === "unsettled") {
-                //     const unsettledData = await getUnsettledTransactions();
-                //     setUnsettledTransactions(unsettledData);
-                // }
             } catch (error) {
                 console.error("Error fetching data for tab:", error);
             }
         }
+    };
+    const formatNumber = (number) => {
+        return new Intl.NumberFormat().format(number);
     };
 
     const variants = {
@@ -122,7 +132,12 @@ export default function HoldStock() {
                         </span>
                         )
                     </div>
-                    <button className={styles.sellButton}>판매하기</button>
+                    <button
+                        className={styles.sellButton}
+                        onClick={() => navigate("/stock")}
+                    >
+                        판매하기
+                    </button>
                 </div>
 
                 <div className={styles.stockContainer}>
@@ -228,7 +243,15 @@ export default function HoldStock() {
                                                 주
                                             </div>
                                             <div className={styles.stockValue}>
-                                                0.00원 ({stock.earningRate})
+                                                {formatNumber(
+                                                    Math.floor(
+                                                        (stock.holdStockCount *
+                                                            stock.averagePrice *
+                                                            stock.earningRate) /
+                                                            100
+                                                    )
+                                                )}
+                                                원 ({stock.earningRate}%)
                                             </div>
                                         </div>
                                     ))}
@@ -306,25 +329,42 @@ export default function HoldStock() {
                                 <div className={styles.unsettledList}>
                                     {unsettledTransactions.map((unsettled) => (
                                         <div
-                                            key={unsettled.id}
+                                            key={unsettled.saleId}
                                             className={styles.unsettled}
                                         >
                                             <div>
                                                 <img
                                                     src={`https://stock-craft.s3.ap-northeast-2.amazonaws.com/logos/${encodeURIComponent(
-                                                        unsettled.name
+                                                        unsettled.enterpriseName
                                                     )}.svg`}
-                                                    alt={`${unsettled.name} 로고`}
+                                                    alt={`${unsettled.enterpriseName} 로고`}
                                                     className={styles.stockLogo}
                                                 />
                                                 <div
                                                     className={
-                                                        styles.transactionDate
+                                                        styles.dateButton
                                                     }
                                                 >
-                                                    {formatDateTime(
-                                                        unsettled.date
-                                                    )}
+                                                    <div
+                                                        className={
+                                                            styles.transactionDate
+                                                        }
+                                                    >
+                                                        {unsettled.saleId}
+                                                    </div>
+
+                                                    <button
+                                                        className={
+                                                            styles.cancelButton
+                                                        }
+                                                        onClick={() =>
+                                                            handleCancelUnsettled(
+                                                                unsettled.saleId
+                                                            )
+                                                        }
+                                                    >
+                                                        취소
+                                                    </button>
                                                 </div>
                                                 <div className={styles.detail}>
                                                     <div
@@ -332,7 +372,10 @@ export default function HoldStock() {
                                                             styles.transactionStockName
                                                         }
                                                     >
-                                                        {unsettled.name} 미체결
+                                                        {
+                                                            unsettled.enterpriseName
+                                                        }{" "}
+                                                        미체결
                                                     </div>
                                                     <div
                                                         className={

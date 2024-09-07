@@ -32,3 +32,15 @@ export const getStockChart = async (code, period) => {
         throw error;
     }
 };
+
+export const getSearchStock = async (query) => {
+    try {
+        const response = await instance.get(`/search/stocks/keyword`, {
+            params: { query },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error submitting quiz answer:", error);
+        throw error;
+    }
+};

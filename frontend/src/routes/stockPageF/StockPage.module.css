@@ -32,7 +32,15 @@
     border-radius: 20px;
     background-color: #fff;
 }
-
+.searchIcon {
+    position: absolute;
+    right: 60px;
+    top: 15px;
+    width: 20px;
+    height: 20px;
+    color: #888;
+    cursor: pointer;
+}
 .searchInput {
     width: 90%;
     padding: 15px;
@@ -140,6 +148,19 @@
     color: #000;
 }
 
+.stockChangeNegative {
+    color: blue;
+    display: flex;
+    align-items: center;
+}
+
+.stockChangePositive {
+    color: red;
+    display: flex;
+    align-items: center;
+}
+
+
 @media (max-height: 890px) {
     .stockCard {
         height: 25px;
@@ -187,6 +208,8 @@
 
     .stockCard {
         height: 16px;
+        width: 70%;
+        padding: 25px 15px;
     }
 
     .searchsearch {
@@ -201,11 +224,15 @@
         font-size: 12px;
     }
 
-    .stockChange {
+    .stockDetails {
         font-size: 12px;
     }
 
     .stockPrice {
+        font-size: 14px;
+    }
+    .suggestions{
+        max-height: 150px;
         font-size: 14px;
     }
 }
@@ -233,7 +260,7 @@
         font-size: 12px;
     }
 
-    .stockChange {
+    .stockDetails {
         font-size: 12px;
     }
 
@@ -269,7 +296,7 @@
         font-size: 11px;
     }
 
-    .stockChange {
+    .stockDetails {
         font-size: 11px;
     }
 
@@ -286,7 +313,7 @@
     .searchInput {
         width: 70%;
         padding: 11px;
-        font-size: 12px;
+        font-size: 14px;
     }
 
     .stockCard {
@@ -327,11 +354,12 @@
     .searchInput {
         width: 70%;
         padding: 11px;
-        font-size: 12px;
+        font-size: 14px;
     }
 
     .stockCard {
         height: 8px;
+        width: 60%;
     }
 
     .searchsearch {
@@ -346,7 +374,7 @@
         font-size: 10px;
     }
 
-    .stockChange {
+    .stockDetails {
         font-size: 10px;
     }
 
@@ -360,5 +388,13 @@
 
     .list {
         top: 60px;
+    }
+    
+    .searchIcon{
+        top: 10px;
+    }
+    .suggestions{
+        max-height: 120px;
+        font-size: 12px;
     }
 }

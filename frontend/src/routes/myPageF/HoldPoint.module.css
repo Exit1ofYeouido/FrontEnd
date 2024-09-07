@@ -177,13 +177,12 @@
 .transactionDate {
     font-size: 0.9rem;
     color: #555;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
 .transactionStockName {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #333;
-    margin-bottom: 5px;
 }
 
 .transactionType {
@@ -199,16 +198,22 @@
 
 .redText {
     color: #ff0000;
+    margin-left: 10px;
 }
 
 .blueText {
     color: #007bff;
+    margin-left: 10px;
 }
-
 
 .noTransactions {
     text-align: center;
     padding: 40px 0px;
     font-size: 1.2rem;
     color: #666;
+}
+
+.datailStock {
+    display: flex;
+    align-items: center;
 }
