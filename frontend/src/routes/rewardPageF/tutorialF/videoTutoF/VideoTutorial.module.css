@@ -1,6 +1,6 @@
 .pageContainer {
     min-height: 100vh;
-    background: linear-gradient(164deg, #fff 0.02%, #ffeaeb 99.98%);
+    background: white;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,7 +15,6 @@
     height: 100vh;
     max-height: 800px;
     background-color: #ffffff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 20px;
     box-sizing: border-box;
     overflow: hidden;
@@ -126,8 +125,15 @@
 
 @media (max-width: 480px) {
     .container {
-        border-radius: 0;
-        height: 100vh;
-        max-height: none;
+        padding: 10px;
+    }
+
+    .description {
+        font-size: 20px;
+    }
+
+    .button {
+        font-size: 16px;
+        padding: 12px 0;
     }
 }

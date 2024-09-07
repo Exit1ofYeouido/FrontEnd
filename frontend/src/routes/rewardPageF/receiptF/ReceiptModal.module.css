@@ -4,12 +4,12 @@
     left: 0;
     width: 100%;
     height: 100vh;
-    border-radius: 30px 30px 0px 0px;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    z-index: 2000;
+    backdrop-filter: blur(5px);
 }
 
 .text{
@@ -20,10 +20,10 @@
 
 .modalContent {
     background-color: white;
-    padding: 20px;
-    border-radius: 8px;
+    padding: 30px;
+    border-radius: 20px;
     width: 400px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
@@ -35,9 +35,20 @@
 
 .info {
     margin-left: 20px;
-    display: flex;
-    flex-direction: column;
+    /*display: flex;*/
+    /*flex-direction: column;*/
     gap: 30px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+
+}
+
+.info div {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
 }
 
 .receiptImage {
@@ -58,8 +69,9 @@
     border: none;
     padding: 10px 20px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 50px;
     width: 50%;
+    transition: all 0.3s ease;
 }
 
 .cancelButton {
@@ -68,9 +80,10 @@
     border: none;
     padding: 10px 20px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 50px;
     width: 50%;
     margin-left: 10px;
+    transition: all 0.3s ease;
 }
 
 .click{
@@ -96,4 +109,25 @@
 .zoomedImage {
     max-width: 90%;
     max-height: 90%;
+}
+
+.confirmButton:hover, .cancelButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 600px) {
+    .modalContent {
+        padding: 20px;
+    }
+    .text {
+        font-size: 20px;
+    }
+    .info {
+        grid-template-columns: 1fr;
+    }
+    .confirmButton, .cancelButton {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
 }

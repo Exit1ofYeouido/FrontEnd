@@ -54,7 +54,7 @@ export default function ReceiptGrid() {
         const t = setInterval(() => setItems((prevItems) => shuffle([...prevItems])), 3000);
         return () => clearInterval(t);
     }, []);
-    
+
     const [heights, gridItems] = useMemo(() => {
         let heights = new Array(columns).fill(0);
         let gridItems = items.map((child, i) => {
