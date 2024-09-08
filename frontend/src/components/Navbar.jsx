@@ -16,46 +16,32 @@ const Navbar = () => {
 
     const isDarkMode = location.pathname.startsWith("/reward/videodetail");
 
+    const navItems = [
+        { path: "/home", icon: homeIcon, darkIcon: homeIconDark, text: "홈" },
+        { path: "/reward", icon: rewardIcon, darkIcon: rewardIconDark, text: "리워드" },
+        { path: "/stock", icon: searchIcon, darkIcon: searchIconDark, text: "주식 검색" },
+        { path: "/my", icon: profileIcon, darkIcon: profileIconDark, text: "내 정보" },
+    ];
+
     return (
-        <div className={`${styles.bar} ${isDarkMode ? styles.darkMode : ""}`}>
+        <nav className={`${styles.bar} ${isDarkMode ? styles.darkMode : ""}`}>
             <div className={styles.group}>
-                <div className={styles.item} onClick={() => navigate("/home")}>
-                    <img
-                        src={isDarkMode ? homeIconDark : homeIcon}
-                        alt="Home"
-                        className={styles.icon}
-                    />
-                    <div className={styles.text}>홈</div>
-                </div>
-                <div
-                    className={styles.item}
-                    onClick={() => navigate("/reward")}
-                >
-                    <img
-                        src={isDarkMode ? rewardIconDark : rewardIcon}
-                        alt="Reward"
-                        className={styles.icon}
-                    />
-                    <div className={styles.text}>리워드</div>
-                </div>
-                <div className={styles.item} onClick={() => navigate("/stock")}>
-                    <img
-                        src={isDarkMode ? searchIconDark : searchIcon}
-                        alt="Search"
-                        className={styles.icon}
-                    />
-                    <div className={styles.text}>주식 검색</div>
-                </div>
-                <div className={styles.item} onClick={() => navigate("/my")}>
-                    <img
-                        src={isDarkMode ? profileIconDark : profileIcon}
-                        alt="Profile"
-                        className={styles.icon}
-                    />
-                    <div className={styles.text}>내 정보</div>
-                </div>
+                {navItems.map((item) => (
+                    <div
+                        key={item.path}
+                        className={`${styles.item} ${location.pathname === item.path ? styles.active : ""}`}
+                        onClick={() => navigate(item.path)}
+                    >
+                        <img
+                            src={isDarkMode ? item.darkIcon : item.icon}
+                            alt={item.text}
+                            className={styles.icon}
+                        />
+                        <div className={styles.text}>{item.text}</div>
+                    </div>
+                ))}
             </div>
-        </div>
+        </nav>
     );
 };
 
