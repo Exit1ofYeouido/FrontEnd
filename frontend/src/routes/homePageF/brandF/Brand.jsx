@@ -26,6 +26,7 @@ export default function Brand() {
             <div className={styles.text}>
                 오늘은 어떤 주식을 받을 수 있을까요?
             </div>
+            <p className={styles.subtitle}>이 브랜드들의 주식을 받아보세요!</p>
             <div className={styles.container}>
                 {selectedLogos.map((logo, index) => (
                     <div

@@ -1,10 +1,11 @@
 .info {
-    background-color: #fff;
+    background-color: #FAF9F6;
     height: 180px;
     padding: 30px;
     border-radius: 20px;
     margin-top: 20px;
-    box-shadow: 0 0px 3px rgba(0, 0, 0, 0.1);
+    border: 2px solid #e0e0e0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 .title {
