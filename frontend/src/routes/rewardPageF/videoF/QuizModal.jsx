@@ -2,9 +2,7 @@ import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import styles from "./QuizModal.module.css";
 import Lottie from "lottie-react";
-
-const congratulationAnimation =
-    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/reward/congratulation.json";
+import congratulationAnimation from "~assets/reward/congratulation.json";
 
 export default function QuizModal({
     onClose,
