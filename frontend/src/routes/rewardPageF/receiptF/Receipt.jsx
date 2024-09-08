@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { uploadReceipt, getReward } from "~apis/rewardAPI/receiptApi";
 import Modal from "./ReceiptModal";
 import Toast, { showToast } from "~components/Toast";
-
+import ReceiptRewardModal from "./ReceiptRewardModal";
 export default function Receipt() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -19,6 +19,8 @@ export default function Receipt() {
     const [receiptData, setReceiptData] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [dragActive, setDragActive] = useState(false);
+    const [isRewardModalOpen, setIsRewardModalOpen] = useState(false);
+    const [rewardData, setRewardData] = useState(null);
 
     const handleBack = () => {
         if (location.state && location.state.from) {
@@ -120,10 +122,11 @@ export default function Receipt() {
             const rewardResponse = await getReward(receiptRequestData);
             setIsModalOpen(false);
 
-            showToast(
-                "success",
-                `영수증이 확인되었습니다! 리워드: ${rewardResponse.name}, 금액: ${rewardResponse.amount}`
-            );
+            setRewardData({
+                company: rewardResponse.name,
+                amount: rewardResponse.amount,
+            });
+            setIsRewardModalOpen(true);
         } catch (error) {
             const status = error.response?.data?.status || "Unknown Status";
             const message =
@@ -141,6 +144,14 @@ export default function Receipt() {
                 showToast("error", message);
             }
         }
+    };
+
+    const closeRewardModal = () => {
+        setIsRewardModalOpen(false);
+    };
+
+    const goCompanyPage = () => {
+        closeRewardModal();
     };
 
     const handleCancel = () => {
@@ -242,6 +253,15 @@ export default function Receipt() {
                     receiptData={receiptData}
                     onConfirm={handleConfirm}
                     onCancel={handleCancel}
+                />
+            )}
+
+            {isRewardModalOpen && (
+                <AttendanceModal
+                    onClose={closeRewardModal}
+                    company={rewardData?.company}
+                    amount={rewardData?.amount}
+                    goCompany={goCompanyPage}
                 />
             )}
             <Navbar />
