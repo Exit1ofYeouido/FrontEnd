@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./AttendanceModal.module.css";
+import styles from "./ReceiptRewardModal.module.css";
 import Lottie from "lottie-react";
 import congratulationAnimation from "~assets/reward/congratulation.json";
 
