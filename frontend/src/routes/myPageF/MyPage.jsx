@@ -40,6 +40,10 @@ export default function MyPage() {
         fetchData();
     }, []);
 
+    const formatNumber = (number) => {
+        return new Intl.NumberFormat().format(number);
+    };
+
     const handleLogout = async () => {
         const response = await logout();
 
@@ -108,7 +112,9 @@ export default function MyPage() {
                             alt="point Logo"
                             className={styles.pointLogo}
                         />
-                        <div className={styles.pointText}>{totalPoint}점</div>
+                        <div className={styles.pointText}>
+                            {formatNumber(totalPoint)}점
+                        </div>
                     </div>
                     <div className={styles.bottom}>
                         <button
@@ -125,7 +131,9 @@ export default function MyPage() {
                     <div className={styles.stockTop}>
                         <div className={styles.myStockText}>내 주식</div>
                         <div className={styles.rate}>
-                            <div className={styles.rate1}>{allCost}원</div>
+                            <div className={styles.rate1}>
+                                {formatNumber(allCost)}원
+                            </div>
                             <div className={styles.rate2}>
                                 <span
                                     className={styles.won}
@@ -139,16 +147,21 @@ export default function MyPage() {
                                                 : "#007bff",
                                     }}
                                 >
-                                    {calculateProfitOrLoss(
-                                        earningRate,
-                                        allCost
+                                    {formatNumber(
+                                        calculateProfitOrLoss(
+                                            earningRate,
+                                            allCost
+                                        )
                                     )}
                                     원
                                 </span>
                                 <span
                                     className={styles.percent}
                                     style={{
-                                        color: earningRate < 0 ? "#ff0000" : "#007bff",
+                                        color:
+                                            earningRate < 0
+                                                ? "#ff0000"
+                                                : "#007bff",
                                     }}
                                 >
                                     ({earningRate}%)

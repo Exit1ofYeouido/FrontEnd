@@ -147,6 +147,11 @@
     font-size: 16px;
     color: #000;
 }
+.stockChangeNeutral{
+    color: black;
+    display: flex;
+    align-items: center;
+}
 
 .stockChangeNegative {
     color: blue;

@@ -1,31 +1,78 @@
 import React, { useState, useEffect } from "react";
 import styles from "./SellModal.module.css";
+import { preSellStock } from "~apis/stockAPI/sellStockApi";
+import { useForm } from "react-hook-form";
+import { motion } from "framer-motion";
 
 export default function SellModal({
     onClose,
+    stockCode,
     stockName,
-    availableAmount,
-    onSell,
     currentPrice,
+    onSell,
 }) {
+    const [availableAmount, setAvailableAmount] = useState(0);
+    const [minSaleAmount, setMinSaleAmount] = useState(0);
+    const [sellable, setSellable] = useState(false);
     const [calculatedTotal, setCalculatedTotal] = useState(0);
 
-    useEffect(() => {
-        setCalculatedTotal((availableAmount * currentPrice).toFixed(0));
-    }, [availableAmount, currentPrice]);
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm();
+    const sellAmount = watch("sellAmount", 0);
 
-    const handleSell = () => {
-        onSell(availableAmount);
+    useEffect(() => {
+        const fetchPreSellData = async () => {
+            try {
+                const data = await preSellStock(stockCode);
+                setAvailableAmount(parseFloat(data.holdingAmount));
+                setMinSaleAmount(parseFloat(data.minSaleAmount));
+                setSellable(data.sellable);
+            } catch (error) {
+                console.error("Error fetching pre-sell data:", error);
+            }
+        };
+
+        fetchPreSellData();
+    }, [stockCode]);
+
+    useEffect(() => {
+        setCalculatedTotal((sellAmount * currentPrice).toFixed(0));
+    }, [sellAmount, currentPrice]);
+
+    const handleSell = (data) => {
+        onSell(data.sellAmount);
+    };
+
+    const modalContentVariants = {
+        hidden: { y: "100%", opacity: 0 },
+        visible: { y: "0%", opacity: 1, transition: { duration: 0.3 } },
+        exit: { y: "100%", opacity: 0, transition: { duration: 0.3 } },
     };
 
     return (
         <div className={styles.modalOverlay}>
-            <div className={styles.modalContent}>
+            <motion.div
+                className={styles.modalContent}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={modalContentVariants}
+            >
                 <h2>{stockName}</h2>
                 <p className={styles.modalTitle}>판매 예약</p>
-                <p className={styles.subTitle}>오늘 오후 3시 주문 예정</p>
+                <p className={styles.subTitle}>오후 3시 주문 예정</p>
 
                 <div className={styles.details}>
+                    <div className={styles.row}>
+                        <span>보유 주식</span>
+                        <span className={styles.value}>
+                            {availableAmount.toFixed(6)}주
+                        </span>
+                    </div>
                     <div className={styles.row}>
                         <span>1주 희망 가격</span>
                         <span className={styles.value}>시장가</span>
@@ -36,9 +83,32 @@ export default function SellModal({
                     </div>
                     <div className={styles.row}>
                         <span>주문 수량</span>
-                        <span className={styles.value}>
-                            {availableAmount.toFixed(6)}주
-                        </span>{" "}
+                        {availableAmount >= minSaleAmount ? (
+                            <form onSubmit={handleSubmit(handleSell)}>
+                                <input
+                                    {...register("sellAmount", {
+                                        required: "주문 수량을 입력해주세요.",
+                                        min: {
+                                            value: minSaleAmount,
+                                            message: `최소 ${minSaleAmount}주 이상 입력해야 합니다.`,
+                                        },
+                                        max: {
+                                            value: availableAmount,
+                                            message: `최대 ${availableAmount.toFixed(
+                                                6
+                                            )}주까지 입력 가능합니다.`,
+                                        },
+                                    })}
+                                    type="number"
+                                    className={styles.input}
+                                    placeholder={`최소 ${minSaleAmount}`}
+                                />
+                            </form>
+                        ) : (
+                            <span className={styles.error}>
+                                최소 {minSaleAmount}주부터 주문 가능합니다.
+                            </span>
+                        )}
                     </div>
                     <div className={styles.row}>
                         <span>총 예상 주문 금액</span>
@@ -47,6 +117,12 @@ export default function SellModal({
                         </span>
                     </div>
                 </div>
+
+                {errors.sellAmount && (
+                    <div className={styles.errorMessage}>
+                        {errors.sellAmount.message}
+                    </div>
+                )}
 
                 <div className={styles.footer}>
                     <div className={styles.actions}>
@@ -58,13 +134,16 @@ export default function SellModal({
                         </button>
                         <button
                             className={styles.sellButton}
-                            onClick={handleSell}
+                            onClick={handleSubmit(handleSell)}
+                            disabled={
+                                !sellable || availableAmount < minSaleAmount
+                            }
                         >
                             판매
                         </button>
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 }

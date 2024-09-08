@@ -146,17 +146,6 @@
     cursor: pointer;
 }
 
-.buyButton2{
-    width: 90%;
-    font-size: 18px;
-    background-color: #f04452;
-    color: #fff;
-    border: none;
-    padding: 15px;
-    border-radius: 15px;
-    cursor: pointer;
-}
-
 .buyButton {
     background-color: #f04452;
 }

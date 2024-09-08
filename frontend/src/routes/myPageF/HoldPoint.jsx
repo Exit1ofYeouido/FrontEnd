@@ -1,17 +1,29 @@
+// HoldPoint.jsx
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import styles from "./HoldPoint.module.css";
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import { getPointStock, getPointHistory } from "~apis/myAPI/myApi";
+import {
+    getPointStock,
+    getPointHistory,
+    preWithdrawPoint,
+    withdrawPoint,
+} from "~apis/myAPI/myApi";
+import WithdrawModal from "./WithdrawModal";
+import { showToast } from "~components/Toast";
 
 export default function HoldPoint() {
     const [totalValue, setTotalValue] = useState(0);
     const [transactions, setTransactions] = useState([]);
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);
-    const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
+    const [accountNumber, setAccountNumber] = useState("");
+    const [availablePoints, setAvailablePoints] = useState(0);
     const observer = useRef();
+    const [totalSize, setTotalSize] = useState(0);
+    const navigate = useNavigate();
 
     const handleBack = () => {
         navigate("/my");
@@ -19,13 +31,16 @@ export default function HoldPoint() {
 
     const loadMoreTransactions = async (page) => {
         try {
-            const stockHistoryData = await getPointHistory(page);
-            console.log(stockHistoryData);
+            const response = await getPointHistory(page);
+            const { size, pointHistory } = response;
+            console.log(pointHistory);
+
             setTransactions((prevTransactions) => [
                 ...prevTransactions,
-                ...stockHistoryData,
+                ...pointHistory,
             ]);
-            setHasMore(stockHistoryData.length === 6);
+            setTotalSize(size);
+            setHasMore(pointHistory.length === 6);
         } catch (error) {
             console.error(
                 "Error fetching data:",
@@ -35,7 +50,6 @@ export default function HoldPoint() {
     };
 
     useEffect(() => {
-        
         const fetchData = async () => {
             try {
                 const holdPointData = await getPointStock();
@@ -64,6 +78,42 @@ export default function HoldPoint() {
         [hasMore]
     );
 
+    const handleWithdrawClick = async () => {
+        try {
+            const response = await preWithdrawPoint();
+            setAccountNumber(response.accountNumber);
+            setAvailablePoints(response.totalPoint);
+            setShowModal(true);
+        } catch (error) {
+            console.error("Error fetching pre-withdrawal data:", error);
+        }
+    };
+
+    const formatNumber = (number) => {
+        return new Intl.NumberFormat().format(number);
+    };
+
+    const handleWithdraw = async (withdrawalAmount) => {
+        try {
+            await withdrawPoint(withdrawalAmount, accountNumber);
+            const updatedPointData = await getPointStock();
+            setTotalValue(updatedPointData.point);
+
+            const updatedTransactions = await getPointHistory(0);
+            setTransactions(updatedTransactions.pointHistory);
+            setPage(0);
+            showToast("success", "출금이 완료되었습니다.");
+            setShowModal(false);
+        } catch (error) {
+            showToast("error", "출금에 실패했습니다.");
+        }
+    };
+
+    const formatDateTime = (dateString) => {
+        const [year, month, day, hour, minute] = dateString.split("-");
+        return `${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분`;
+    };
+
     return (
         <motion.div
             key="hold-point"
@@ -82,8 +132,13 @@ export default function HoldPoint() {
 
                 <div className={styles.totalPoint}>
                     <div>내 포인트</div>
-                    <div>{totalValue}원</div>
-                    <button className={styles.sellButton}>출금하기</button>
+                    <div>{formatNumber(totalValue)}원</div>
+                    <button
+                        className={styles.sellButton}
+                        onClick={handleWithdrawClick}
+                    >
+                        출금하기
+                    </button>
                 </div>
 
                 <div className={styles.stockContainer}>
@@ -99,9 +154,7 @@ export default function HoldPoint() {
                         </div>
                     </div>
 
-                    <div className={styles.totalCount}>
-                        총 {transactions.length} 건
-                    </div>
+                    <div className={styles.totalCount}>총 {totalSize} 건</div>
 
                     {transactions.length > 0 ? (
                         <div className={styles.transactionsList}>
@@ -111,7 +164,7 @@ export default function HoldPoint() {
                                     className={styles.transaction}
                                 >
                                     <div className={styles.transactionDate}>
-                                        {transaction.createdAt}
+                                        {formatDateTime(transaction.date)}
                                     </div>
                                     <div className={styles.detail}>
                                         <div className={styles.datailStock}>
@@ -135,11 +188,18 @@ export default function HoldPoint() {
                                                 {transaction.type === "in"
                                                     ? "+"
                                                     : "-"}
-                                                {transaction.requestPoint} 원
+                                                {formatNumber(
+                                                    transaction.requestPoint
+                                                )}{" "}
+                                                원
                                             </div>
                                         </div>
                                         <div>
-                                            잔액 : {transaction.resultPoint} 원
+                                            잔액 :{" "}
+                                            {formatNumber(
+                                                transaction.resultPoint
+                                            )}{" "}
+                                            원
                                         </div>
                                     </div>
                                 </div>
@@ -152,6 +212,15 @@ export default function HoldPoint() {
                         </div>
                     )}
                 </div>
+
+                {showModal && (
+                    <WithdrawModal
+                        onClose={() => setShowModal(false)}
+                        accountNumber={accountNumber}
+                        availablePoints={availablePoints}
+                        onWithdraw={handleWithdraw}
+                    />
+                )}
             </div>
         </motion.div>
     );
