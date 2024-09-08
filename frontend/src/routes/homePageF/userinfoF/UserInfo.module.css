@@ -1,10 +1,11 @@
 .container {
-    background-color: #fff;
+    background-color: #FAF9F6;
     padding: 30px;
     height: 110px;
     border-radius: 20px;
-    box-shadow: 0 0px 3px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    border: 2px solid #e0e0e0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-top: 15px;
 }
 
 .name {
