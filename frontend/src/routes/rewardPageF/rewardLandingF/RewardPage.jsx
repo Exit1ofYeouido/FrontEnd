@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import styles from "./RewardPage.module.css";
-import calendarIcon from "~assets/homepage/calendar.png";
-import receiptIcon from "~assets/homepage/receipt.svg";
-import videoIcon from "~assets/homepage/video.svg";
 import { IoIosArrowForward } from "react-icons/io";
 import Navbar from "~components/Navbar";
 import { getTutorialCheck } from "~apis/myAPI/myApi";
+
+const calendarIcon =
+    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/homepage/calendar.png";
+const receiptIcon =
+    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/homepage/receipt.svg";
+const videoIcon =
+    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/homepage/video.svg";
 
 const RewardItem = ({ icon, title, description, navigateTo, type }) => {
     const navigate = useNavigate();

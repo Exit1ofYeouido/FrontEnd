@@ -169,16 +169,17 @@
 }
 
 .calendarIcon {
-    background-image: url("~assets/my/logout.svg");
+    background-image: url("https://stock-craft.s3.ap-northeast-2.amazonaws.com/my/logout.svg");
 }
 
 .noticeIcon {
-    background-image: url("~assets/my/notice.svg");
+    background-image: url("https://stock-craft.s3.ap-northeast-2.amazonaws.com/my/notice.svg");
 }
 
 .faqIcon {
-    background-image: url("~assets/homepage/faq.svg");
+    background-image: url("https://stock-craft.s3.ap-northeast-2.amazonaws.com/homepage/faq.svg");
 }
+
 
 .actionItem {
     display: flex;

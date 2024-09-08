@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import styles from "./VideoTutorial.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import quiz from "~assets/tutorial/video/quiz.json";
-import video from "~assets/tutorial/video/video.json";
-import stock from "~assets/tutorial/video/stock.json";
 import { IoIosArrowBack } from "react-icons/io";
 import Lottie from "lottie-react";
 import { tutorialNoLook } from "~apis/myAPI/myApi";
+
+
+
+const quiz = "https://stock-craft.s3.ap-northeast-2.amazonaws.com/tutorial/video/quiz.json";
+const video = "https://stock-craft.s3.ap-northeast-2.amazonaws.com/tutorial/video/video.json";
+const stock = "https://stock-craft.s3.ap-northeast-2.amazonaws.com/tutorial/video/stock.json";
+
 
 const slides = [
     {

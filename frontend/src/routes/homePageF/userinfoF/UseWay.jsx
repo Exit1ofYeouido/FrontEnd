@@ -2,11 +2,14 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import styles from "./UseWay.module.css";
-import receiptIcon from "~assets/homepage/receipt.svg";
-import videoIcon from "~assets/homepage/video.svg";
 import { IoIosArrowForward } from "react-icons/io";
 import Navbar from "~components/Navbar";
 import { IoIosArrowBack } from "react-icons/io";
+
+const receiptIcon =
+    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/homepage/receipt.svg";
+const videoIcon =
+    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/homepage/video.svg";
 
 const RewardItem = ({ icon, title, description, navigateTo }) => {
     const navigate = useNavigate();

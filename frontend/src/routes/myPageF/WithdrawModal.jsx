@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import styles from "./WithdrawModal.module.css";
-import accountLogo from "~assets/my/accountLogo.svg";
+
 import { AiOutlineClose } from "react-icons/ai";
 import { showToast } from "~components/Toast";
 import { motion } from "framer-motion";
+
+const accountLogo =
+    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/my/accountLogo.svg";
 
 export default function WithdrawModal({
     onClose,

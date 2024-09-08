@@ -2,15 +2,17 @@ import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import styles from "./QuizModal.module.css";
 import Lottie from "lottie-react";
-import congratulationAnimation from "~assets/reward/congratulation.json";
+
+const congratulationAnimation =
+    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/reward/congratulation.json";
 
 export default function QuizModal({
-                                      onClose,
-                                      enterpriseName,
-                                      amount,
-                                      goVideo,
-                                      goCompany,
-                                  }) {
+    onClose,
+    enterpriseName,
+    amount,
+    goVideo,
+    goCompany,
+}) {
     return (
         <div className={styles.modalOverlay}>
             <motion.div

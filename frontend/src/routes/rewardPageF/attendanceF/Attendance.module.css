@@ -5,10 +5,12 @@
     padding: 20px;
     background-color: #f8f9fa;
     height: 100vh;
-    background: url("~assets/attendance/background.svg") no-repeat center;
+    background: url("https://stock-craft.s3.ap-northeast-2.amazonaws.com/attendance/background.svg")
+        no-repeat center;
     background-size: cover;
     overflow: hidden;
 }
+
 .dayImage {
     max-width: 100%;
     height: auto;
@@ -80,7 +82,7 @@
     border-radius: 20px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    width: 100%; 
+    width: 100%;
     height: auto;
     margin-top: -20px;
     z-index: 0;
@@ -124,11 +126,11 @@
 }
 
 @media (max-height: 880px) {
-    .attendanceTitle{
+    .attendanceTitle {
         font-size: 22px;
         margin-bottom: 40px;
     }
-    .dayImage{
+    .dayImage {
         width: 90%;
     }
     .attendanceBox {
@@ -140,18 +142,18 @@
     .attendanceMonth {
         font-size: 18px;
     }
-    
+
     .attendanceDay {
         font-size: 22px;
     }
 }
 
 @media (max-height: 830px) {
-    .attendanceTitle{
+    .attendanceTitle {
         font-size: 20px;
         margin-bottom: 30px;
     }
-    .dayImage{
+    .dayImage {
         width: 85%;
     }
     .attendanceBox {
@@ -163,7 +165,7 @@
     .attendanceMonth {
         font-size: 18px;
     }
-    
+
     .attendanceDay {
         font-size: 22px;
     }
@@ -174,11 +176,11 @@
 }
 
 @media (max-height: 800px) {
-    .attendanceTitle{
+    .attendanceTitle {
         font-size: 20px;
         margin-bottom: 30px;
     }
-    .dayImage{
+    .dayImage {
         width: 80%;
     }
     .attendanceBox {
@@ -189,7 +191,7 @@
     .attendanceMonth {
         font-size: 16px;
     }
-    
+
     .attendanceDay {
         font-size: 20px;
     }
@@ -200,11 +202,11 @@
 }
 
 @media (max-height: 770px) {
-    .attendanceTitle{
+    .attendanceTitle {
         font-size: 18px;
         margin-bottom: 20px;
     }
-    .dayImage{
+    .dayImage {
         width: 75%;
     }
     .attendanceBox {
@@ -215,20 +217,18 @@
     .attendanceMonth {
         font-size: 16px;
     }
-    
+
     .attendanceDay {
         font-size: 20px;
     }
-
 }
 
-
 @media (max-height: 740px) {
-    .attendanceTitle{
+    .attendanceTitle {
         font-size: 18px;
         margin-bottom: 20px;
     }
-    .dayImage{
+    .dayImage {
         width: 70%;
     }
     .attendanceBox {
@@ -239,9 +239,8 @@
     .attendanceMonth {
         font-size: 16px;
     }
-    
+
     .attendanceDay {
         font-size: 20px;
     }
-
 }
