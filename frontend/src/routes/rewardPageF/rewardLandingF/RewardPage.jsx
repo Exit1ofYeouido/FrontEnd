@@ -32,22 +32,24 @@ const RewardItem = ({ icon, title, description, navigateTo, type }) => {
     };
 
     return (
-        <div className={styles.item} onClick={handleNavigation}>
-            <motion.div
-                className={styles.iconWrapper}
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.9 }}
-            >
+        <motion.div
+            className={styles.item}
+            onClick={handleNavigation}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 300 }}
+        >
+            <motion.div className={styles.iconWrapper}>
                 <img src={icon} alt={title} className={styles.icon} />
             </motion.div>
-            <div className={styles.textWrapper}>
+            <motion.div className={styles.textWrapper}>
                 <div className={styles.title}>{title}</div>
                 <div className={styles.description}>{description}</div>
-            </div>
-            <div className={styles.arrowWrapper}>
+            </motion.div>
+            <motion.div className={styles.arrowWrapper}>
                 <IoIosArrowForward />
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
     );
 };
 

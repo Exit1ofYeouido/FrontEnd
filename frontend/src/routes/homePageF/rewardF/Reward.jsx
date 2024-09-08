@@ -30,12 +30,12 @@ export default function Reward() {
     return (
         <div className={styles.section}>
             <div className={styles.title}>리워드</div>
-
+            <div className={styles.separator}></div>
             <div className={styles.item} onClick={handleVideoClick}>
                 <motion.div
                     className={`${styles.icon} ${styles.videoIcon}`}
-                    whileHover={{ scale: 1.2 }}
-                    whileTap={{ scale: 0.9 }}
+                    whileHover={{scale: 1.2}}
+                    whileTap={{scale: 0.9}}
                 ></motion.div>
                 <div className={styles.text}>
                     <div className={styles.itemTitle}>기업 영상 시청</div>
@@ -48,8 +48,8 @@ export default function Reward() {
             <div className={styles.item} onClick={handleReceiptClick}>
                 <motion.div
                     className={`${styles.icon} ${styles.receiptIcon}`}
-                    whileHover={{ scale: 1.2 }}
-                    whileTap={{ scale: 0.9 }}
+                    whileHover={{scale: 1.2}}
+                    whileTap={{scale: 0.9}}
                 ></motion.div>
                 <div className={styles.text}>
                     <div className={styles.itemTitle}>영수증 인증</div>
