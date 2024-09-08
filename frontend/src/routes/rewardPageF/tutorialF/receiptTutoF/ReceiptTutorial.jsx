@@ -2,18 +2,13 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import styles from "./ReceiptTutorial.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
+import shopping from "~assets/tutorial/receipt/shopping.json";
+import camera from "~assets/tutorial/receipt/camera.json";
+import receipt from "~assets/tutorial/receipt/receipt.json";
+import stock from "~assets/tutorial/video/stock.json";
 import { IoIosArrowBack } from "react-icons/io";
 import Lottie from "lottie-react";
 import { tutorialNoLook } from "~apis/myAPI/myApi";
-
-const shopping =
-    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/tutorial/receipt/shopping.json";
-const camera =
-    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/tutorial/receipt/camera.json";
-const receipt =
-    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/tutorial/receipt/receipt.json";
-const stock =
-    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/tutorial/video/stock.json";
 
 const slides = [
     {
