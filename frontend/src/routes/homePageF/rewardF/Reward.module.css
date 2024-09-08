@@ -1,7 +1,7 @@
 .section {
     padding: 30px;
     height: auto;
-    background-color: #FAF9F6;
+    background-color: #faf9f6;
     border-radius: 20px;
     border: 2px solid #e0e0e0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -56,9 +56,9 @@
 }
 
 .videoIcon {
-    background-image: url("~assets/homepage/video.svg");
+    background-image: url("https://stock-craft.s3.ap-northeast-2.amazonaws.com/homepage/video.svg");
 }
 
 .receiptIcon {
-    background-image: url("~assets/homepage/receipt.svg");
+    background-image: url("https://stock-craft.s3.ap-northeast-2.amazonaws.com/homepage/receipt.svg");
 }

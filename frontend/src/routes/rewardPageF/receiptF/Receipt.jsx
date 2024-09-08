@@ -40,6 +40,13 @@ export default function Receipt() {
         fileInputRef.current.click();
     };
 
+    const keyTranslations = {
+        storeName: "가게 이름",
+        price: "금액",
+        dealTime: "거래일시",
+        approvalNum: "승인번호",
+    };
+
     const handleImageSubmit = async () => {
         if (!selectedFile) {
             showToast("error", "먼저 이미지를 업로드해주세요.");
@@ -58,13 +65,41 @@ export default function Receipt() {
             showToast("success", "이미지가 성공적으로 제출되었습니다!");
         } catch (error) {
             const status = error.response?.data?.status || "Unknown Status";
+            const data = error.response?.data?.data?.missingValue || [];
+
+            const translateKey = (key) => keyTranslations[key] || key;
+
+            const dataString =
+                Array.isArray(data) && data.length > 0
+                    ? data.map((item) => translateKey(item)).join(", ")
+                    : "No missing values";
+
             const message =
                 error.response?.data?.message ||
                 error.message ||
                 "Unknown Error";
 
-            showToast("error", message);
-            setIsModalOpen(false);
+            if (status === 400) {
+                showToast("error", message);
+            } else if (status === 401) {
+                showToast("error", message);
+            } else if (status === 402) {
+                showToast("error", message);
+            } else if (status === 403) {
+                showToast("error", message);
+            } else if (status === 404) {
+                showToast(
+                    "error",
+                    <div>
+                        {message} <br />
+                        누락정보 : {dataString}
+                    </div>
+                );
+            } else if (status === 405) {
+                showToast("error", message);
+            } else {
+                showToast("error", "message");
+            }
         } finally {
             setIsSubmitting(false);
         }
@@ -96,8 +131,15 @@ export default function Receipt() {
                 error.message ||
                 "Unknown Error";
 
-            showToast("error", message);
-            setIsModalOpen(false);
+            if (status === 406) {
+                showToast("error", message);
+            } else if (status === 407) {
+                showToast("error", message);
+            } else if (status === 408) {
+                showToast("error", message);
+            } else {
+                showToast("error", message);
+            }
         }
     };
 

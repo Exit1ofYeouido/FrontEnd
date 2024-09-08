@@ -1,4 +1,3 @@
-// HoldPoint.jsx
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import styles from "./HoldPoint.module.css";

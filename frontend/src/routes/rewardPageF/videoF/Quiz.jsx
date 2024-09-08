@@ -6,8 +6,9 @@ import Modal from "./QuizModal";
 import { useNavigate } from "react-router-dom";
 import { quizListApi, quizCorrectApi } from "~apis/rewardAPI/quizApi";
 import Lottie from "lottie-react";
-import errorAnimation from "~assets/reward/wrong.json";
-import correctAnimation from "~assets/reward/correct.json";
+
+const errorAnimation = "https://stock-craft.s3.ap-northeast-2.amazonaws.com/reward/wrong.json";
+const correctAnimation = "https://stock-craft.s3.ap-northeast-2.amazonaws.com/reward/correct.json";
 
 export default function Quiz({ onClose, mediaId, enterpriseName }) {
     const [answer, setAnswer] = useState(0);

@@ -1,5 +1,5 @@
 .container {
-    background-color: #FAF9F6;
+    background-color: #faf9f6;
     padding: 30px;
     height: 110px;
     border-radius: 20px;
@@ -35,19 +35,19 @@
 }
 
 .calendarIcon {
-    background-image: url("~assets/homepage/calendar.png");
+    background-image: url("https://stock-craft.s3.ap-northeast-2.amazonaws.com/homepage/calendar.png");
 }
 
 .pointIcon {
-    background-image: url("~assets/homepage/point.png");
+    background-image: url("https://stock-craft.s3.ap-northeast-2.amazonaws.com/homepage/point.png");
 }
 
 .useIcon {
-    background-image: url("~assets/homepage/use.svg");
+    background-image: url("https://stock-craft.s3.ap-northeast-2.amazonaws.com/homepage/use.svg");
 }
 
 .faqIcon {
-    background-image: url("~assets/homepage/faq.svg");
+    background-image: url("https://stock-craft.s3.ap-northeast-2.amazonaws.com/homepage/faq.svg");
 }
 
 .actionItem {

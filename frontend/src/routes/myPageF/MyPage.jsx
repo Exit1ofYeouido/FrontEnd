@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./MyPage.module.css";
 import { motion } from "framer-motion";
-import accountLogo from "~assets/my/accountLogo.svg";
-import pointLogo from "~assets/my/point.svg";
 import { useNavigate } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import { myGetAll } from "~apis/myAPI/myApi";
@@ -10,6 +8,11 @@ import { logout } from "~apis/loginAPI/login";
 import { showToast } from "~components/Toast";
 import LogoutModal from "~components/LogoutModal";
 import LoadingPage from "~components/LoadingPage";
+
+const accountLogo =
+    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/my/accountLogo.svg";
+const pointLogo =
+    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/my/point.svg";
 
 export default function MyPage() {
     const [accountId, setAccountId] = useState("");

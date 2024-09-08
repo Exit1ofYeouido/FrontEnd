@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Brand.module.css";
 
-import starbucks from "~assets/brand_logo/starbucks.svg";
-import shinhan from "~assets/brand_logo/shinhan.svg";
-import lg from "~assets/brand_logo/lg.svg";
-import samsung from "~assets/brand_logo/samsung.svg";
-import cocacola from "~assets/brand_logo/cocacola.svg";
-import emtek from "~assets/brand_logo/emtek.svg";
-import apple from "~assets/brand_logo/apple.svg";
-import jls from "~assets/brand_logo/jls.svg";
+const logos1 = [
+    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/brand_logo/starbucks.svg",
+    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/brand_logo/cocacola.svg",
+    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/brand_logo/apple.svg",
+    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/brand_logo/shinhan.svg",
+];
 
-const logos1 = [starbucks, cocacola, apple, shinhan];
-const logos2 = [jls, emtek, samsung, lg];
+const logos2 = [
+    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/brand_logo/jls.svg",
+    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/brand_logo/emtek.svg",
+    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/brand_logo/samsung.svg",
+    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/brand_logo/lg.svg",
+];
 
 export default function Brand() {
     const [selectedLogos, setSelectedLogos] = useState([]);
