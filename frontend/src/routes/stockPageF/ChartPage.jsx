@@ -83,7 +83,7 @@ export default function ChartPage() {
 
     const handleSell = async (quantity) => {
         try {
-            // await sellStock(stockCode, stocksPrice.stockName, quantity);
+            await sellStock(stockCode, stocksPrice.stockName, quantity);
 
             setShowSellModal(false);
             setModalClosedTrigger((prev) => !prev);
@@ -340,22 +340,11 @@ export default function ChartPage() {
                 </div>
             </div>
 
-            <div>
-                {stocksPrice.availableAmount > 0 ? (
-                    <div className={styles.buttonGroup}>
-                        <button
-                            className={styles.sellButton}
-                            onClick={handleSellClick}
-                        >
-                            판매
-                        </button>
-                        <button className={styles.buyButton}>구매</button>
-                    </div>
-                ) : (
-                    <div className={styles.buttonGroup}>
-                        <button className={styles.buyButton2}>구매</button>
-                    </div>
-                )}
+            <div className={styles.buttonGroup}>
+                <button className={styles.sellButton} onClick={handleSellClick}>
+                    판매
+                </button>
+                <button className={styles.buyButton}>구매</button>
             </div>
 
             {showSellModal && (
@@ -364,6 +353,7 @@ export default function ChartPage() {
                     stockName={stocksPrice.stockName}
                     availableAmount={stocksPrice.availableAmount}
                     onSell={handleSell}
+                    stockCode={stocksPrice.stockCode}
                     currentPrice={stocksPrice.stockPrice}
                 />
             )}

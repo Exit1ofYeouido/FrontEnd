@@ -77,7 +77,6 @@
     overflow: hidden;
 }
 
-
 .tabs {
     display: flex;
     align-items: center;
@@ -98,7 +97,6 @@
     transition: color 0.3s, font-weight 0.3s;
     white-space: nowrap;
 }
-
 
 .activeTab {
     color: #000;
@@ -129,7 +127,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 20px;
     height: auto;
-    max-height: calc(100vh - 480px);
+    max-height: calc(100vh - 520px);
     overflow-y: auto;
 }
 
@@ -145,6 +143,29 @@
 .stockCard:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.sellButton {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: red;
+    color: white;
+    width: 50%;
+    height: 25%;
+    border-radius: 8px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.stockCard:hover .sellButton {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .stockLogo {
@@ -168,7 +189,7 @@
     flex-direction: column;
     gap: 15px;
     height: auto;
-    max-height: calc(100vh - 475px);
+    max-height: calc(100vh - 520px);
     overflow-y: auto;
 }
 
@@ -199,7 +220,6 @@
     color: #007bff;
 }
 
-
 .detail {
     display: flex;
     justify-content: space-between;
@@ -221,8 +241,85 @@
     color: #666;
 }
 
-.dateButton{
+.dateButton {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.unsettledList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: auto;
+    max-height: calc(100vh - 520px);
+    overflow-y: auto;
+}
+
+.unsettled {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.unsettled:hover {
+    background-color: #f9f9f9;
+}
+
+.unsettled .stockLogo {
+    max-width: 40px;
+    height: auto;
+    margin-right: 15px;
+}
+
+.unsettled .dateButton {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.unsettled .transactionDate {
+    font-size: 12px;
+    color: #555;
+}
+
+.unsettled .transactionStockName {
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: bold;
+}
+
+.unsettled .transactionQuantity {
+    font-size: 1rem;
+    color: black;
+}
+
+.cancelButton {
+    background-color: #ccc;
+    color: #000;
+    padding: 6px 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+    margin-bottom: 5px;
+}
+
+.cancelButton:hover {
+    background-color: #e60000;
+}
+.positiveText {
+    color: #ff0000;
+}
+
+.negativeText {
+    color: #007bff;
+}
+
+.neutralText {
+    color: #000000;
 }

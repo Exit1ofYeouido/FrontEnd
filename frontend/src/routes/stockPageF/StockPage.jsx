@@ -5,8 +5,8 @@ import stockData from "./stocks.json";
 import { IoMdSearch } from "react-icons/io";
 import { getStock, getSearchStock } from "~apis/stockAPI/getStockApi";
 import { useNavigate } from "react-router-dom";
-import { FaCaretDown, FaCaretUp } from "react-icons/fa6";
-
+import { FaCaretDown, FaCaretUp} from "react-icons/fa6";
+import { TiMinus } from "react-icons/ti";
 export default function StockPage() {
     const [stocks, setStocks] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
@@ -207,16 +207,23 @@ export default function StockPage() {
                                     <div className={styles.stockDetails}>
                                         <div
                                             className={
-                                                stock.previousPrice.startsWith(
-                                                    "-"
-                                                )
+                                                stock.previousPrice === "0"
+                                                    ? styles.stockChangeNeutral
+                                                    : stock.previousPrice.startsWith(
+                                                          "-"
+                                                      )
                                                     ? styles.stockChangeNegative
                                                     : styles.stockChangePositive
                                             }
                                         >
-                                            {stock.previousPrice.startsWith(
-                                                "-"
-                                            ) ? (
+                                            {stock.previousPrice === "0" ? (
+                                                <>
+                                                    <TiMinus />
+                                                    {stock.previousPrice}{" "}
+                                                </>
+                                            ) : stock.previousPrice.startsWith(
+                                                  "-"
+                                              ) ? (
                                                 <>
                                                     <FaCaretDown />
                                                     {stock.previousPrice.slice(

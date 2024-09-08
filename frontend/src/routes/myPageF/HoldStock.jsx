@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import styles from "./HoldStock.module.css";
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import CancelModal from "./CancelModal";
+import { showToast } from "~components/Toast";
 import {
     getHoldStock,
     getStockHistory,
-    myGetAll,
     getStockPendingHistory,
+    cancelStockPending,
+    myGetStock,
 } from "~apis/myAPI/myApi";
 
 export default function HoldStock() {
@@ -18,6 +21,14 @@ export default function HoldStock() {
     const [activeTab, setActiveTab] = useState("stocks");
     const [isFirstRender, setIsFirstRender] = useState(true);
     const [unsettledTransactions, setUnsettledTransactions] = useState([]);
+    const [size, setSize] = useState(0);
+    const [transactionPage, setTransactionPage] = useState(0);
+    const [hasMoreTransactions, setHasMoreTransactions] = useState(true);
+    const [showCancelModal, setShowCancelModal] = useState(false);
+    const [selectedSaleId, setSelectedSaleId] = useState(null);
+
+    const observer = useRef();
+
     const navigate = useNavigate();
 
     const handleBack = () => {
@@ -28,12 +39,11 @@ export default function HoldStock() {
         const fetchData = async () => {
             try {
                 const holdStockData = await getHoldStock();
-                const allData = await myGetAll();
-                setTotalValue(allData.allCost);
+                const allData = await myGetStock();
+                setTotalValue(allData.stocksValue);
                 setEarningRate(allData.earningRate);
                 setStocks(holdStockData);
                 setIsFirstRender(false);
-                console.log(holdStockData);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -42,17 +52,61 @@ export default function HoldStock() {
         fetchData();
     }, []);
 
-    const calculateProfitOrLoss = (earningRate, allCost) => {
-        const rate = parseFloat(earningRate);
-        const originalCost = allCost / (1 + rate / 100);
-        const profitOrLoss = allCost - originalCost;
-        return Math.round(profitOrLoss);
+    const loadMoreTransactions = async (page) => {
+        try {
+            const stockHistoryData = await getStockHistory(page);
+            const { size, stocksHistory } = stockHistoryData;
+
+            setTransactions((prevTransactions) => [
+                ...prevTransactions,
+                ...stocksHistory,
+            ]);
+            setSize(size);
+            setHasMoreTransactions(stocksHistory.length === 6);
+        } catch (error) {
+            console.error("Error fetching transactions:", error);
+        }
     };
 
-    const formatDateTime = (dateString) => {
-        const [year, month, day, hour, minute] = dateString.split("-");
-        return `${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분`;
+    const handleCancelUnsettled = (saleId) => {
+        setSelectedSaleId(saleId);
+        setShowCancelModal(true);
     };
+
+    const confirmCancel = async (saleId) => {
+        try {
+            await cancelStockPending(saleId);
+            showToast("success", "주문이 취소되었습니다.");
+            const unsettledData = await getStockPendingHistory();
+            setUnsettledTransactions(
+                unsettledData.myStockSaleRequestResponseDtos
+            );
+            setShowCancelModal(false);
+        } catch (error) {
+            console.error("Error cancelling the order:", error);
+            showToast("error", "취소에 실패했습니다.");
+        }
+    };
+
+    useEffect(() => {
+        if (activeTab === "transactions") {
+            loadMoreTransactions(transactionPage);
+        }
+    }, [transactionPage, activeTab]);
+
+    const lastTransactionElementRef = useCallback(
+        (node) => {
+            if (observer.current) observer.current.disconnect();
+            observer.current = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && hasMoreTransactions) {
+                    console.log("Increasing page from:", prevPage);
+                    setTransactionPage((prevPage) => prevPage + 1);
+                }
+            });
+            if (node) observer.current.observe(node);
+        },
+        [hasMoreTransactions]
+    );
 
     const handleTabChange = async (tab) => {
         if (tab !== activeTab) {
@@ -62,8 +116,8 @@ export default function HoldStock() {
                     const holdStockData = await getHoldStock();
                     setStocks(holdStockData);
                 } else if (tab === "transactions") {
-                    const stockHistoryData = await getStockHistory();
-                    setTransactions(stockHistoryData);
+                    setTransactionPage(0);
+                    setTransactions([]);
                 } else if (tab === "unsettled") {
                     const unsettledData = await getStockPendingHistory();
                     setUnsettledTransactions(
@@ -94,6 +148,18 @@ export default function HoldStock() {
         },
     };
 
+    const calculateProfitOrLoss = (earningRate, allCost) => {
+        const rate = parseFloat(earningRate);
+        const originalCost = allCost / (1 + rate / 100);
+        const profitOrLoss = allCost - originalCost;
+        return Math.round(profitOrLoss);
+    };
+
+    const formatDateTime = (dateString) => {
+        const [year, month, day, hour, minute] = dateString.split("-");
+        return `${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분`;
+    };
+
     return (
         <motion.div
             key="hold-stock"
@@ -112,7 +178,7 @@ export default function HoldStock() {
 
                 <div className={styles.totalStock}>
                     <div>내 주식</div>
-                    <div>{totalValue}원</div>
+                    <div>{formatNumber(totalValue)}원</div>
                     <div
                         style={{
                             color:
@@ -195,7 +261,7 @@ export default function HoldStock() {
                         {activeTab === "stocks"
                             ? stocks.length
                             : activeTab === "transactions"
-                            ? transactions.length
+                            ? size
                             : unsettledTransactions.length}{" "}
                         건
                     </div>
@@ -242,7 +308,16 @@ export default function HoldStock() {
                                                 )}{" "}
                                                 주
                                             </div>
-                                            <div className={styles.stockValue}>
+
+                                            <div
+                                                className={
+                                                    stock.earningRate < 0
+                                                        ? styles.negativeText
+                                                        : stock.earningRate > 0
+                                                        ? styles.positiveText
+                                                        : styles.neutralText
+                                                }
+                                            >
                                                 {formatNumber(
                                                     Math.floor(
                                                         (stock.holdStockCount *
@@ -253,6 +328,20 @@ export default function HoldStock() {
                                                 )}
                                                 원 ({stock.earningRate}%)
                                             </div>
+
+                                            <button
+                                                className={styles.sellButton}
+                                                onClick={() =>
+                                                    navigate("/stock/chart", {
+                                                        state: {
+                                                            stockCode:
+                                                                stock.stockCode,
+                                                        },
+                                                    })
+                                                }
+                                            >
+                                                매도하기
+                                            </button>
                                         </div>
                                     ))}
                                 </div>
@@ -264,7 +353,7 @@ export default function HoldStock() {
                         ) : activeTab === "transactions" ? (
                             transactions.length > 0 ? (
                                 <div className={styles.transactionsList}>
-                                    {transactions.map((transaction) => (
+                                    {transactions.map((transaction, index) => (
                                         <div
                                             key={transaction.id}
                                             className={styles.transaction}
@@ -316,6 +405,14 @@ export default function HoldStock() {
                                                     </div>
                                                 </div>
                                             </div>
+                                            {index ===
+                                                transactions.length - 1 && (
+                                                <div
+                                                    ref={
+                                                        lastTransactionElementRef
+                                                    }
+                                                />
+                                            )}
                                         </div>
                                     ))}
                                 </div>
@@ -350,7 +447,9 @@ export default function HoldStock() {
                                                             styles.transactionDate
                                                         }
                                                     >
-                                                        {unsettled.saleId}
+                                                        {formatDateTime(
+                                                            unsettled.date
+                                                        )}
                                                     </div>
 
                                                     <button
@@ -397,6 +496,13 @@ export default function HoldStock() {
                         ) : null}
                     </motion.div>
                 </div>
+                {showCancelModal && (
+                    <CancelModal
+                        saleId={selectedSaleId}
+                        onClose={() => setShowCancelModal(false)}
+                        onCancel={confirmCancel}
+                    />
+                )}
             </div>
         </motion.div>
     );
