@@ -13,13 +13,14 @@ export default function SellModal({
 }) {
     const [availableAmount, setAvailableAmount] = useState(0);
     const [minSaleAmount, setMinSaleAmount] = useState(0);
-    const [sellable, setSellable] = useState(false);
     const [calculatedTotal, setCalculatedTotal] = useState(0);
+    const [autoSellAll, setAutoSellAll] = useState(false);
 
     const {
         register,
         handleSubmit,
         watch,
+        setValue,
         formState: { errors },
     } = useForm();
     const sellAmount = watch("sellAmount", 0);
@@ -30,14 +31,18 @@ export default function SellModal({
                 const data = await preSellStock(stockCode);
                 setAvailableAmount(parseFloat(data.holdingAmount));
                 setMinSaleAmount(parseFloat(data.minSaleAmount));
-                setSellable(data.sellable);
+
+                if (parseFloat(data.holdingAmount) < parseFloat(data.minSaleAmount)) {
+                    setAutoSellAll(true);
+                    setValue("sellAmount", parseFloat(data.holdingAmount));
+                }
             } catch (error) {
                 console.error("Error fetching pre-sell data:", error);
             }
         };
 
         fetchPreSellData();
-    }, [stockCode]);
+    }, [stockCode, setValue]);
 
     useEffect(() => {
         setCalculatedTotal((sellAmount * currentPrice).toFixed(0));
@@ -83,7 +88,11 @@ export default function SellModal({
                     </div>
                     <div className={styles.row}>
                         <span>주문 수량</span>
-                        {availableAmount >= minSaleAmount ? (
+                        {autoSellAll ? (
+                            <span className={styles.value}>
+                                {availableAmount.toFixed(6)}주 (전량 매도)
+                            </span>
+                        ) : availableAmount >= minSaleAmount ? (
                             <form onSubmit={handleSubmit(handleSell)}>
                                 <input
                                     {...register("sellAmount", {
@@ -135,9 +144,6 @@ export default function SellModal({
                         <button
                             className={styles.sellButton}
                             onClick={handleSubmit(handleSell)}
-                            disabled={
-                                !sellable || availableAmount < minSaleAmount
-                            }
                         >
                             판매
                         </button>
