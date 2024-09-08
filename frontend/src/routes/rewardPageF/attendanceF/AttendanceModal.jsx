@@ -1,9 +1,7 @@
 import React from "react";
 import styles from "./AttendanceModal.module.css";
 import Lottie from "lottie-react";
-
-
-const congratulationAnimation = "https://stock-craft.s3.ap-northeast-2.amazonaws.com/reward/congratulation.json";
+import congratulationAnimation from "~assets/reward/congratulation.json";
 
 export default function AttendanceModal({
     onClose,
