@@ -257,7 +257,7 @@ export default function Receipt() {
             )}
 
             {isRewardModalOpen && (
-                <AttendanceModal
+                <ReceiptRewardModal
                     onClose={closeRewardModal}
                     company={rewardData?.company}
                     amount={rewardData?.amount}
