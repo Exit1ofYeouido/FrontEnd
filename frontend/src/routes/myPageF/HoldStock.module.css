@@ -113,7 +113,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 20px;
     height: auto;
-    max-height: calc(100vh - 520px);
+    max-height: calc(100vh - 490px);
     overflow-y: auto;
 }
 
@@ -225,7 +225,7 @@
     flex-direction: column;
     gap: 15px;
     height: auto;
-    max-height: calc(100vh - 520px);
+    max-height: calc(100vh - 490px);
     overflow-y: auto;
 }
 
@@ -358,4 +358,378 @@
 
 .neutralText {
     color: #000000;
+}
+
+
+@media (max-height: 800px) {
+    .stockCard {
+        min-height: 130px;
+    }
+
+    .stockLogo {
+        max-width: 40px;
+    }
+
+    .stockName {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        color: #333;
+    }
+    
+    
+    .stockQuantity,
+    .stockValue {
+        font-size: 14px;
+        color: #777;
+    }
+
+    .topBar {
+        font-size: 22px;
+    }
+
+    .stockBack {
+        font-size: 14px;
+    }
+
+    .sellButton2 {
+        margin-top: 10px;
+        padding: 10px 20px;
+        font-size: 12px;
+    }
+
+    .transactionsList {
+        max-height: calc(100vh - 490px);
+    }
+}
+
+@media (max-height: 730px) {
+    .stockCard {
+        min-height: 110px;
+    }
+
+    .stockLogo {
+        max-width: 35px;
+    }
+
+    .stockName {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        color: #333;
+    }
+    
+    
+    .stockQuantity,
+    .stockValue {
+        font-size: 14px;
+        color: #777;
+    }
+
+    .totalStock {
+        margin-top: 20px;
+    }
+    
+    .totalStock div:first- {
+        font-size: 18px;
+    }
+    
+    .totalStock div:nth-child(2) {
+        margin-top: 8px;
+        font-size: 28px;
+    }
+    
+    .totalStock div:nth-child(3) {
+        margin-top: 8px;
+        font-size: 12px;
+    }
+
+    .sellButton {
+        font-size: 12px;
+    }
+
+    .tabs {
+        margin-bottom: 15px;
+    }
+    
+    .tabButton {
+        font-size: 0.9rem;
+    }
+    .topBar {
+        font-size: 20px;
+    }
+
+    .negativeText,
+    .positiveText,
+    .neutralText{
+        font-size: 14px;
+    }
+    .stocksList {
+        max-height: calc(100vh - 460px);
+    }
+    .stockBack {
+        font-size: 14px;
+    }
+
+    .sellButton2 {
+        margin-top: 10px;
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+
+    .transactionsList {
+        max-height: calc(100vh - 460px);
+    }
+}
+
+
+
+@media (max-height: 670px) {
+    .stockCard {
+        min-height: 90px;
+    }
+
+    .stockLogo {
+        max-width: 30px;
+    }
+
+    .stockName {
+        font-size: 1rem;
+        margin-bottom: 6px;
+        color: #333;
+    }
+    
+    
+    .stockQuantity,
+    .stockValue {
+        font-size: 13px;
+        color: #777;
+    }
+
+    .totalStock {
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    
+    .totalStock div:first- {
+        font-size: 16px;
+    }
+    
+    .totalStock div:nth-child(2) {
+        margin-top: 8px;
+        font-size: 24px;
+    }
+    
+    .totalStock div:nth-child(3) {
+        margin-top: 8px;
+        font-size: 11px;
+    }
+
+    .sellButton {
+        font-size: 11px;
+    }
+
+    .tabs {
+        margin-bottom: 10px;
+    }
+    
+    .tabButton {
+        font-size: 0.8rem;
+    }
+    .topBar {
+        font-size: 18px;
+    }
+
+    .negativeText,
+    .positiveText,
+    .neutralText{
+        font-size: 13px;
+    }
+    .stocksList {
+        max-height: calc(100vh - 420px);
+    }
+
+    .totalCount {
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+    }
+
+    .stockBack {
+        font-size: 13px;
+    }
+
+    .sellButton2 {
+        margin-top: 10px;
+        padding: 8px 18px;
+        font-size: 12px;
+    }
+    .transactionsList {
+        max-height: calc(100vh - 420px);
+    }
+
+    .noData {
+        font-size: 1.1rem;
+    }
+}
+
+
+@media (max-height: 600px) {
+    .stockCard {
+        min-height: 90px;
+    }
+
+    .stockLogo {
+        max-width: 25px;
+    }
+
+    .stockName {
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+        color: #333;
+    }
+    
+    
+    .stockQuantity,
+    .stockValue {
+        font-size: 12px;
+        color: #777;
+    }
+
+    .totalStock {
+        margin-top: 18px;
+        margin-bottom: 8px;
+    }
+    
+    .totalStock div:first- {
+        font-size: 14px;
+    }
+    
+    .totalStock div:nth-child(2) {
+        margin-top: 8px;
+        font-size: 22px;
+    }
+    
+    .totalStock div:nth-child(3) {
+        margin-top: 8px;
+        font-size: 10px;
+    }
+
+    .sellButton {
+        font-size: 10px;
+    }
+
+    .tabs {
+        margin-bottom: 10px;
+    }
+    
+    .tabButton {
+        font-size: 0.7rem;
+    }
+    .topBar {
+        font-size: 16px;
+    }
+
+    .negativeText,
+    .positiveText,
+    .neutralText{
+        font-size: 12px;
+    }
+    .stocksList {
+        max-height: calc(100vh - 400px);
+    }
+
+    .totalCount {
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+    }
+
+    .stockBack {
+        font-size: 13px;
+    }
+
+    .sellButton2 {
+        margin-top: 10px;
+        padding: 8px 18px;
+        font-size: 12px;
+    }
+}
+
+
+@media (max-width: 360px) {
+    .stockCard {
+        min-height: 90px;
+    }
+
+    .stockLogo {
+        max-width: 25px;
+    }
+
+    .stockName {
+        font-size: 0.8rem;
+        margin-bottom: 6px;
+        color: #333;
+    }
+    
+    
+    .stockQuantity,
+    .stockValue {
+        font-size: 12px;
+        color: #777;
+    }
+
+    .totalStock {
+        margin-top: 18px;
+        margin-bottom: 8px;
+    }
+    
+    .totalStock div:first- {
+        font-size: 14px;
+    }
+    
+    .totalStock div:nth-child(2) {
+        margin-top: 8px;
+        font-size: 22px;
+    }
+    
+    .totalStock div:nth-child(3) {
+        margin-top: 8px;
+        font-size: 10px;
+    }
+
+    .sellButton {
+        font-size: 10px;
+    }
+
+    .tabs {
+        margin-bottom: 10px;
+    }
+    
+    .tabButton {
+        font-size: 0.7rem;
+    }
+    .topBar {
+        font-size: 16px;
+    }
+
+    .negativeText,
+    .positiveText,
+    .neutralText{
+        font-size: 12px;
+    }
+    .stocksList {
+        max-height: calc(100vh - 400px);
+    }
+
+    .totalCount {
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+    }
+
+    .stockBack {
+        font-size: 13px;
+    }
+
+    .sellButton2 {
+        margin-top: 10px;
+        padding: 8px 18px;
+        font-size: 12px;
+    }
 }
