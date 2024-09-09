@@ -16,7 +16,7 @@
     border-radius: 0.5rem;
     padding: 2rem;
     overflow-y: auto;
-    max-height: calc(100vh - 6rem - 110px);
+    max-height: calc(100dvh - 6rem - 110px);
 }
 
 .faqHeader {

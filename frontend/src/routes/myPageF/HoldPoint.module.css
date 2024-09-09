@@ -160,7 +160,7 @@
     flex-direction: column;
     gap: 15px;
     height: auto;
-    max-height: calc(100vh - 500px);
+    max-height: calc(100dvh - 500px);
     overflow-y: auto;
     padding-right: 5px;
 }

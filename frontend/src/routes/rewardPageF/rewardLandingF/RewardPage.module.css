@@ -1,6 +1,6 @@
 .container {
     padding: 20px;
-    height: calc(100vh - 90px);
+    height: calc(100dvh - 90px);
     background-color: #fff;
 }
 
