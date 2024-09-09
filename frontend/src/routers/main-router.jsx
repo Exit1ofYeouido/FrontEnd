@@ -27,6 +27,10 @@ import HoldStockPage from "../routes/myPageF/HoldStock";
 import NoticePage from "../routes/myPageF/Notice";
 import FaqPage from "../routes/myPageF/Faq";
 
+// 통계 페이지
+import StatisticPage from "../routes/statisticF/Statistic";
+
+
 // 레이아웃
 import MainLayPage from "../routes/Layout";
 import LandingLayout from "../routes/landingPageF/LandingLayout";
@@ -159,6 +163,11 @@ const mainRouter = [
                         index: true,
                     },
                 ],
+            },
+            {
+                path: "statistic",
+                element: <StatisticPage />,
+                index: true,
             },
         ],
     },

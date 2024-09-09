@@ -87,7 +87,6 @@ export default function ChartPage() {
 
             setShowSellModal(false);
             setModalClosedTrigger((prev) => !prev);
-            console.log(modalClosedTrigger);
             showToast("success", "판매예약이 완료되었습니다.");
         } catch (error) {
             console.error("판매 실패:", error);

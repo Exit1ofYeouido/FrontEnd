@@ -3,7 +3,6 @@ import instance from "../basis";
 export const getStock = async () => {
     try {
         const response = await instance.get(`/search/stocks`);
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error("Error fetching attendace:", error);

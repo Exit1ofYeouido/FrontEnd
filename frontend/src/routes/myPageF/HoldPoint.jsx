@@ -32,7 +32,6 @@ export default function HoldPoint() {
         try {
             const response = await getPointHistory(page);
             const { size, pointHistory } = response;
-            console.log(pointHistory);
 
             setTransactions((prevTransactions) => [
                 ...prevTransactions,
