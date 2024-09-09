@@ -54,7 +54,7 @@ export default function WithdrawModal({
                 <p className={styles.subTitle}>출금 희망 금액을 입력하세요</p>
 
                 <input
-                    type="number"
+                    type="text"
                     value={withdrawalAmount}
                     onChange={(e) => setWithdrawalAmount(e.target.value)}
                     className={styles.input}
