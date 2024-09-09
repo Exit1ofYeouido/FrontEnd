@@ -175,7 +175,17 @@ export default function MyPage() {
 
                     <div className={styles.earningRatesList}>
                         {earningRates.map((rate, index) => (
-                            <div key={index} className={styles.earningRateItem}>
+                            <div
+                                key={index}
+                                className={styles.earningRateItem}
+                                onClick={() =>
+                                    navigate("/stock/chart", {
+                                        state: {
+                                            stockCode: rate.stockCode,
+                                        },
+                                    })
+                                }
+                            >
                                 <img
                                     src={`https://stock-craft.s3.ap-northeast-2.amazonaws.com/logos/${encodeURIComponent(
                                         rate.enterpriseName

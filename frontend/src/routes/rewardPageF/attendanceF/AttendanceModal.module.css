@@ -13,6 +13,7 @@
 }
 
 .modalContent {
+    width: 40%;
     position: relative;
     background: white;
     padding: 20px 40px;
@@ -45,6 +46,7 @@
     border-radius: 30px;
     cursor: pointer;
     font-size: 14px;
+    z-index: 10000;
 }
 
 .confirm {
@@ -57,6 +59,7 @@
     border-radius: 30px;
     cursor: pointer;
     font-size: 14px;
+    z-index: 10000;
 }
 
 .confirm:hover {

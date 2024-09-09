@@ -63,7 +63,6 @@ export default function Attendance() {
 
     const goCompany = () => {
         setShowModal(false);
-        navigate("/reward/video");
     };
 
     return (
@@ -106,9 +105,9 @@ export default function Attendance() {
                                     animate={
                                         index === attendCount - 1
                                             ? {
-                                                  scale: [1, 1.2, 1],
-                                                  rotate: [0, 10, -10, 0],
-                                              }
+                                                scale: [1, 1.2, 1],
+                                                rotate: [0, 10, -10, 0],
+                                            }
                                             : {}
                                     }
                                     transition={{
