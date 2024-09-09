@@ -4,7 +4,7 @@
     align-items: center;
     padding: 20px;
     background-color: #f8f9fa;
-    height: 100vh;
+    height: 100dvh;
     background: url("https://stock-craft.s3.ap-northeast-2.amazonaws.com/attendance/background.svg")
         no-repeat center;
     background-size: cover;
