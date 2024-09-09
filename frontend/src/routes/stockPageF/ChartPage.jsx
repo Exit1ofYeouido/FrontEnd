@@ -321,7 +321,7 @@ export default function ChartPage() {
                     <div>
                         {stocksPrice.availableAmount
                             ? stocksPrice.availableAmount.toFixed(6)
-                            : "0.000000"}
+                            : "0"}
                         주
                     </div>
                 </div>
