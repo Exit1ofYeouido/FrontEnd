@@ -96,18 +96,21 @@ export default function HoldStock() {
     }, [transactionPage, activeTab]);
 
     const lastTransactionElementRef = useCallback(
-        (node) => {
-            if (observer.current) observer.current.disconnect();
-            observer.current = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting && hasMoreTransactions) {
+    (node) => {
+        if (observer.current) observer.current.disconnect();
+        observer.current = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && hasMoreTransactions) {
+                setTransactionPage((prevPage) => {
                     console.log("Increasing page from:", prevPage);
-                    setTransactionPage((prevPage) => prevPage + 1);
-                }
-            });
-            if (node) observer.current.observe(node);
-        },
-        [hasMoreTransactions]
-    );
+                    return prevPage + 1;
+                });
+            }
+        });
+        if (node) observer.current.observe(node);
+    },
+    [hasMoreTransactions]
+);
+
 
     const handleTabChange = async (tab) => {
         if (tab !== activeTab) {
