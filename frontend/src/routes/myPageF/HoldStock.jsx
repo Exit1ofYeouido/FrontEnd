@@ -10,7 +10,6 @@ import {
     getStockHistory,
     getStockPendingHistory,
     cancelStockPending,
-    myGetStock,
 } from "~apis/myAPI/myApi";
 
 export default function HoldStock() {
@@ -39,10 +38,12 @@ export default function HoldStock() {
         const fetchData = async () => {
             try {
                 const holdStockData = await getHoldStock();
-                const allData = await myGetStock();
-                setTotalValue(allData.stocksValue);
-                setEarningRate(allData.earningRate);
-                setStocks(holdStockData);
+                setTotalValue(holdStockData.stocksValueResponseDto.stocksValue);
+                setEarningRate(
+                    holdStockData.stocksValueResponseDto.earningRate
+                );
+                setStocks(holdStockData.myStocksResponse);
+                console.log(holdStockData);
                 setIsFirstRender(false);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -95,18 +96,21 @@ export default function HoldStock() {
     }, [transactionPage, activeTab]);
 
     const lastTransactionElementRef = useCallback(
-        (node) => {
-            if (observer.current) observer.current.disconnect();
-            observer.current = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting && hasMoreTransactions) {
+    (node) => {
+        if (observer.current) observer.current.disconnect();
+        observer.current = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && hasMoreTransactions) {
+                setTransactionPage((prevPage) => {
                     console.log("Increasing page from:", prevPage);
-                    setTransactionPage((prevPage) => prevPage + 1);
-                }
-            });
-            if (node) observer.current.observe(node);
-        },
-        [hasMoreTransactions]
-    );
+                    return prevPage + 1;
+                });
+            }
+        });
+        if (node) observer.current.observe(node);
+    },
+    [hasMoreTransactions]
+);
+
 
     const handleTabChange = async (tab) => {
         if (tab !== activeTab) {
@@ -114,7 +118,13 @@ export default function HoldStock() {
             try {
                 if (tab === "stocks") {
                     const holdStockData = await getHoldStock();
-                    setStocks(holdStockData);
+                    setTotalValue(
+                        holdStockData.stocksValueResponseDto.stocksValue
+                    );
+                    setEarningRate(
+                        holdStockData.stocksValueResponseDto.earningRate
+                    );
+                    setStocks(holdStockData.myStocksResponse);
                 } else if (tab === "transactions") {
                     setTransactionPage(0);
                     setTransactions([]);
@@ -290,58 +300,97 @@ export default function HoldStock() {
                                             key={stock.id}
                                             className={styles.stockCard}
                                         >
-                                            <img
-                                                src={`https://stock-craft.s3.ap-northeast-2.amazonaws.com/logos/${encodeURIComponent(
-                                                    stock.name
-                                                )}.svg`}
-                                                alt={`${stock.name} 로고`}
-                                                className={styles.stockLogo}
-                                            />
-                                            <div className={styles.stockName}>
-                                                {stock.name}
-                                            </div>
-                                            <div
-                                                className={styles.stockQuantity}
-                                            >
-                                                {stock.holdStockCount.toFixed(
-                                                    6
-                                                )}{" "}
-                                                주
-                                            </div>
-
-                                            <div
-                                                className={
-                                                    stock.earningRate < 0
-                                                        ? styles.negativeText
-                                                        : stock.earningRate > 0
-                                                        ? styles.positiveText
-                                                        : styles.neutralText
-                                                }
-                                            >
-                                                {formatNumber(
-                                                    Math.floor(
-                                                        (stock.holdStockCount *
+                                            <div className={styles.stockInner}>
+                                                <div
+                                                    className={
+                                                        styles.stockFront
+                                                    }
+                                                >
+                                                    <img
+                                                        src={`https://stock-craft.s3.ap-northeast-2.amazonaws.com/logos/${encodeURIComponent(
+                                                            stock.name
+                                                        )}.svg`}
+                                                        alt={`${stock.name} 로고`}
+                                                        className={
+                                                            styles.stockLogo
+                                                        }
+                                                    />
+                                                    <div
+                                                        className={
+                                                            styles.stockName
+                                                        }
+                                                    >
+                                                        {stock.name}
+                                                    </div>
+                                                    <div
+                                                        className={
+                                                            styles.stockQuantity
+                                                        }
+                                                    >
+                                                        {" "}
+                                                        {stock.holdStockCount.toFixed(
+                                                            6
+                                                        )}{" "}
+                                                        주
+                                                    </div>
+                                                    <div
+                                                        className={
+                                                            stock.earningRate <
+                                                            0
+                                                                ? styles.negativeText
+                                                                : stock.earningRate >
+                                                                  0
+                                                                ? styles.positiveText
+                                                                : styles.neutralText
+                                                        }
+                                                    >
+                                                        {formatNumber(
+                                                            Math.floor(
+                                                                (stock.holdStockCount *
+                                                                    stock.averagePrice *
+                                                                    stock.earningRate) /
+                                                                    100
+                                                            )
+                                                        )}
+                                                        원 ({stock.earningRate}
+                                                        %)
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    className={styles.stockBack}
+                                                >
+                                                    <div>
+                                                        평균 단가 :{" "}
+                                                        {formatNumber(stock.averagePrice)}원
+                                                    </div>
+                                                    <div>
+                                                        평가 금액 :{" "}
+                                                        {formatNumber(Math.floor(
                                                             stock.averagePrice *
-                                                            stock.earningRate) /
-                                                            100
-                                                    )
-                                                )}
-                                                원 ({stock.earningRate}%)
-                                            </div>
+                                                                stock.holdStockCount
+                                                        ))}원
+                                                    </div>
 
-                                            <button
-                                                className={styles.sellButton}
-                                                onClick={() =>
-                                                    navigate("/stock/chart", {
-                                                        state: {
-                                                            stockCode:
-                                                                stock.stockCode,
-                                                        },
-                                                    })
-                                                }
-                                            >
-                                                매도하기
-                                            </button>
+                                                    <button
+                                                        className={
+                                                            styles.sellButton2
+                                                        }
+                                                        onClick={() =>
+                                                            navigate(
+                                                                "/stock/chart",
+                                                                {
+                                                                    state: {
+                                                                        stockCode:
+                                                                            stock.stockCode,
+                                                                    },
+                                                                }
+                                                            )
+                                                        }
+                                                    >
+                                                        판매 하기
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>

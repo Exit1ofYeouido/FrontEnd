@@ -32,7 +32,10 @@ export default function SellModal({
                 setAvailableAmount(parseFloat(data.holdingAmount));
                 setMinSaleAmount(parseFloat(data.minSaleAmount));
 
-                if (parseFloat(data.holdingAmount) < parseFloat(data.minSaleAmount)) {
+                if (
+                    parseFloat(data.holdingAmount) <
+                    parseFloat(data.minSaleAmount)
+                ) {
                     setAutoSellAll(true);
                     setValue("sellAmount", parseFloat(data.holdingAmount));
                 }
@@ -58,6 +61,7 @@ export default function SellModal({
         exit: { y: "100%", opacity: 0, transition: { duration: 0.3 } },
     };
 
+    const isSellDisabled = availableAmount === 0;
     return (
         <div className={styles.modalOverlay}>
             <motion.div
@@ -75,7 +79,9 @@ export default function SellModal({
                     <div className={styles.row}>
                         <span>보유 주식</span>
                         <span className={styles.value}>
-                            {availableAmount.toFixed(6)}주
+                            {availableAmount === 0
+                                ? "0주"
+                                : availableAmount.toFixed(6) + "주"}
                         </span>
                     </div>
                     <div className={styles.row}>
@@ -88,7 +94,11 @@ export default function SellModal({
                     </div>
                     <div className={styles.row}>
                         <span>주문 수량</span>
-                        {autoSellAll ? (
+                        {isSellDisabled ? (
+                            <span className={styles.error}>
+                                보유하지 않는 주식입니다.
+                            </span>
+                        ) : autoSellAll ? (
                             <span className={styles.value}>
                                 {availableAmount.toFixed(6)}주 (전량 매도)
                             </span>
@@ -144,6 +154,12 @@ export default function SellModal({
                         <button
                             className={styles.sellButton}
                             onClick={handleSubmit(handleSell)}
+                            disabled={isSellDisabled}
+                            style={{
+                                backgroundColor: isSellDisabled
+                                    ? "#ccc"
+                                    : "#007bff",
+                            }}
                         >
                             판매
                         </button>

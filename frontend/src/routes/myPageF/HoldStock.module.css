@@ -47,20 +47,6 @@
     font-size: 14px;
 }
 
-.sellButton {
-    position: absolute;
-    right: 20px;
-    bottom: 20px;
-    padding: 10px 20px;
-    font-size: 14px;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s;
-}
 
 .sellButton:hover {
     background-color: #0056b3;
@@ -137,30 +123,79 @@
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
+    perspective: 1000px;
+    position: relative;
+    width: auto;
+    height: auto;
+    min-height: 150px;
+}
+
+.stockInner {
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.stockCard:hover .stockInner {
+    transform: rotateY(180deg);
 }
 
 .stockCard:hover {
-    transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.stockFront,
+.stockBack {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.stockFront {
+    background-color: #ffffff;
+}
+
+.stockBack {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transform: rotateY(180deg);
+    font-size: 16px;
 }
 
 .sellButton {
     position: absolute;
+    right: 20px;
     bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #2882ff;
-    color: white;
-    width: 50%;
-    height: 25%;
-    border-radius: 8px;
+    padding: 10px 20px;
     font-size: 14px;
+    color: #fff;
+    background-color: #007bff;
     border: none;
+    border-radius: 8px;
     cursor: pointer;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+
+.sellButton2 {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
 }
 
 .stockCard:hover .sellButton {
@@ -178,9 +213,10 @@
     color: #333;
 }
 
+
 .stockQuantity,
 .stockValue {
-    font-size: 1rem;
+    font-size: 16px;
     color: #777;
 }
 
