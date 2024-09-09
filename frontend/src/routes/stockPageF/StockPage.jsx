@@ -66,7 +66,6 @@ export default function StockPage() {
         if (searchTerm) {
             try {
                 const searchResults = await getSearchStock(searchTerm);
-                console.log(searchResults);
                 setStocks(searchResults);
             } catch (error) {
                 console.error("Error fetching search results:", error);

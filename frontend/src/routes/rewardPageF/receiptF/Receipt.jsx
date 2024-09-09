@@ -117,7 +117,6 @@ export default function Receipt() {
                 imgURL: receiptData.imgURL,
                 enterpriseName: receiptData.enterpriseName,
             };
-            console.log(receiptRequestData);
 
             const rewardResponse = await getReward(receiptRequestData);
             setIsModalOpen(false);

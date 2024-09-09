@@ -1,6 +1,10 @@
 .container {
-    width: 100%;
-    max-width: 480px;
+    position: fixed;
+    background-color: #fff;
+    left: 20px;
+    top: 20px;
+    height: 100vh;
+    width: 100vw;
     margin: 0 auto;
 }
 
@@ -64,7 +68,7 @@ button:hover {
 
 .chartWrapper {
     width: 100%;
-    overflow-x: auto; /* 가로 스크롤을 허용 */
+    overflow-x: auto;
 }
 
 .scrollContainer {

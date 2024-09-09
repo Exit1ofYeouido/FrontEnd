@@ -43,7 +43,6 @@ export default function HoldStock() {
                     holdStockData.stocksValueResponseDto.earningRate
                 );
                 setStocks(holdStockData.myStocksResponse);
-                console.log(holdStockData);
                 setIsFirstRender(false);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -101,7 +100,6 @@ export default function HoldStock() {
         observer.current = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting && hasMoreTransactions) {
                 setTransactionPage((prevPage) => {
-                    console.log("Increasing page from:", prevPage);
                     return prevPage + 1;
                 });
             }

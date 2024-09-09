@@ -49,7 +49,6 @@ export default function SignIn() {
                 trimmedData.loginId,
                 trimmedData.loginPassword
             );
-            console.log(result);
 
             if (!result.error) {
                 dispatch(setCredentials({ loginId: trimmedData.loginId }));

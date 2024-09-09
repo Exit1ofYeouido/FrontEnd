@@ -42,7 +42,6 @@ export const login = async (id, password) => {
         console.error("Error details:", error);
 
         if (error.response?.status === 401) {
-            console.log(error.response.data.message);
             showToast("error", "아이디 및 패스워드를 확인해주세요.");
             return { error: "에러" };
         } else {

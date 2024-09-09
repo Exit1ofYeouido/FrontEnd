@@ -7,7 +7,6 @@ export const sellStock = async (code, name, amount) => {
             stockName: name,
             sellAmount: amount,
         });
-        console.log(response);
         return response.data;
     } catch (error) {
         console.error("Error fetching attendace:", error);
