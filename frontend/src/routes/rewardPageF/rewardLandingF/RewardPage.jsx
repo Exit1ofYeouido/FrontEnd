@@ -75,14 +75,14 @@ export default function RewardPage() {
                         <RewardItem
                             icon={calendarIcon}
                             title="출석 체크"
-                            description="출석을 통해 랜덤 주식을 받을 수 있어요!"
+                            description="출석 체크 후 랜덤 주식을 받을 수 있어요!"
                             navigateTo="/reward/attendance"
                             type="출첵"
                         />
                         <RewardItem
                             icon={videoIcon}
                             title="기업 광고 시청"
-                            description="내가 원하는 기업 광고를 재미있게 시청하고 주식 받자!"
+                            description="기업 광고를 시청 후 주식을 받을 수 있어요!"
                             navigateTo="/reward/video"
                             type="광고"
                         />
@@ -91,8 +91,8 @@ export default function RewardPage() {
                             title="영수증 인증"
                             description={
                                 <>
-                                    좋아하는 물품을 사고나서 <br />
-                                    해당 기업의 주식을 받을 수 있어요!
+                                    영수증 인증 후 <br></br>해당 기업의 주식을
+                                    받을 수 있어요!
                                 </>
                             }
                             navigateTo="/reward/receipt"

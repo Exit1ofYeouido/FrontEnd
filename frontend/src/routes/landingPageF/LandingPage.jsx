@@ -13,7 +13,8 @@ export default function LandingPage() {
     return (
         <div className={styles.container}>
             <img src={Logo} alt="Logo" className={styles.logo}/>
-            <h1 className={styles.title}>소수점 주식 리워드, 스탁크래프트 </h1>
+            <div className={styles.title}>소수점 주식 플랫폼</div>
+            <div className={styles.title}>스탁크래프트</div>
             <p className={styles.description}>
                 광고, 영수증 인증을 통해 소수점 주식을 받아요
                 <br/>
