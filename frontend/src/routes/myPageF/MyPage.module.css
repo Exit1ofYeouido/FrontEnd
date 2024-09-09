@@ -23,6 +23,9 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
+.accountInfo{
+    margin-left: 10px;
+}
 .top {
     display: flex;
     justify-content: space-between;
@@ -32,10 +35,10 @@
 .logoAccount {
     display: flex;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 .accountId {
-    margin-left: 10px;
     font-weight: 600;
 }
 
@@ -47,6 +50,10 @@
 .arrowWrapper {
     font-size: 24px;
     cursor: pointer;
+}
+
+.pointInfo{
+    margin-left: 15px;
 }
 
 .pointLogo{
@@ -61,7 +68,6 @@
 }
 
 .pointText{
-    margin-left: 15px;
     font-size: 30px;
     font-weight: 600;
 }

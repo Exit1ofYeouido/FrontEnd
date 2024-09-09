@@ -82,8 +82,8 @@ export default function Attendance() {
                         />
                     </div>
                     <div className={styles.attendanceTitle}>
-                        25일동안 5일마다 출석하면
-                        <br /> 주식을 드려요!
+                        출석 체크 5일마다 랜덤 주식을 드려요!
+                        <br /> (최대 25일)
                     </div>
 
                     <div className={styles.attendanceBox}>
@@ -136,7 +136,7 @@ export default function Attendance() {
                         onClick={handleAttendance}
                         disabled={isButtonDisabled}
                     >
-                        {isButtonDisabled ? "출석완료" : "출석하기"}
+                        {isButtonDisabled ? "출석완료" : "출석체크"}
                     </motion.button>
                 </div>
             </motion.div>

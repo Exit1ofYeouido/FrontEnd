@@ -47,7 +47,6 @@
     font-size: 14px;
 }
 
-
 .sellButton:hover {
     background-color: #0056b3;
 }
@@ -133,7 +132,7 @@
 .stockInner {
     transition: transform 0.6s;
     transform-style: preserve-3d;
-    
+
     display: flex;
     position: relative;
     width: 100%;
@@ -184,7 +183,6 @@
     transition: background-color 0.3s;
 }
 
-
 .sellButton2 {
     margin-top: 10px;
     padding: 10px 20px;
@@ -212,7 +210,6 @@
     margin-bottom: 10px;
     color: #333;
 }
-
 
 .stockQuantity,
 .stockValue {
@@ -360,7 +357,6 @@
     color: #000000;
 }
 
-
 @media (max-height: 800px) {
     .stockCard {
         min-height: 130px;
@@ -375,8 +371,7 @@
         margin-bottom: 10px;
         color: #333;
     }
-    
-    
+
     .stockQuantity,
     .stockValue {
         font-size: 14px;
@@ -416,8 +411,7 @@
         margin-bottom: 10px;
         color: #333;
     }
-    
-    
+
     .stockQuantity,
     .stockValue {
         font-size: 14px;
@@ -427,16 +421,16 @@
     .totalStock {
         margin-top: 20px;
     }
-    
+
     .totalStock div:first- {
         font-size: 18px;
     }
-    
+
     .totalStock div:nth-child(2) {
         margin-top: 8px;
         font-size: 28px;
     }
-    
+
     .totalStock div:nth-child(3) {
         margin-top: 8px;
         font-size: 12px;
@@ -449,7 +443,7 @@
     .tabs {
         margin-bottom: 15px;
     }
-    
+
     .tabButton {
         font-size: 0.9rem;
     }
@@ -459,7 +453,7 @@
 
     .negativeText,
     .positiveText,
-    .neutralText{
+    .neutralText {
         font-size: 14px;
     }
     .stocksList {
@@ -480,8 +474,6 @@
     }
 }
 
-
-
 @media (max-height: 670px) {
     .stockCard {
         min-height: 90px;
@@ -496,8 +488,7 @@
         margin-bottom: 6px;
         color: #333;
     }
-    
-    
+
     .stockQuantity,
     .stockValue {
         font-size: 13px;
@@ -508,16 +499,16 @@
         margin-top: 20px;
         margin-bottom: 10px;
     }
-    
+
     .totalStock div:first- {
         font-size: 16px;
     }
-    
+
     .totalStock div:nth-child(2) {
         margin-top: 8px;
         font-size: 24px;
     }
-    
+
     .totalStock div:nth-child(3) {
         margin-top: 8px;
         font-size: 11px;
@@ -530,7 +521,7 @@
     .tabs {
         margin-bottom: 10px;
     }
-    
+
     .tabButton {
         font-size: 0.8rem;
     }
@@ -540,7 +531,7 @@
 
     .negativeText,
     .positiveText,
-    .neutralText{
+    .neutralText {
         font-size: 13px;
     }
     .stocksList {
@@ -565,11 +556,19 @@
         max-height: calc(100dvh - 420px);
     }
 
+    .unsettledList {
+        max-height: calc(100dvh - 420px);
+    }
+
     .noData {
         font-size: 1.1rem;
     }
-}
 
+    .transactionStockName,
+    .transactionQuantity{
+        font-size: 14px;
+    }
+}
 
 @media (max-height: 600px) {
     .stockCard {
@@ -585,8 +584,7 @@
         margin-bottom: 6px;
         color: #333;
     }
-    
-    
+
     .stockQuantity,
     .stockValue {
         font-size: 12px;
@@ -597,16 +595,16 @@
         margin-top: 18px;
         margin-bottom: 8px;
     }
-    
+
     .totalStock div:first- {
         font-size: 14px;
     }
-    
+
     .totalStock div:nth-child(2) {
         margin-top: 8px;
         font-size: 22px;
     }
-    
+
     .totalStock div:nth-child(3) {
         margin-top: 8px;
         font-size: 10px;
@@ -619,7 +617,7 @@
     .tabs {
         margin-bottom: 10px;
     }
-    
+
     .tabButton {
         font-size: 0.7rem;
     }
@@ -629,7 +627,7 @@
 
     .negativeText,
     .positiveText,
-    .neutralText{
+    .neutralText {
         font-size: 12px;
     }
     .stocksList {
@@ -652,7 +650,6 @@
     }
 }
 
-
 @media (max-width: 360px) {
     .stockCard {
         min-height: 90px;
@@ -663,12 +660,11 @@
     }
 
     .stockName {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
         margin-bottom: 6px;
         color: #333;
     }
-    
-    
+
     .stockQuantity,
     .stockValue {
         font-size: 12px;
@@ -679,16 +675,16 @@
         margin-top: 18px;
         margin-bottom: 8px;
     }
-    
+
     .totalStock div:first- {
         font-size: 14px;
     }
-    
+
     .totalStock div:nth-child(2) {
         margin-top: 8px;
         font-size: 22px;
     }
-    
+
     .totalStock div:nth-child(3) {
         margin-top: 8px;
         font-size: 10px;
@@ -701,7 +697,7 @@
     .tabs {
         margin-bottom: 10px;
     }
-    
+
     .tabButton {
         font-size: 0.7rem;
     }
@@ -711,7 +707,7 @@
 
     .negativeText,
     .positiveText,
-    .neutralText{
+    .neutralText {
         font-size: 12px;
     }
     .stocksList {
@@ -730,6 +726,11 @@
     .sellButton2 {
         margin-top: 10px;
         padding: 8px 18px;
-        font-size: 12px;
+        font-size: 10px;
+    }
+
+    .transactionStockName,
+    .transactionQuantity{
+        font-size: 14px;
     }
 }

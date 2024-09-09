@@ -102,7 +102,12 @@ export default function MyPage() {
                                 alt="Account Logo"
                                 className={styles.accountLogo}
                             />
-                            <div className={styles.accountId}>{accountId}</div>
+                            <div className={styles.accountInfo}>
+                                <div>계좌 번호</div>
+                                <div className={styles.accountId}>
+                                    {accountId}
+                                </div>
+                            </div>
                         </div>
                         <IoIosArrowForward
                             className={styles.arrowWrapper}
@@ -115,8 +120,11 @@ export default function MyPage() {
                             alt="point Logo"
                             className={styles.pointLogo}
                         />
-                        <div className={styles.pointText}>
-                            {formatNumber(totalPoint)}점
+                        <div className={styles.pointInfo}>
+                            <div>보유 포인트</div>
+                            <div className={styles.pointText}>
+                                {formatNumber(totalPoint)}점
+                            </div>
                         </div>
                     </div>
                     <div className={styles.bottom}>
@@ -132,7 +140,7 @@ export default function MyPage() {
                 {/* 주식 부분 */}
                 <div className={styles.stock}>
                     <div className={styles.stockTop}>
-                        <div className={styles.myStockText}>내 주식</div>
+                        <div className={styles.myStockText}>보유 주식</div>
                         <div className={styles.rate}>
                             <div className={styles.rate1}>
                                 {formatNumber(allCost)}원

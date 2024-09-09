@@ -17,7 +17,7 @@ export default function LogoutModal({ onClose, confirm }) {
             >
                 <img src={warning} className={styles.icon} />
                 <div className={styles.logoutText}>
-                    정말 로그아웃 하시겠습니까?
+                    로그아웃 하시겠습니까?
                 </div>
                 <div className={styles.modalButtons}>
                     <button className={styles.cancelButton} onClick={onClose}>
