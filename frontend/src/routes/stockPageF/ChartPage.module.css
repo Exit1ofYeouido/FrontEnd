@@ -1,7 +1,6 @@
 .container {
     background-color: #fff;
-    height: calc(100vh - 90px);
-    /* margin: 20px 20px; */
+    height: calc(100dvh - 70px);
     padding: 20px;
 }
 
