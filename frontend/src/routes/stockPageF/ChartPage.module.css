@@ -1,7 +1,8 @@
 .container {
-    padding: 20px;
     background-color: #fff;
     height: calc(100vh - 90px);
+    /* margin: 20px 20px; */
+    padding: 20px;
 }
 
 .topBar {
@@ -129,7 +130,6 @@
     width: 100%;
     max-width: 480px;
     display: flex;
-    gap: 10px;
     z-index: 999;
     justify-content: flex-start;
 }
@@ -141,9 +141,10 @@
     background-color: #3182f7;
     color: #fff;
     border: none;
-    padding: 15px;
+    padding: 15px 20px;
     border-radius: 15px;
     cursor: pointer;
+    margin-right: 50px;
 }
 
 .buyButton {
