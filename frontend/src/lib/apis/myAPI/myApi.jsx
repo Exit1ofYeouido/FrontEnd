@@ -10,17 +10,6 @@ export const myGetAll = async () => {
     }
 };
 
-
-export const myGetStock = async () => {
-    try {
-        const response = await instance.get(`/my/stocks-value`);
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching all data:", error);
-        throw error;
-    }
-};
-
 export const getHoldStock = async () => {
     try {
         const response = await instance.get(`/my/stocks`);
