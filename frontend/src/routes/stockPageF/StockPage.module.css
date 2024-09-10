@@ -1,6 +1,6 @@
 .container {
     padding: 20px;
-    background-color: #ffffff;
+    background-color: #f6f6f6;
     height: calc(100vh - 90px);
     overflow-y: auto;
 }
@@ -129,10 +129,10 @@
     justify-content: space-between;
     align-items: center;
     height: 30px;
-    background-color: #FAF9F6;
-    border-radius: 20px;
-    border: 2px solid #e0e0e0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+    border-radius: 15px;
+    border: 0.5px solid #d0d0d0;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.05);
 }
 
 .stockInfo {
@@ -167,7 +167,7 @@
     font-size: 16px;
     color: #000;
 }
-.stockChangeNeutral{
+.stockChangeNeutral {
     color: black;
     display: flex;
     align-items: center;
@@ -184,7 +184,6 @@
     display: flex;
     align-items: center;
 }
-
 
 @media (max-height: 890px) {
     .stockCard {
@@ -256,7 +255,7 @@
     .stockPrice {
         font-size: 14px;
     }
-    .suggestions{
+    .suggestions {
         max-height: 150px;
         font-size: 14px;
     }
@@ -374,7 +373,6 @@
     }
 }
 
-
 @media (max-height: 720px) {
     .searchInput {
         width: 70%;
@@ -414,11 +412,11 @@
     .list {
         top: 60px;
     }
-    
-    .searchIcon{
+
+    .searchIcon {
         top: 10px;
     }
-    .suggestions{
+    .suggestions {
         max-height: 120px;
         font-size: 12px;
     }

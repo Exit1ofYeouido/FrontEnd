@@ -5,8 +5,9 @@ import stockData from "./stocks.json";
 import { IoMdSearch } from "react-icons/io";
 import { getStock, getSearchStock } from "~apis/stockAPI/getStockApi";
 import { useNavigate } from "react-router-dom";
-import { FaCaretDown, FaCaretUp} from "react-icons/fa6";
+import { FaCaretDown, FaCaretUp } from "react-icons/fa6";
 import { TiMinus } from "react-icons/ti";
+import LoadingPage from "~components/LoadingPage";
 export default function StockPage() {
     const [stocks, setStocks] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
@@ -25,7 +26,6 @@ export default function StockPage() {
                 console.error("Error fetching data:", error);
             }
         };
-
         fetchData();
     }, []);
 

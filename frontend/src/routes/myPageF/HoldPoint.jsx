@@ -130,7 +130,7 @@ export default function HoldPoint() {
 
                 <div className={styles.totalPoint}>
                     <div>내 포인트</div>
-                    <div>{formatNumber(totalValue)}원</div>
+                    <div>{formatNumber(totalValue)}점</div>
                     <button
                         className={styles.sellButton}
                         onClick={handleWithdrawClick}
@@ -173,8 +173,8 @@ export default function HoldPoint() {
                                             >
                                                 포인트
                                                 {transaction.type === "in"
-                                                    ? "획득"
-                                                    : "출금"}
+                                                    ? " 획득"
+                                                    : " 출금"}
                                             </div>
                                             <div
                                                 className={
@@ -189,7 +189,7 @@ export default function HoldPoint() {
                                                 {formatNumber(
                                                     transaction.requestPoint
                                                 )}{" "}
-                                                원
+                                                점
                                             </div>
                                         </div>
                                         <div>
@@ -197,7 +197,7 @@ export default function HoldPoint() {
                                             {formatNumber(
                                                 transaction.resultPoint
                                             )}{" "}
-                                            원
+                                            점
                                         </div>
                                     </div>
                                 </div>

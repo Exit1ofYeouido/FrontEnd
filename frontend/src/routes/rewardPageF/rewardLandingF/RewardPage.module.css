@@ -1,19 +1,19 @@
 .container {
-    padding: 20px;
+    padding: 25px;
     height: calc(100dvh - 90px);
-    background-color: #fff;
+    background-color: #f6f6f6;
 }
 
 .item {
     display: flex;
-    background-color: #f4f4f4;
+    background-color: #fff;
     align-items: center;
     justify-content: center;
-    border-radius: 20px;
+    border-radius: 15px;
     padding: 35px;
     margin-bottom: 30px;
-    border: 2px solid #e0e0e0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 0.5px solid #d0d0d0;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.05);
     height: 40px;
     cursor: pointer;
 }

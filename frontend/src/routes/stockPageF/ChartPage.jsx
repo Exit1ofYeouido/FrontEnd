@@ -14,6 +14,7 @@ import {
     Tooltip,
     ResponsiveContainer,
 } from "recharts";
+import LoadingPage from "~components/LoadingPage";
 
 export default function ChartPage() {
     const navigate = useNavigate();
@@ -68,6 +69,10 @@ export default function ChartPage() {
 
         fetchData();
     }, [activePeriod, modalClosedTrigger]);
+
+    if (Object.keys(stocksPrice).length === 0 || stocksChart.length === 0) {
+        return <LoadingPage />;
+    }
 
     const handleBack = () => {
         navigate("/stock");
@@ -221,7 +226,7 @@ export default function ChartPage() {
                                                 cx={cx}
                                                 cy={cy}
                                                 r={3}
-                                                fill="blue"
+                                                fill="red"
                                             />
                                             <text
                                                 x={
@@ -251,7 +256,7 @@ export default function ChartPage() {
                                                 cx={cx}
                                                 cy={cy}
                                                 r={3}
-                                                fill="red"
+                                                fill="blue"
                                             />
                                             <text
                                                 x={

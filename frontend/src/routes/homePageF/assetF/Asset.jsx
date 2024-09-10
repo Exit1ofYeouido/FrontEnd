@@ -59,20 +59,27 @@ export default function Asset() {
             </div>
             <div
                 className={styles.earningRate}
-                style={{ color: profitOrLoss < 0 ? "#007bff" : "#ff0000" }}
+                style={{
+                    color:
+                        profitOrLoss === 0
+                            ? "#000000"
+                            : profitOrLoss > 0
+                            ? "#ff0000" 
+                            : "#007bff",
+                }}
             >
                 {profitOrLoss}원 ({earningRate}%)
             </div>
             <div className={styles.line}></div>
             <div className={styles.subInfo}>
                 <div className={styles.stock}>
-                    <div className={styles.stockTitle}>보유 주식</div>
+                    <div className={styles.stockTitle}>보유 주식 :</div>
                     <div className={styles.stockAmount}>
                         {formatNumber(stock)} 원
                     </div>
                 </div>
                 <div className={styles.point}>
-                    <div className={styles.pointTitle}>보유 포인트</div>
+                    <div className={styles.pointTitle}>보유 포인트 :</div>
                     <div className={styles.pointAmount}>
                         {formatNumber(point)} 점
                     </div>

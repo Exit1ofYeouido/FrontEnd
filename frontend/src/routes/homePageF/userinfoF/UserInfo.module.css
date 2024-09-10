@@ -1,10 +1,10 @@
 .container {
-    background-color: #faf9f6;
+    border-radius: 15px;
+    background-color: #fff;
+    border: 0.5px solid #d0d0d0;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.05);
     padding: 30px;
     height: 110px;
-    border-radius: 20px;
-    border: 2px solid #e0e0e0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     margin-top: 15px;
 }
 
@@ -64,4 +64,29 @@
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
+}
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+        height: 110px;
+        margin-top: 15px;
+    }
+
+    .icon {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+@media (max-height: 830px) {
+    .container {
+        padding: 30px;
+        height: auto;
+        margin-top: 15px;
+    }
+
+    .icon {
+        width: 25px;
+        height: 25px;
+    }
 }

@@ -80,8 +80,10 @@ export default function VideoDetail() {
         player.setVolume(newValue);
         if (newValue === 0) {
             setIsMuted(true);
+            player.mute();
         } else {
             setIsMuted(false);
+            player.unMute();
         }
     };
 
