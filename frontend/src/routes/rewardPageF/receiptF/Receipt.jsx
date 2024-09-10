@@ -124,6 +124,7 @@ export default function Receipt() {
             setRewardData({
                 company: rewardResponse.name,
                 amount: rewardResponse.amount,
+                stockCode: rewardResponse.stockCode,
             });
             setIsRewardModalOpen(true);
         } catch (error) {
@@ -149,9 +150,6 @@ export default function Receipt() {
         setIsRewardModalOpen(false);
     };
 
-    const goCompanyPage = () => {
-        closeRewardModal();
-    };
 
     const handleCancel = () => {
         setIsModalOpen(false);
@@ -260,7 +258,7 @@ export default function Receipt() {
                     onClose={closeRewardModal}
                     company={rewardData?.company}
                     amount={rewardData?.amount}
-                    goCompany={goCompanyPage}
+                    stockCode={rewardData?.stockCode}
                 />
             )}
             <Navbar />

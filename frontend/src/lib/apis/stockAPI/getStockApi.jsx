@@ -54,3 +54,16 @@ export const getLink = async () => {
     }
 };
 
+export const getDetail = async (enterpriseName) => {
+    try {
+        const response = await instance.get(`/reward/detail`, {
+            params: {
+                enterpriseName: enterpriseName,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error detail", error);
+        throw error;
+    }
+};

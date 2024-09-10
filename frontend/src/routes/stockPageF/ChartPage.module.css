@@ -21,7 +21,7 @@
 }
 
 .info {
-    margin-top: 70px;
+    margin-top: 60px;
 }
 
 .stockNameGroup {
@@ -77,6 +77,15 @@
     font-weight: 500;
 }
 
+.previousPriceZero {
+    color: #000000;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    margin-top: 8px;
+    font-weight: 500;
+}
+
 .noDataMessage{
     display: flex;
     align-items: center;
@@ -89,6 +98,64 @@
     height: 300px;
     overflow: visible;
 }
+
+.topTabs {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.topTabButton {
+    flex: 1;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    color: #999;
+    font-weight: normal;
+    transition: color 0.3s ease, font-weight 0.3s ease;
+    position: relative;
+}
+
+.activeTab {
+    color: #000;
+    font-weight: bold;
+}
+
+.underline {
+    position: absolute;
+    left: 0;
+    bottom: -12px;
+    width: 100%;
+    height: 2px;
+    background-color: #000;
+    border-radius: 2px;
+}
+
+.descriptionContainer{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.Logo{
+    width: 90px;
+    height: 90px;
+    margin-bottom: 10px;
+}
+.name{
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.comment{
+    letter-spacing: 2px;
+}
+
 
 @keyframes pulse {
     0% {
@@ -137,6 +204,12 @@
     display: flex;
     z-index: 999;
     justify-content: flex-start;
+    flex-direction: column;
+}
+
+.buttonButton{
+    display: flex;
+    flex-direction: row;
 }
 
 .sellButton,
@@ -165,7 +238,8 @@
 .row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    margin-right: 50px;
 }
 
 .row div:first-child {
@@ -181,12 +255,27 @@
     margin-left: 5px;
 }
 
-@media (max-height: 820px) {
-    .buttonGroup {
-        margin-top: 40px;
+@media (max-width: 420px) {
+    .Logo{
+        width: 70px;
+        height: 70px;
+        margin-bottom: 10px;
     }
+    .name{
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .comment{
+        letter-spacing: 1px;
+        font-size: 14px;
+    }
+    
+}
+
+@media (max-height: 890px) {
     .chartContainer {
-        height: 250px;
+        height: 270px;
         margin-top: 10px;
     }
     .info {
@@ -194,29 +283,177 @@
     }
 }
 
-@media (max-height: 750px) {
-    .buttonGroup {
-        margin-top: 20px;
-    }
+@media (max-height: 850px) {
     .chartContainer {
-        margin-top: 5px;
-    }
-    .sellButton,
-    .buyButton {
-        padding: 12px;
+        height: 250px;
+        margin-top: 10px;
     }
     .info {
-        margin-top: 50px;
+        margin-top: 40px;
+    }
+
+    .stockName {
+        font-size: 18px;
+    }
+
+    .stockCode {
+        font-size: 12px;
+    }
+
+    .stockPrice {
+        font-size: 28px;
+    }
+
+    .previousPricePositive,
+    .previousPriceNegative {
+        font-size: 14px;
+        margin-top: 3px;
+    }
+
+    .Logo{
+        width: 80px;
+        height: 80px;
+        margin-bottom: 10px;
+    }
+    .name{
+        font-size: 22px;
+        margin-bottom: 10px;
+    }
+    
+    .comment{
+        font-size: 16px;
+    }
+    .topTabs {
+        margin-top: 15px;
+        margin-bottom: 15px;
     }
 }
 
-@media (max-height: 730px) {
-    .buttonGroup {
-        margin-top: 20px;
-    }
+@media (max-height: 800px) {
     .chartContainer {
-        margin-top: 5px;
+        height: 230px;
+        margin-top: 10px;
     }
+    .info {
+        margin-top: 30px;
+    }
+
+    .stockName {
+        font-size: 18px;
+    }
+
+    .stockCode {
+        font-size: 12px;
+    }
+
+    .stockPrice {
+        font-size: 28px;
+    }
+
+    .previousPricePositive,
+    .previousPriceNegative {
+        font-size: 12px;
+        margin-top: 3px;
+    }
+
+    .buyButton,
+    .sellButton{
+        font-size: 16px;
+        padding: 10px 15px;
+    }
+
+    .Logo{
+        width: 70px;
+        height: 70px;
+        margin-bottom: 10px;
+    }
+    .name{
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    
+    .comment{
+        font-size: 15px;
+    }
+    .topTabs {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+
+@media (max-height: 725px) {
+
+    .chartContainer {
+        height: 200px;
+        margin-top: 10px;
+    }
+    .info {
+        margin-top: 30px;
+    }
+
+    .stockName {
+        font-size: 18px;
+    }
+
+    .stockCode {
+        font-size: 12px;
+    }
+
+    .stockPrice {
+        font-size: 28px;
+    }
+
+    .previousPricePositive,
+    .previousPriceNegative {
+        font-size: 12px;
+        margin-top: 3px;
+    }
+
+    .buyButton,
+    .sellButton{
+        font-size: 16px;
+        padding: 10px 15px;
+    }
+
+    .Logo{
+        width: 60px;
+        height: 60px;
+        margin-bottom: 10px;
+    }
+    .name{
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    
+    .comment{
+        font-size: 14px;
+        letter-spacing: 0px;
+    }
+    .topTabs {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .tabButton {
+        font-size: 12px;
+    }
+
+    .myStock {
+        margin-top: 15px;
+        font-size: 14px;
+    }
+}
+
+
+@media (max-height: 690px) {
+    .chartContainer {
+        height: 190px;
+        margin-top: 10px;
+    }
+    .info {
+        margin-top: 30px;
+    }
+
     .stockName {
         font-size: 16px;
     }
@@ -228,15 +465,46 @@
     .stockPrice {
         font-size: 26px;
     }
+
+    .previousPricePositive,
+    .previousPriceNegative {
+        font-size: 12px;
+        margin-top: 3px;
+    }
+
+    .buyButton,
+    .sellButton{
+        font-size: 16px;
+        padding: 10px 15px;
+    }
+
+    .Logo{
+        width: 60px;
+        height: 60px;
+        margin-bottom: 10px;
+    }
+    .name{
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+    
+    .comment{
+        font-size: 14px;
+        letter-spacing: 0px;
+    }
+    .topTabs {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
     .tabButton {
         font-size: 12px;
     }
-    .info {
-        margin-top: 30px;
+
+    .topTabButton {
+        font-size: 12px;
     }
-    .previousPricePositive,
-    .previousPriceNegative {
-        font-size: 14px;
-        margin-top: 3px;
+    .myStock {
+        margin-top: 10px;
+        font-size: 13px;
     }
 }

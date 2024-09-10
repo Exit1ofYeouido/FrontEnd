@@ -195,7 +195,7 @@ export default function SignUp() {
                                 className={styles.backIcon}
                                 onClick={() => navigate("/login")}
                             />
-                            <div>계정 소유자 정보를 입력해주세요</div>
+                            <div>회원 가입</div>
                         </div>
                         <br />
                         <form>
@@ -400,7 +400,7 @@ export default function SignUp() {
                                 className={styles.backIcon}
                                 onClick={() => navigate("/login")}
                             />
-                            <div>계정 소유자 정보를 입력해주세요</div>
+                            <div>회원 가입</div>
                         </div>
                         <br />
                         <form onSubmit={handleSubmit(onSubmitSignUp)}>

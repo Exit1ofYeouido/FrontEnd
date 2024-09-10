@@ -3,14 +3,24 @@ import { motion } from "framer-motion";
 import styles from "./QuizModal.module.css";
 import Lottie from "lottie-react";
 import congratulationAnimation from "~assets/reward/congratulation.json";
-
+import { useNavigate } from "react-router-dom";
 export default function QuizModal({
     onClose,
     enterpriseName,
     amount,
     goVideo,
-    goCompany,
+    stockCode,
 }) {
+    const navigate = useNavigate();
+
+    const goCompanyPage = () => {
+        onClose();
+        navigate("/stock/chart", {
+            state: {
+                stockCode: stockCode,
+            },
+        });
+    };
     return (
         <div className={styles.modalOverlay}>
             <motion.div
@@ -48,7 +58,7 @@ export default function QuizModal({
                         </div>
                         <div className={styles.buttonContainer}>
                             <button
-                                onClick={goCompany}
+                                onClick={goCompanyPage}
                                 className={styles.goCompany}
                             >
                                 기업 보기
