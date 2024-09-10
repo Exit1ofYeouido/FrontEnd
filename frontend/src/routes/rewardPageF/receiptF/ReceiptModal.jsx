@@ -34,14 +34,14 @@ export default function ReceiptModal({ receiptData, onConfirm, onCancel }) {
                     </div>
                 )}
                 <div className={styles.modalActions}>
+                    <button onClick={onCancel} className={styles.cancelButton}>
+                        아니에요
+                    </button>
                     <button
                         onClick={onConfirm}
                         className={styles.confirmButton}
                     >
                         맞아요
-                    </button>
-                    <button onClick={onCancel} className={styles.cancelButton}>
-                        아니에요
                     </button>
                 </div>
             </div>

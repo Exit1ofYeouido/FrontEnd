@@ -93,3 +93,19 @@ h2 {
     color: #333;
     z-index: 3000;
 }
+
+.error{
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Firefox에서 스피너 제거 */
+}

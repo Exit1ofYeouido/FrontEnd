@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
 import styles from "./WithdrawModal.module.css";
 
 import { AiOutlineClose } from "react-icons/ai";
@@ -14,13 +15,20 @@ export default function WithdrawModal({
     availablePoints,
     onWithdraw,
 }) {
-    const [withdrawalAmount, setWithdrawalAmount] = useState("");
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
 
-    const handleWithdraw = () => {
-        if (withdrawalAmount > 0) {
-            onWithdraw(withdrawalAmount);
+    const onSubmit = (data) => {
+        const { withdrawalAmount } = data;
+        const numericAmount = parseFloat(withdrawalAmount);
+
+        if (numericAmount >= 100) {
+            onWithdraw(numericAmount);
         } else {
-            showToast("error", "출금 금액을 입력하세요.");
+            showToast("error", "출금은 최소 100원이상 가능합니다.");
         }
     };
 
@@ -48,25 +56,43 @@ export default function WithdrawModal({
                     className={styles.accountLogo}
                 />
                 <div className={styles.accountNumber}>{accountNumber}</div>
-                <p className={styles.modalTitle}>
+                <div className={styles.modalTitle}>
                     해당 계좌로 출금하시겠습니까?
-                </p>
-                <p className={styles.subTitle}>출금 희망 금액을 입력하세요</p>
+                </div>
+                <div className={styles.subTitle}>출금 희망 금액을 입력하세요</div>
 
-                <input
-                    type="text"
-                    value={withdrawalAmount}
-                    onChange={(e) => setWithdrawalAmount(e.target.value)}
-                    className={styles.input}
-                    placeholder="출금 금액"
-                />
+                <div>
+                    <input
+                        type="text"
+                        {...register("withdrawalAmount", {
+                            required: "출금 금액을 입력하세요",
+                            validate: (value) => {
+                                if (isNaN(value)) {
+                                    return "숫자만 입력할 수 있습니다.";
+                                } else if (parseFloat(value) <= 0) {
+                                    return "출금 금액은 0보다 커야 합니다.";
+                                }
+                                return true;
+                            },
+                        })}
+                        className={styles.input}
+                        placeholder="출금 금액"
+                    />
+                    {errors.withdrawalAmount && (
+                        <div className={styles.error}>
+                            {errors.withdrawalAmount.message}
+                        </div>
+                    )}
+                </div>
 
-                <button
-                    className={styles.withdrawButton}
-                    onClick={handleWithdraw}
-                >
-                    출금하기
-                </button>
+                <div>
+                    <button
+                        className={styles.withdrawButton}
+                        onClick={handleSubmit(onSubmit)}
+                    >
+                        출금하기
+                    </button>
+                </div>
             </motion.div>
         </div>
     );
