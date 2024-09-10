@@ -6,23 +6,70 @@ import Navbar from "~components/Navbar";
 import Modal from "./AttendanceModal";
 import { useNavigate } from "react-router-dom";
 import { attendance, attendanceCheck } from "~apis/rewardAPI/attendanceApi";
-const S3_BASE_URL =
-    "https://stock-craft.s3.ap-northeast-2.amazonaws.com/attendance/";
-const complete = `${S3_BASE_URL}complete.svg`;
-const images = Array.from(
-    { length: 25 },
-    (_, i) => `${S3_BASE_URL}day${i + 1}.svg`
-);
+import day1 from "~assets/attendance/day1.svg";
+import day2 from "~assets/attendance/day2.svg";
+import day3 from "~assets/attendance/day3.svg";
+import day4 from "~assets/attendance/day4.svg";
+import day5 from "~assets/attendance/day5.svg";
+import day6 from "~assets/attendance/day6.svg";
+import day7 from "~assets/attendance/day7.svg";
+import day8 from "~assets/attendance/day8.svg";
+import day9 from "~assets/attendance/day9.svg";
+import day10 from "~assets/attendance/day10.svg";
+import day11 from "~assets/attendance/day11.svg";
+import day12 from "~assets/attendance/day12.svg";
+import day13 from "~assets/attendance/day13.svg";
+import day14 from "~assets/attendance/day14.svg";
+import day15 from "~assets/attendance/day15.svg";
+import day16 from "~assets/attendance/day16.svg";
+import day17 from "~assets/attendance/day17.svg";
+import day18 from "~assets/attendance/day18.svg";
+import day19 from "~assets/attendance/day19.svg";
+import day20 from "~assets/attendance/day20.svg";
+import day21 from "~assets/attendance/day21.svg";
+import day22 from "~assets/attendance/day22.svg";
+import day23 from "~assets/attendance/day23.svg";
+import day24 from "~assets/attendance/day24.svg";
+import day25 from "~assets/attendance/day25.svg";
+import complete from "~assets/attendance/complete.svg";
+
+const images = [
+    day1,
+    day2,
+    day3,
+    day4,
+    day5,
+    day6,
+    day7,
+    day8,
+    day9,
+    day10,
+    day11,
+    day12,
+    day13,
+    day14,
+    day15,
+    day16,
+    day17,
+    day18,
+    day19,
+    day20,
+    day21,
+    day22,
+    day23,
+    day24,
+    day25,
+];
 
 export default function Attendance() {
     const [month, setMonth] = useState(0);
     const [attendCount, setAttendCount] = useState(0);
     const [company, setCompany] = useState("");
+    const [stockCode, setStockCode] = useState("");
     const [amount, setAmount] = useState(0.0);
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
-
     useEffect(() => {
         const fetchAttendance = async () => {
             try {
@@ -46,6 +93,7 @@ export default function Attendance() {
             if (data.hasReward) {
                 setCompany(data.reward.enterpriseName);
                 setAmount(data.reward.amount);
+                setStockCode(data.reward.stockCode);
                 setShowModal(true);
             }
         } catch (error) {
@@ -61,9 +109,6 @@ export default function Attendance() {
         setShowModal(false);
     };
 
-    const goCompany = () => {
-        setShowModal(false);
-    };
 
     return (
         <div>
@@ -145,7 +190,7 @@ export default function Attendance() {
                     onClose={handleCloseModal}
                     company={company}
                     amount={amount}
-                    goCompany={goCompany}
+                    stockCode={stockCode}
                 />
             )}
             <Navbar />

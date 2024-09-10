@@ -12,6 +12,7 @@ import correctAnimation from "~assets/reward/correct.json";
 export default function Quiz({ onClose, mediaId, enterpriseName }) {
     const [answer, setAnswer] = useState(0);
     const [question, setQuestion] = useState("");
+    const [stockCode, setStockCode] = useState("");
     const [quizSectionList, setQuizSectionList] = useState([]);
     const [amount, setAmount] = useState(0.0);
     const [showModal, setShowModal] = useState(false);
@@ -40,6 +41,7 @@ export default function Quiz({ onClose, mediaId, enterpriseName }) {
             try {
                 const data = await quizCorrectApi(mediaId, enterpriseName);
                 setAmount(data.amount);
+                setStockCode(data.stockCode);
                 setShowCorrectAnimation(true);
                 setIsCorrect(true);
             } catch (error) {
@@ -126,7 +128,7 @@ export default function Quiz({ onClose, mediaId, enterpriseName }) {
                     enterpriseName={enterpriseName}
                     amount={amount}
                     goVideo={goVideo}
-                    goCompany={goCompany}
+                    stockCode={stockCode}
                 />
             )}
         </>

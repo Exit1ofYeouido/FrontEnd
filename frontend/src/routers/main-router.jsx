@@ -15,7 +15,6 @@ import VideoTutorialPage from "../routes/rewardPageF/tutorialF/videoTutoF/VideoT
 import AttendancePage from "../routes/rewardPageF/attendanceF/Attendance";
 import CompanyInfoPage from "../routes/rewardPageF/companyInfoF/CompanyInfo";
 
-
 // 주식 검색
 import StockPage from "../routes/stockPageF/StockPage";
 import ChartPage from "../routes/stockPageF/ChartPage";
@@ -29,7 +28,6 @@ import FaqPage from "../routes/myPageF/Faq";
 
 // 통계 페이지
 import StatisticPage from "../routes/statisticF/Statistic";
-
 
 // 레이아웃
 import MainLayPage from "../routes/Layout";
@@ -165,7 +163,7 @@ const mainRouter = [
                 ],
             },
             {
-                path: "statistic",
+                path: "admin",
                 element: <StatisticPage />,
                 index: true,
             },

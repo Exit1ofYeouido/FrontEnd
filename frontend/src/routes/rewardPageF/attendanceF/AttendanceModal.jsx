@@ -2,13 +2,25 @@ import React from "react";
 import styles from "./AttendanceModal.module.css";
 import Lottie from "lottie-react";
 import congratulationAnimation from "~assets/reward/congratulation.json";
+import { useNavigate } from "react-router-dom";
 
 export default function AttendanceModal({
     onClose,
     company,
     amount,
-    goCompany,
+    stockCode,
 }) {
+    const navigate = useNavigate();
+
+    const goCompanyPage = () => {
+        onClose();
+        navigate("/stock/chart", {
+            state: {
+                stockCode: stockCode,
+            },
+        });
+    };
+
     return (
         <div className={styles.modalOverlay}>
             <div className={styles.modalContent}>
@@ -34,7 +46,10 @@ export default function AttendanceModal({
                     주가 도착했어요!
                 </div>
                 <div className={styles.buttonContainer}>
-                    <button onClick={goCompany} className={styles.goCompany}>
+                    <button
+                        onClick={goCompanyPage}
+                        className={styles.goCompany}
+                    >
                         기업 보기
                     </button>
                     <button onClick={onClose} className={styles.confirm}>

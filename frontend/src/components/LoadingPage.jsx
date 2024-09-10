@@ -14,7 +14,9 @@ export default function LoadingPage() {
                     ease: "linear",
                 }}
             />
-            <div className={styles.loadingText}>Loading...</div>
+            <div className={styles.loadingText}>Loading...
+                <div>10초이상 로딩시 새로고침 해주세요</div>
+            </div>
         </div>
     );
 }

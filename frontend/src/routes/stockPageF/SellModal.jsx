@@ -73,11 +73,10 @@ export default function SellModal({
             >
                 <h2>{stockName}</h2>
                 <p className={styles.modalTitle}>판매 예약</p>
-                <p className={styles.subTitle}>오전 10시 & 오후 3시 주문 예정</p>
 
                 <div className={styles.details}>
                     <div className={styles.row}>
-                        <span>보유 주식</span>
+                        <span>판매 가능 주식</span>
                         <span className={styles.value}>
                             {availableAmount === 0
                                 ? "0주"
@@ -96,7 +95,7 @@ export default function SellModal({
                         <span>주문 수량</span>
                         {isSellDisabled ? (
                             <span className={styles.error}>
-                                보유하지 않는 주식입니다.
+                                판매 가능한 주식이 없습니다.
                             </span>
                         ) : autoSellAll ? (
                             <span className={styles.value}>
