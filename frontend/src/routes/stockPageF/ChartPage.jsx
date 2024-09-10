@@ -11,6 +11,7 @@ import {
 } from "~apis/stockAPI/getStockApi";
 import { sellStock } from "~apis/stockAPI/sellStockApi";
 import SellModal from "./SellModal";
+import BuyModal from "./BuyModal";
 import { showToast } from "~components/Toast";
 import {
     LineChart,
@@ -30,6 +31,7 @@ export default function ChartPage() {
     const location = useLocation();
     const { stockCode } = location.state || {};
     const [showSellModal, setShowSellModal] = useState(false);
+    const [showBuyModal, setShowBuyModal] = useState(false);
     const chartRef = useRef(null);
     const [modalClosedTrigger, setModalClosedTrigger] = useState(false);
     const [activeTab, setActiveTab] = useState("chart");
@@ -112,12 +114,17 @@ export default function ChartPage() {
         navigate("/stock");
     };
 
+    const handleBuyClick = () => {
+        setShowBuyModal(true);
+    };
+
     const handleSellClick = () => {
         setShowSellModal(true);
     };
 
     const closeSellModal = () => {
         setShowSellModal(false);
+        setShowBuyModal(false);
     };
 
     const handleSell = async (quantity) => {
@@ -488,7 +495,7 @@ export default function ChartPage() {
                     </button>
                     <button
                         className={styles.buyButton}
-                        onClick={handleGetLink}
+                        onClick={handleBuyClick}
                     >
                         구매
                     </button>
@@ -503,6 +510,14 @@ export default function ChartPage() {
                     onSell={handleSell}
                     stockCode={stocksPrice.stockCode}
                     currentPrice={stocksPrice.stockPrice}
+                />
+            )}
+
+            {showBuyModal && (
+                <BuyModal
+                    onClose={closeSellModal}
+                    stockName={stocksPrice.stockName}
+                    goLink={handleGetLink}
                 />
             )}
         </div>
