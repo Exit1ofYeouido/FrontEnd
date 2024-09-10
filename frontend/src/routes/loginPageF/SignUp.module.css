@@ -100,15 +100,17 @@ input::placeholder {
     color: #bcbcbc;
 }
 
-.maskedValue {
-    display: flex;
-}
 
 .maskedDot {
     margin-left: 2px;
     color: #bcbcbc;
+    font-size: 16px;
 }
-
+.genderGroup{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .birthInput {
     width: 50%;
     padding: 1px;
@@ -120,10 +122,10 @@ input::placeholder {
 }
 
 .genderInput {
-    width: 7%;
+    max-width: 20px;
     padding: 1px;
     border: none;
-    margin-left: 15px;
+    margin-left: 20px;
     background-color: #fafafa;
     font-size: 16px;
     outline: none;
