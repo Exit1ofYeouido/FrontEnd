@@ -3,6 +3,7 @@ import styles from "./Asset.module.css";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { getHome } from "~apis/homeAPI/homeApi";
+import { FaQuestionCircle } from "react-icons/fa";
 
 export default function Asset() {
     const navigate = useNavigate();
@@ -57,19 +58,28 @@ export default function Asset() {
                     더보기
                 </motion.div>
             </div>
-            <div
-                className={styles.earningRate}
-                style={{
-                    color:
-                        profitOrLoss === 0
-                            ? "#000000"
-                            : profitOrLoss > 0
-                            ? "#ff0000" 
-                            : "#007bff",
-                }}
-            >
-                {profitOrLoss}원 ({earningRate}%)
+            <div className={styles.earningGroup}>
+                <div
+                    className={styles.earningRate}
+                    style={{
+                        color:
+                            profitOrLoss === 0
+                                ? "#000000"
+                                : profitOrLoss > 0
+                                ? "#ff0000"
+                                : "#007bff",
+                    }}
+                >
+                    {profitOrLoss}원 ({earningRate}%)
+                </div>
+                <div className={styles.tooltipWrapper}>
+                    <FaQuestionCircle className={styles.questionMark} />
+                    <span className={styles.tooltipText}>
+                        해당 수익과 수익률은 보유 주식 기준입니다
+                    </span>
+                </div>
             </div>
+
             <div className={styles.line}></div>
             <div className={styles.subInfo}>
                 <div className={styles.stock}>
