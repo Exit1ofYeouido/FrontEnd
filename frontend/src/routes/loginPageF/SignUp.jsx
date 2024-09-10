@@ -29,6 +29,8 @@ export default function SignUp() {
     const [shakeKey, setShakeKey] = useState(0);
     const [isIdChecked, setIsIdChecked] = useState(false);
     const [isPhoneVerified, setIsPhoneVerified] = useState(false);
+    const [isCheckingId, setIsCheckingId] = useState(false);
+    const [checkedId, setCheckedId] = useState("");
     const navigate = useNavigate();
 
     const handlePhoneNumberChange = (fieldName, value) => {
@@ -136,17 +138,34 @@ export default function SignUp() {
 
     const checkId = async () => {
         const id = getValues("memberName");
-        const response = await idCheck(id);
 
-        if (response.error) {
-            showToast("error", response.message);
-            setIsIdChecked(false);
-        } else if (response === false) {
-            setIsIdChecked(true);
-            showToast("success", "사용 가능한 아이디 입니다.");
-        } else {
-            setIsIdChecked(false);
-            showToast("error", "중복된 아이디 입니다.");
+        if (id === checkedId) {
+            showToast("success", "이미 인증된 아이디입니다.");
+            return;
+        }
+
+        if (isCheckingId) return;
+
+        setIsCheckingId(true);
+
+        try {
+            const response = await idCheck(id);
+
+            if (response.error) {
+                showToast("error", response.message);
+                setIsIdChecked(false);
+            } else if (response === false) {
+                setIsIdChecked(true);
+                setCheckedId(id);
+                showToast("success", "사용 가능한 아이디 입니다.");
+            } else {
+                setIsIdChecked(false);
+                showToast("error", "중복된 아이디 입니다.");
+            }
+        } catch (error) {
+            showToast("error", "중복 검사 중 오류가 발생했습니다.");
+        } finally {
+            setIsCheckingId(false);
         }
     };
 
@@ -228,8 +247,11 @@ export default function SignUp() {
                                         type="button"
                                         className={styles.idCheckButton}
                                         onClick={checkId}
+                                        disabled={isCheckingId}
                                     >
-                                        중복 검사
+                                        {isCheckingId
+                                            ? "검사 중..."
+                                            : "중복 검사"}
                                     </button>
                                 </div>
                             </motion.div>
@@ -329,46 +351,60 @@ export default function SignUp() {
                                             }
                                         />
                                         <div className={styles.dod}>-</div>
-                                        <input
-                                            type="text"
-                                            placeholder="0"
-                                            {...register("sex", {
-                                                required:
-                                                    "성별 코드 1자리를 입력해주세요.",
-                                                pattern: {
-                                                    value: /^[1-4]$/,
-                                                    message:
-                                                        "1에서 4 사이의 숫자를 입력해주세요.",
-                                                },
-                                            })}
-                                            maxLength={1}
-                                            className={styles.genderInput}
-                                            onChange={(e) =>
-                                                handleInputChange(
-                                                    "sex",
-                                                    e.target.value
-                                                )
-                                            }
-                                        />
-                                        <div className={styles.maskedValue}>
-                                            <span className={styles.maskedDot}>
-                                                ●
-                                            </span>
-                                            <span className={styles.maskedDot}>
-                                                ●
-                                            </span>
-                                            <span className={styles.maskedDot}>
-                                                ●
-                                            </span>
-                                            <span className={styles.maskedDot}>
-                                                ●
-                                            </span>
-                                            <span className={styles.maskedDot}>
-                                                ●
-                                            </span>
-                                            <span className={styles.maskedDot}>
-                                                ●
-                                            </span>
+                                        <div className={styles.genderGroup}>
+                                            <input
+                                                type="text"
+                                                placeholder="0"
+                                                {...register("sex", {
+                                                    required:
+                                                        "성별 코드 1자리를 입력해주세요.",
+                                                    pattern: {
+                                                        value: /^[1-4]$/,
+                                                        message:
+                                                            "1에서 4 사이의 숫자를 입력해주세요.",
+                                                    },
+                                                })}
+                                                maxLength={1}
+                                                className={styles.genderInput}
+                                                onChange={(e) =>
+                                                    handleInputChange(
+                                                        "sex",
+                                                        e.target.value
+                                                    )
+                                                }
+                                            />
+                                            <div className={styles.maskedValue}>
+                                                <span
+                                                    className={styles.maskedDot}
+                                                >
+                                                    ●
+                                                </span>
+                                                <span
+                                                    className={styles.maskedDot}
+                                                >
+                                                    ●
+                                                </span>
+                                                <span
+                                                    className={styles.maskedDot}
+                                                >
+                                                    ●
+                                                </span>
+                                                <span
+                                                    className={styles.maskedDot}
+                                                >
+                                                    ●
+                                                </span>
+                                                <span
+                                                    className={styles.maskedDot}
+                                                >
+                                                    ●
+                                                </span>
+                                                <span
+                                                    className={styles.maskedDot}
+                                                >
+                                                    ●
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

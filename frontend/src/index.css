@@ -23,7 +23,7 @@ body,
 #root {
     height: 100%;
     margin: 0;
-    background-color: #f8f9fa;
+    background-color: #fff;
     font-family: LINESeedKR-Bd, sans-serif;
     scrollbar-width: none;
     overflow: hidden;

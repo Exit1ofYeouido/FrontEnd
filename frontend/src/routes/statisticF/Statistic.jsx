@@ -1,25 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Statistic.module.css";
 import {
     getStatisticMember,
     getStatisticMemberStock,
     getStatisticStock,
+    getAdmin,
 } from "~apis/statisticAPI/getStatisticApi";
-import {
-    BarChart,
-    Bar,
-    LineChart,
-    Line,
-    PieChart,
-    Pie,
-    Cell,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    ResponsiveContainer,
-    LabelList,
-} from "recharts";
+import BarChartComponent from "./BarChartComponent";
+import LineChartComponent from "./LineChartComponent";
+import PieChartComponent from "./PieChartComponent";
 
 export default function Statistic() {
     const [selectedOption, setSelectedOption] = useState("memberSearch");
@@ -29,6 +18,15 @@ export default function Statistic() {
     const [year, setYear] = useState(new Date().getFullYear().toString());
     const [month, setMonth] = useState((new Date().getMonth() + 1).toString());
     const [searchHistory, setSearchHistory] = useState([]);
+
+    useEffect(() => {
+        setMemberId("");
+        setEnterpriseName("");
+        setYear(new Date().getFullYear().toString());
+        setMonth((new Date().getMonth() + 1).toString());
+        setSearchHistory([]);
+        setChartType("bar");
+    }, [selectedOption]);
 
     const handleFetchSearchHistory = async () => {
         try {
@@ -46,128 +44,63 @@ export default function Statistic() {
                 setSearchHistory(data.countResult);
             } else if (selectedOption === "enterpriseSearch") {
                 data = await getStatisticStock(enterpriseName, year, month);
+                setSearchHistory(data.countResults);
             }
         } catch (error) {
             console.error("Error fetching search history:", error);
         }
     };
 
-    // const CustomTooltip = ({ active, payload }) => {
-    //     if (active && payload && payload.length) {
-    //         const { enterpriseName, totalCount, holding } = payload[0].payload;
-    //         return (
-    //             <div className={styles.customTooltip}>
-    //                 <p>{`기업명: ${enterpriseName}`}</p>
-    //                 <p>{`검색 횟수: ${totalCount}`}</p>
-    //                 <p>{`보유 여부: ${holding ? "보유 중" : "미보유"}`}</p>
-    //             </div>
-    //         );
-    //     }
-    //     return null;
-    // };
+    const convertToCSV = (data) => {
+        const header = Object.keys(data[0]).join(",") + "\n";
+        const rows = data.map((row) => Object.values(row).join(",")).join("\n");
+        return header + rows;
+    };
 
-    const renderBarChart = () => (
-        <BarChart
-            data={searchHistory}
-            width={Math.max(480, searchHistory.length * 60)}
-            height={400}
-            margin={{ top: 20, right: 30, left: -10, bottom: 50 }}
-        >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis
-                dataKey={
-                    selectedOption === "memberAndEnterpriseSearch"
-                        ? "date"
-                        : "enterpriseName"
-                }
-                interval={0}
-                angle={-45}
-                textAnchor="end"
-                dy={10}
-                tick={{ fontSize: 14 }}
-                tickFormatter={(name) =>
-                    name.length > 5 ? `${name.slice(0, 5)}...` : name
-                }
-            />
-            <YAxis />
-            <Tooltip/>
-            <Bar dataKey="totalCount" fill="#8884d8">
-                <LabelList dataKey="totalCount" position="top" />
-            </Bar>
-        </BarChart>
-    );
-
-    const renderLineChart = () => (
-        <LineChart
-            data={searchHistory}
-            width={Math.max(480, searchHistory.length * 60)}
-            height={400}
-            margin={{ top: 20, right: 30, left: -10, bottom: 50 }}
-        >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis
-                dataKey={
-                    selectedOption === "memberAndEnterpriseSearch"
-                        ? "date"
-                        : "enterpriseName"
-                }
-                interval={0}
-                angle={-45}
-                textAnchor="end"
-                dy={10}
-                tick={{ fontSize: 14 }}
-                tickFormatter={(name) =>
-                    name.length > 5 ? `${name.slice(0, 5)}...` : name
-                }
-            />
-            <YAxis />
-            <Tooltip />
-            <Line
-                type="monotone"
-                dataKey="totalCount"
-                stroke="#8884d8"
-                activeDot={{ r: 8 }}
-            />
-        </LineChart>
-    );
-
-    const renderPieChart = () => (
-        <PieChart width={400} height={400}>
-            <Pie
-                data={searchHistory}
-                dataKey="totalCount"
-                nameKey="enterpriseName"
-                cx="50%"
-                cy="50%"
-                outerRadius={150}
-                fill="#8884d8"
-                label={(entry) => entry.enterpriseName}
-            >
-                {searchHistory.map((_, index) => (
-                    <Cell
-                        key={`cell-${index}`}
-                        fill={index % 2 === 0 ? "#8884d8" : "#82ca9d"}
-                    />
-                ))}
-            </Pie>
-            <Tooltip />
-        </PieChart>
-    );
+    const downloadCSV = () => {
+        const csvData = convertToCSV(searchHistory);
+        const blob = new Blob([csvData], { type: "text/csv" });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `검색로그.${new Date().toISOString()}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    };
 
     const renderChart = () => {
         if (chartType === "bar") {
-            return renderBarChart();
+            return (
+                <BarChartComponent
+                    data={searchHistory}
+                    selectedOption={selectedOption}
+                    month={month}
+                />
+            );
         } else if (chartType === "line") {
-            return renderLineChart();
+            return (
+                <LineChartComponent
+                    data={searchHistory}
+                    selectedOption={selectedOption}
+                    month={month}
+                />
+            );
         } else if (chartType === "pie") {
-            return renderPieChart();
+            return (
+                <PieChartComponent
+                    data={searchHistory}
+                    selectedOption={selectedOption}
+                    month={month}
+                />
+            );
         }
         return null;
     };
 
     return (
         <div className={styles.container}>
-            <h1>검색 기록 통계</h1>
+            <h1 className={styles.mainText}>검색 기록 통계</h1>
 
             <div className={styles.toggleGroup}>
                 <label>
@@ -206,7 +139,11 @@ export default function Statistic() {
 
             <div className={styles.inputGroup}>
                 <label>연도:</label>
-                <select value={year} onChange={(e) => setYear(e.target.value)}>
+                <select
+                    className={styles.inputSelect}
+                    value={year}
+                    onChange={(e) => setYear(e.target.value)}
+                >
                     {Array.from(
                         { length: new Date().getFullYear() - 1999 },
                         (_, i) => {
@@ -224,6 +161,7 @@ export default function Statistic() {
             <div className={styles.inputGroup}>
                 <label>월:</label>
                 <select
+                    className={styles.inputSelect}
                     value={month}
                     onChange={(e) =>
                         setMonth(e.target.value === "" ? "0" : e.target.value)
@@ -243,6 +181,7 @@ export default function Statistic() {
                     <div className={styles.inputGroup}>
                         <label>회원 ID:</label>
                         <input
+                            className={styles.inputField}
                             value={memberId}
                             onChange={(e) => setMemberId(e.target.value)}
                             placeholder="회원 ID를 입력하세요"
@@ -251,6 +190,7 @@ export default function Statistic() {
                     <div className={styles.inputGroup}>
                         <label>기업 이름:</label>
                         <input
+                            className={styles.inputField}
                             value={enterpriseName}
                             onChange={(e) => setEnterpriseName(e.target.value)}
                             placeholder="기업 이름을 입력하세요"
@@ -263,6 +203,7 @@ export default function Statistic() {
                 <div className={styles.inputGroup}>
                     <label>기업 이름:</label>
                     <input
+                        className={styles.inputField}
                         value={enterpriseName}
                         onChange={(e) => setEnterpriseName(e.target.value)}
                         placeholder="기업 이름을 입력하세요"
@@ -274,6 +215,7 @@ export default function Statistic() {
                 <div className={styles.inputGroup}>
                     <label>회원 ID:</label>
                     <input
+                        className={styles.inputField}
                         value={memberId}
                         onChange={(e) => setMemberId(e.target.value)}
                         placeholder="회원 ID를 입력하세요"
@@ -282,17 +224,46 @@ export default function Statistic() {
             )}
 
             <div className={styles.inputGroup}>
-                <button onClick={handleFetchSearchHistory}>조회</button>
+                <button
+                    className={styles.fetchButton}
+                    onClick={handleFetchSearchHistory}
+                >
+                    조회
+                </button>
             </div>
 
-            <div className={styles.chartTypeSelector}>
-                <button onClick={() => setChartType("bar")}>막대 차트</button>
-                <button onClick={() => setChartType("line")}>라인 차트</button>
-                <button onClick={() => setChartType("pie")}>파이 차트</button>
+            <div className={styles.chartButtonGroup}>
+                <button
+                    className={styles.chartButton}
+                    onClick={() => setChartType("bar")}
+                >
+                    막대 차트
+                </button>
+                <button
+                    className={styles.chartButton}
+                    onClick={() => setChartType("line")}
+                >
+                    라인 차트
+                </button>
+                <button
+                    className={styles.chartButton}
+                    onClick={() => setChartType("pie")}
+                >
+                    파이 차트
+                </button>
             </div>
 
             <div className={styles.chartWrapper}>
                 <div className={styles.scrollContainer}>{renderChart()}</div>
+            </div>
+
+            <div className={styles.downloadButtonWrapper}>
+                <button
+                    className={styles.downloadCSVButton}
+                    onClick={downloadCSV}
+                >
+                    CSV로 다운로드
+                </button>
             </div>
         </div>
     );
