@@ -16,7 +16,7 @@
     border-radius: 0.5rem;
     padding: 2rem;
     overflow-y: auto;
-    max-height: calc(100dvh - 6rem - 110px);
+    max-height: calc(100dvh - 6rem - 110px );
 }
 
 .faqHeader {
@@ -84,10 +84,11 @@
     overflow: hidden;
     transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
     opacity: 0;
+    overflow-y: auto; 
 }
 
 .faqAnswer.open {
-    max-height: 100px; /* Adjust this value based on your content */
+    max-height: 150px; /* Adjust this value based on your content */
     opacity: 1;
     margin-top: 0.5rem;
 }
@@ -118,3 +119,44 @@
 .faqFooter a:hover {
     text-decoration: underline;
 }
+
+.faqTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-bottom: 18px;
+}
+
+.faqTable th, .faqTable td {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+}
+  
+.faqTable th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+  
+.faqTable td {
+    background-color: #ffffff;
+    margin-bottom:10px;
+}
+  
+.faqTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+  
+.faqTable {
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.names p{
+    padding-bottom:5px;
+}
+
+
+
