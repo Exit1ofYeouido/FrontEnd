@@ -2,7 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import styles from "./ChartPage.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
-import { getStockPrice, getStockChart } from "~apis/stockAPI/getStockApi";
+import {
+    getStockPrice,
+    getStockChart,
+    getLink,
+} from "~apis/stockAPI/getStockApi";
 import { sellStock } from "~apis/stockAPI/sellStockApi";
 import SellModal from "./SellModal";
 import { showToast } from "~components/Toast";
@@ -42,7 +46,7 @@ export default function ChartPage() {
         return () => {
             window.removeEventListener("resize", updateContainerWidth);
         };
-    }, []);
+    }, [activePeriod]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -70,9 +74,19 @@ export default function ChartPage() {
         fetchData();
     }, [activePeriod, modalClosedTrigger]);
 
-    if (Object.keys(stocksPrice).length === 0 || stocksChart.length === 0) {
+    if (Object.keys(stocksPrice).length === 0) {
         return <LoadingPage />;
     }
+
+    const handleGetLink = async () => {
+        try {
+            const link = await getLink();
+            window.location.href = link.url;
+        } catch (error) {
+            console.error("Error getting link:", error);
+            showToast("error", "오류가 발생했습니다.");
+        }
+    };
 
     const handleBack = () => {
         navigate("/stock");
@@ -163,126 +177,141 @@ export default function ChartPage() {
             </div>
 
             <div className={styles.chartContainer} ref={chartRef}>
-                <ResponsiveContainer width="100%" height="100%">
-                    <LineChart
-                        data={stocksChart.slice().reverse()}
-                        margin={{ top: 70, right: 10, left: -55, bottom: 0 }}
-                    >
-                        <XAxis dataKey="date" tick={false} axisLine={false} />
-                        <YAxis
-                            domain={["dataMin - 500", "dataMax + 500"]}
-                            tick={false}
-                            axisLine={false}
-                        />
-                        <Tooltip
-                            cursor={{ stroke: "#eee", strokeWidth: 2 }}
-                            formatter={(value, name, props) => [
-                                `${formatNumber(value)}원`,
-                            ]}
-                            position={{ y: 10 }}
-                            contentStyle={{
-                                backgroundColor: "white",
-                                border: "1px solid #ccc",
-                                borderRadius: "5px",
-                                fontSize: "14px",
-                                width: "100px",
+                {stocksChart.length === 0 ? (
+                    <div className={styles.noDataMessage}>
+                        <span>차트 데이터가 없습니다.</span>
+                    </div>
+                ) : (
+                    <ResponsiveContainer width="100%" height="100%">
+                        <LineChart
+                            data={stocksChart.slice().reverse()}
+                            margin={{
+                                top: 70,
+                                right: 10,
+                                left: -55,
+                                bottom: 0,
                             }}
-                            itemStyle={{
-                                color: "#333",
-                                fontWeight: "bold",
-                                fontSize: "12px",
-                            }}
-                        />
-                        <Line
-                            type="monotone"
-                            dataKey="price"
-                            stroke="#3B7FEE"
-                            strokeWidth={3}
-                            animationDuration={400}
-                            dot={(dotProps) => {
-                                const { index, cx, cy } = dotProps;
-                                const margin = 10;
+                        >
+                            <XAxis
+                                dataKey="date"
+                                tick={false}
+                                axisLine={false}
+                            />
+                            <YAxis
+                                domain={["dataMin - 500", "dataMax + 500"]}
+                                tick={false}
+                                axisLine={false}
+                            />
+                            <Tooltip
+                                cursor={{ stroke: "#eee", strokeWidth: 2 }}
+                                formatter={(value, name, props) => [
+                                    `${formatNumber(value)}원`,
+                                ]}
+                                position={{ y: 10 }}
+                                contentStyle={{
+                                    backgroundColor: "white",
+                                    border: "1px solid #ccc",
+                                    borderRadius: "5px",
+                                    fontSize: "14px",
+                                    width: "100px",
+                                }}
+                                itemStyle={{
+                                    color: "#333",
+                                    fontWeight: "bold",
+                                    fontSize: "12px",
+                                }}
+                            />
+                            <Line
+                                type="monotone"
+                                dataKey="price"
+                                stroke="#3B7FEE"
+                                strokeWidth={3}
+                                animationDuration={400}
+                                dot={(dotProps) => {
+                                    const { index, cx, cy } = dotProps;
+                                    const margin = 10;
 
-                                const isTextOverflowingRight =
-                                    cx + 100 > containerWidth - margin;
-                                const isTextTooLeft = cx - 100 < margin;
+                                    const isTextOverflowingRight =
+                                        cx + 100 > containerWidth - margin;
+                                    const isTextTooLeft = cx - 100 < margin;
 
-                                if (index === stocksChart.length - 1) {
-                                    return (
-                                        <circle
-                                            key={`dot-${index}`}
-                                            cx={cx}
-                                            cy={cy}
-                                            r={5}
-                                            className={styles.glowingDot}
-                                        />
-                                    );
-                                }
-                                if (index === reversedMaxPriceIndex) {
-                                    return (
-                                        <g key={`max-price-${index}`}>
+                                    if (index === stocksChart.length - 1) {
+                                        return (
                                             <circle
                                                 key={`dot-${index}`}
                                                 cx={cx}
                                                 cy={cy}
-                                                r={3}
-                                                fill="red"
+                                                r={5}
+                                                className={styles.glowingDot}
                                             />
-                                            <text
-                                                x={
-                                                    isTextOverflowingRight
-                                                        ? cx - 100
-                                                        : isTextTooLeft
-                                                        ? cx + 10
-                                                        : cx + 10
-                                                }
-                                                y={cy - 10}
-                                                fill="red"
-                                                fontSize={12}
-                                                key={`text-max-${index}`}
-                                            >
-                                                {`최고가: ${formatNumber(
-                                                    maxPrice
-                                                )}원`}
-                                            </text>
-                                        </g>
-                                    );
-                                }
-                                if (index === reversedMinPriceIndex) {
-                                    return (
-                                        <g key={`min-price-${index}`}>
-                                            <circle
-                                                key={`dot-${index}`}
-                                                cx={cx}
-                                                cy={cy}
-                                                r={3}
-                                                fill="blue"
-                                            />
-                                            <text
-                                                x={
-                                                    isTextOverflowingRight
-                                                        ? cx - 100
-                                                        : isTextTooLeft
-                                                        ? cx + 10
-                                                        : cx + 10
-                                                }
-                                                y={cy + 15}
-                                                fill="blue"
-                                                fontSize={12}
-                                                key={`text-min-${index}`}
-                                            >
-                                                {`최저가: ${formatNumber(
-                                                    minPrice
-                                                )}원`}
-                                            </text>
-                                        </g>
-                                    );
-                                }
-                                return null;
-                            }}
-                        />
-                    </LineChart>
-                </ResponsiveContainer>
+                                        );
+                                    }
+                                    if (index === reversedMaxPriceIndex) {
+                                        return (
+                                            <g key={`max-price-${index}`}>
+                                                <circle
+                                                    key={`dot-${index}`}
+                                                    cx={cx}
+                                                    cy={cy}
+                                                    r={3}
+                                                    fill="red"
+                                                />
+                                                <text
+                                                    x={
+                                                        isTextOverflowingRight
+                                                            ? cx - 100
+                                                            : isTextTooLeft
+                                                            ? cx + 10
+                                                            : cx + 10
+                                                    }
+                                                    y={cy - 10}
+                                                    fill="red"
+                                                    fontSize={12}
+                                                    key={`text-max-${index}`}
+                                                >
+                                                    {`최고가: ${formatNumber(
+                                                        maxPrice
+                                                    )}원`}
+                                                </text>
+                                            </g>
+                                        );
+                                    }
+                                    if (index === reversedMinPriceIndex) {
+                                        return (
+                                            <g key={`min-price-${index}`}>
+                                                <circle
+                                                    key={`dot-${index}`}
+                                                    cx={cx}
+                                                    cy={cy}
+                                                    r={3}
+                                                    fill="blue"
+                                                />
+                                                <text
+                                                    x={
+                                                        isTextOverflowingRight
+                                                            ? cx - 100
+                                                            : isTextTooLeft
+                                                            ? cx + 10
+                                                            : cx + 10
+                                                    }
+                                                    y={cy + 15}
+                                                    fill="blue"
+                                                    fontSize={12}
+                                                    key={`text-min-${index}`}
+                                                >
+                                                    {`최저가: ${formatNumber(
+                                                        minPrice
+                                                    )}원`}
+                                                </text>
+                                            </g>
+                                        );
+                                    }
+                                    return null;
+                                }}
+                            />
+                        </LineChart>
+                    </ResponsiveContainer>
+                )}
             </div>
             <div className={styles.tabs}>
                 <div
@@ -348,7 +377,9 @@ export default function ChartPage() {
                 <button className={styles.sellButton} onClick={handleSellClick}>
                     판매
                 </button>
-                <button className={styles.buyButton}>구매</button>
+                <button className={styles.buyButton} onClick={handleGetLink}>
+                    구매
+                </button>
             </div>
 
             {showSellModal && (

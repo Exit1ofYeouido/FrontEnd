@@ -43,3 +43,14 @@ export const getSearchStock = async (query) => {
         throw error;
     }
 };
+
+export const getLink = async () => {
+    try {
+        const response = await instance.post(`/my/stocks/purchase`);
+        return response.data;
+    } catch (error) {
+        console.error("Error Link", error);
+        throw error;
+    }
+};
+
