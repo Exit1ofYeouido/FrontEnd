@@ -13,21 +13,6 @@ const PieChartComponent = ({ data = [], selectedOption, month }) => {
     let top5NotHoldingStocks = [];
     let top5Dates = [];
 
-    const CustomTooltip = ({ active, payload, label }) => {
-        if (active && payload && payload.length) {
-            const value = payload[0].value;
-            const formattedLabel = `${label}월`;
-            const formattedValue = `${value}건`;
-            return (
-                <div className={styles.customTooltip}>
-                    <p
-                        className={styles.label}
-                    >{`${formattedLabel}: ${formattedValue}`}</p>
-                </div>
-            );
-        }
-        return null;
-    };
 
     if (selectedOption === "memberSearch") {
         pieData = data
@@ -96,7 +81,7 @@ const PieChartComponent = ({ data = [], selectedOption, month }) => {
             }));
 
         holdingPieData = data.map((entry) => ({
-            name: month === "0" ? entry.month : entry.date,
+            name: month? entry.month : entry.date,
             보유자: entry.holdingCount,
             비보유자: entry.notHoldingCount,
         }));
@@ -125,7 +110,7 @@ const PieChartComponent = ({ data = [], selectedOption, month }) => {
                 <div className={styles.chartWrapper}>
                     <div>
                         <h3>검색량 Top 10</h3>
-                        <PieChart width={400} height={400}>
+                        <PieChart width={300} height={300}>
                             <Pie
                                 data={pieData}
                                 dataKey="value"
@@ -148,7 +133,7 @@ const PieChartComponent = ({ data = [], selectedOption, month }) => {
                     </div>
                     <div>
                         <h3>보유량에 따른 검색량</h3>
-                        <PieChart width={400} height={400}>
+                        <PieChart width={300} height={300}>
                             <Pie
                                 data={holdingPieData}
                                 dataKey="value"
@@ -171,7 +156,7 @@ const PieChartComponent = ({ data = [], selectedOption, month }) => {
                     </div>
                     <div>
                         <h3>보유한 주식 중 검색량 상위 5개</h3>
-                        <PieChart width={400} height={400}>
+                        <PieChart width={300} height={300}>
                             <Pie
                                 data={top5HoldingStocks}
                                 dataKey="value"
@@ -194,7 +179,7 @@ const PieChartComponent = ({ data = [], selectedOption, month }) => {
                     </div>
                     <div>
                         <h3>보유하지 않은 주식 중 검색량 상위 5개</h3>
-                        <PieChart width={400} height={400}>
+                        <PieChart width={300} height={300}>
                             <Pie
                                 data={top5NotHoldingStocks}
                                 dataKey="value"
@@ -222,7 +207,7 @@ const PieChartComponent = ({ data = [], selectedOption, month }) => {
                 <div className={styles.chartWrapper}>
                     <div>
                         <h3>검색량이 많은 날짜</h3>
-                        <PieChart width={400} height={400}>
+                        <PieChart width={300} height={300}>
                             <Pie
                                 data={pieData}
                                 dataKey="value"
@@ -318,7 +303,7 @@ const PieChartComponent = ({ data = [], selectedOption, month }) => {
                 <div className={styles.chartWrapper}>
                     <div>
                         <h3>보유자와 비보유자의 검색량 차이</h3>
-                        <PieChart width={400} height={400}>
+                        <PieChart width={300} height={300}>
                             <Pie
                                 data={pieData}
                                 dataKey="value"
@@ -342,7 +327,7 @@ const PieChartComponent = ({ data = [], selectedOption, month }) => {
 
                     <div>
                         <h3>검색량 상위 5개 날짜</h3>
-                        <PieChart width={400} height={400}>
+                        <PieChart width={300} height={300}>
                             <Pie
                                 data={top5Dates}
                                 dataKey="value"
@@ -360,7 +345,7 @@ const PieChartComponent = ({ data = [], selectedOption, month }) => {
                                     />
                                 ))}
                             </Pie>
-                            <Tooltip content={<CustomTooltip />} />
+                            <Tooltip/>
                         </PieChart>
                     </div>
                 </div>
