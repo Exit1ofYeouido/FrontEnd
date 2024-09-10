@@ -103,7 +103,9 @@ export default function MyPage() {
                                 className={styles.accountLogo}
                             />
                             <div className={styles.accountInfo}>
-                                <div>계좌 번호</div>
+                                <div className={styles.accountName}>
+                                    신한 S-Lite
+                                </div>
                                 <div className={styles.accountId}>
                                     {accountId}
                                 </div>
@@ -182,33 +184,39 @@ export default function MyPage() {
                     </div>
 
                     <div className={styles.earningRatesList}>
-                        {earningRates.map((rate, index) => (
-                            <div
-                                key={index}
-                                className={styles.earningRateItem}
-                                onClick={() =>
-                                    navigate("/stock/chart", {
-                                        state: {
-                                            stockCode: rate.stockCode,
-                                        },
-                                    })
-                                }
-                            >
-                                <img
-                                    src={`https://stock-craft.s3.ap-northeast-2.amazonaws.com/logos/${encodeURIComponent(
-                                        rate.enterpriseName
-                                    )}.svg`}
-                                    alt={`${rate.enterpriseName} logo`}
-                                    className={styles.logo}
-                                />
-                                <div className={styles.enterpriseName}>
-                                    {rate.enterpriseName}
+                        {earningRates.length > 0 ? (
+                            earningRates.map((rate, index) => (
+                                <div
+                                    key={index}
+                                    className={styles.earningRateItem}
+                                    onClick={() =>
+                                        navigate("/stock/chart", {
+                                            state: {
+                                                stockCode: rate.stockCode,
+                                            },
+                                        })
+                                    }
+                                >
+                                    <img
+                                        src={`https://stock-craft.s3.ap-northeast-2.amazonaws.com/logos/${encodeURIComponent(
+                                            rate.enterpriseName
+                                        )}.svg`}
+                                        alt={`${rate.enterpriseName} logo`}
+                                        className={styles.logo}
+                                    />
+                                    <div className={styles.enterpriseName}>
+                                        {rate.enterpriseName}
+                                    </div>
+                                    <div className={styles.rateValue}>
+                                        ({rate.earningRate}%)
+                                    </div>
                                 </div>
-                                <div className={styles.rateValue}>
-                                    ({rate.earningRate}%)
-                                </div>
+                            ))
+                        ) : (
+                            <div className={styles.noStocksMessage}>
+                                보유 주식이 없습니다
                             </div>
-                        ))}
+                        )}
                     </div>
 
                     <div className={styles.bottom}>

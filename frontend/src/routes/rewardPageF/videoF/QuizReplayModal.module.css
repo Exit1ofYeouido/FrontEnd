@@ -67,7 +67,6 @@ body {
 
 .quizContainer:hover,
 .replayContainer:hover {
-    background-color: #fff;
     transform: translateY(-3px);
 }
 

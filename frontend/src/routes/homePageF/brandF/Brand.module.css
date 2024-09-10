@@ -14,17 +14,17 @@
     text-align: center;
 }
 
-
 .container {
     position: relative;
     width: 100%;
     height: 150px;
     overflow: hidden;
-    border-radius: 20px;
-    background-color: #FAF9F6;
-    border: 2px solid #e0e0e0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 15px;
+    background-color: #fff;
+    border: 0.5px solid #d0d0d0;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.05);
 }
+
 .logo {
     width: 75px;
     height: 75px;
@@ -52,6 +52,85 @@
         transform: translateY(0);
     }
     50% {
-        transform: translateY(30px);
+        transform: translateY(25px);
+    }
+}
+
+@media (max-width: 430px) {
+    .text {
+        font-size: 22px;
+    }
+
+    .container {
+        height: 130px;
+    }
+
+    .logo {
+        width: 65px;
+        height: 65px;
+    }
+}
+
+@media (max-width: 400px) {
+    .text {
+        font-size: 20px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+    }
+
+    .container {
+        height: 110px;
+    }
+
+    .logo {
+        width: 55px;
+        height: 55px;
+    }
+}
+
+@media (max-width: 370px) {
+    .text {
+        font-size: 18px;
+    }
+    .container {
+        height: 100px;
+    }
+    .logo {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-height: 830px) {
+    .text {
+        font-size: 22px;
+    }
+    .container {
+        height: 130px;
+    }
+    .logo {
+        width: 65px;
+        height: 65px;
+    }
+}
+
+@media (max-height: 750px) {
+    .text {
+        font-size: 20px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+    }
+
+    .container {
+        height: 110px;
+    }
+
+    .logo {
+        width: 55px;
+        height: 55px;
     }
 }

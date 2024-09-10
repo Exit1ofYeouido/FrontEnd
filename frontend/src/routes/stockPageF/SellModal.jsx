@@ -73,7 +73,7 @@ export default function SellModal({
             >
                 <h2>{stockName}</h2>
                 <p className={styles.modalTitle}>판매 예약</p>
-                <p className={styles.subTitle}>오후 3시 주문 예정</p>
+                <p className={styles.subTitle}>오전 10시 & 오후 3시 주문 예정</p>
 
                 <div className={styles.details}>
                     <div className={styles.row}>

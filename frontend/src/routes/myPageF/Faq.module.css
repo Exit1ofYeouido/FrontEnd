@@ -1,12 +1,12 @@
 .faqContainer {
     background: linear-gradient(to bottom, #e9f0f8, #ffffff);
-    padding: 3rem 1rem;
+    padding: 40px 25px;
     overflow-y: auto;
     box-sizing: border-box;
 }
 
 .pageWithNavbar {
-    padding-bottom: 110px; /* Navbar height (90px) + extra padding */
+    padding-bottom: 110px;
 }
 
 .faqContent {

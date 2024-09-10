@@ -1,7 +1,7 @@
 .container {
     background-color: #fff;
     height: calc(100dvh - 70px);
-    padding: 20px;
+    padding: 25px;
 }
 
 .topBar {

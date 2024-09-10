@@ -1,11 +1,11 @@
 .info {
-    background-color: #FAF9F6;
+    background-color: #fff;
     height: 180px;
     padding: 30px;
-    border-radius: 20px;
+    border-radius: 15px;
     margin-top: 20px;
-    border: 2px solid #e0e0e0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 0.5px solid #d0d0d0;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.05);
 }
 
 .title {
@@ -21,7 +21,7 @@
 }
 
 .amount {
-    font-size: 32px;
+    font-size: 30px;
     font-weight: 600;
 }
 
@@ -62,13 +62,13 @@
 
 .stockTitle,
 .pointTitle {
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .stockAmount,
 .pointAmount {
-    font-size: 20px;
-    margin-left: 25px;
+    font-size: 18px;
+    margin-left: 12px;
     font-weight: 600;
 }
 
@@ -121,7 +121,137 @@
     }
 }
 
+@media (max-width: 430px) {
+
+    .title {
+        font-size: 18px;
+    }
+
+    .details {
+        margin: 5px 0;
+    }
+
+    .amount {
+        font-size: 26px;
+    }
+
+    .more {
+        font-size: 10px;
+        padding: 4px 15px;
+    }
+
+    .earningRate {
+        font-size: 12px;
+    }
+
+    .line {
+        margin: 20px 0;
+    }
+
+    .subInfo {
+        font-size: 12px;
+        margin-top: 8px;
+    }
+
+    .stockTitle,
+    .pointTitle {
+        font-size: 14px;
+    }
+
+    .stockAmount,
+    .pointAmount {
+        font-size: 16px;
+        margin-left: 15px;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .amount {
+        font-size: 24px;
+    }
+    
+    .stockTitle,
+    .pointTitle {
+        font-size: 12px;
+    }
+
+    .stockAmount,
+    .pointAmount {
+        font-size: 16px;
+        margin-left: 15px;
+    }
+}
+
 @media (max-width: 380px) {
+
+    .amount {
+        font-size: 24px;
+    }
+    
+    .stockTitle,
+    .pointTitle {
+        font-size: 12px;
+    }
+
+    .stockAmount,
+    .pointAmount {
+        font-size: 16px;
+        margin-left: 8px;
+    }
+}
+
+@media (max-height: 830px) {
+    .title {
+        font-size: 18px;
+    }
+
+    .details {
+        margin: 5px 0;
+    }
+
+    .amount {
+        font-size: 26px;
+    }
+
+    .more {
+        font-size: 10px;
+        padding: 4px 15px;
+    }
+
+    .earningRate {
+        font-size: 12px;
+    }
+
+    .line {
+        margin: 20px 0;
+    }
+
+    .subInfo {
+        font-size: 12px;
+        margin-top: 8px;
+    }
+
+    .stockTitle,
+    .pointTitle {
+        font-size: 14px;
+    }
+
+    .stockAmount,
+    .pointAmount {
+        font-size: 16px;
+        margin-left: 15px;
+    }
+    .info{
+        height: auto;
+    }
+}
+
+@media (max-height: 750px) {
+    .amount {
+        font-size: 24px;
+    }
+    
     .stockTitle,
     .pointTitle {
         font-size: 12px;
