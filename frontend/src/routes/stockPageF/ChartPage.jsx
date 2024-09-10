@@ -232,7 +232,7 @@ export default function ChartPage() {
                                                         : cx + 10
                                                 }
                                                 y={cy - 10}
-                                                fill="blue"
+                                                fill="red"
                                                 fontSize={12}
                                                 key={`text-max-${index}`}
                                             >
@@ -262,7 +262,7 @@ export default function ChartPage() {
                                                         : cx + 10
                                                 }
                                                 y={cy + 15}
-                                                fill="red"
+                                                fill="blue"
                                                 fontSize={12}
                                                 key={`text-min-${index}`}
                                             >

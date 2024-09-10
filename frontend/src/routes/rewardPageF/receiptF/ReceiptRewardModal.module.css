@@ -13,16 +13,18 @@
 
 .modalContent {
     position: relative;
+    width: 40%;
+    height: auto;
     background: white;
-    padding: 20px 40px;
+    padding: 40px 40px 15px 40px;
     border-radius: 30px;
     text-align: center;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
-    width: 30%;
-    height: 30%;
+    width: 20%;
+    height: 20%;
 }
 
 .correctText {
@@ -44,6 +46,7 @@
     border-radius: 30px;
     cursor: pointer;
     font-size: 14px;
+    z-index: 1000;
 }
 
 .confirm {
@@ -56,6 +59,7 @@
     border-radius: 30px;
     cursor: pointer;
     font-size: 14px;
+    z-index: 1000;
 }
 
 .confirm:hover {

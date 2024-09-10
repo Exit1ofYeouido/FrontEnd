@@ -31,6 +31,34 @@ export default function SignUp() {
     const [isPhoneVerified, setIsPhoneVerified] = useState(false);
     const navigate = useNavigate();
 
+    const handlePhoneNumberChange = (fieldName, value) => {
+        const cleanedValue = value.replace(/-/g, "").replace(/\s/g, "");
+
+        if (/\s/.test(value)) {
+            showToast("error", "공백은 허용되지 않습니다.");
+        }
+
+        let formattedValue = "";
+        if (cleanedValue.length <= 3) {
+            formattedValue = cleanedValue;
+        } else if (cleanedValue.length <= 7) {
+            formattedValue = `${cleanedValue.slice(0, 3)}-${cleanedValue.slice(
+                3
+            )}`;
+        } else {
+            formattedValue = `${cleanedValue.slice(0, 3)}-${cleanedValue.slice(
+                3,
+                7
+            )}-${cleanedValue.slice(7, 11)}`;
+        }
+
+        setValue(fieldName, formattedValue);
+
+        if (errors[fieldName]) {
+            clearErrors(fieldName);
+        }
+    };
+
     const handleNextStep = async () => {
         const result = await trigger([
             "memberName",
@@ -397,7 +425,7 @@ export default function SignUp() {
                                         })}
                                         className={styles.phoneInput}
                                         onChange={(e) =>
-                                            handleInputChange(
+                                            handlePhoneNumberChange(
                                                 "phoneNumber",
                                                 e.target.value
                                             )
