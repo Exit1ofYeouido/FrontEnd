@@ -20,6 +20,18 @@ export default function Statistic() {
     const [searchHistory, setSearchHistory] = useState([]);
 
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const price = await getAdmin();
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    useEffect(() => {
         setMemberId("");
         setEnterpriseName("");
         setYear(new Date().getFullYear().toString());
