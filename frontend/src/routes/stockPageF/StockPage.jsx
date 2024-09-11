@@ -119,6 +119,10 @@ export default function StockPage() {
         }
     }, [selectedIndex, suggestions]);
 
+    const formatNumber = (number) => {
+        return new Intl.NumberFormat().format(number);
+    };
+
     return (
         <motion.div
             key="stock-page"
@@ -225,19 +229,23 @@ export default function StockPage() {
                                               ) ? (
                                                 <>
                                                     <FaCaretDown />
-                                                    {stock.previousPrice.slice(
-                                                        1
+                                                    {formatNumber(
+                                                        stock.previousPrice.slice(
+                                                            1
+                                                        )
                                                     )}{" "}
                                                 </>
                                             ) : (
                                                 <>
                                                     <FaCaretUp />
-                                                    {stock.previousPrice}{" "}
+                                                    {formatNumber(
+                                                        stock.previousPrice
+                                                    )}{" "}
                                                 </>
                                             )}
                                         </div>
                                         <div className={styles.stockPrice}>
-                                            {stock.stockPrice}원
+                                            {formatNumber(stock.stockPrice)}원
                                         </div>
                                     </div>
                                 </div>
