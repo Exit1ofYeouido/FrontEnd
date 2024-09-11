@@ -155,7 +155,7 @@ export default function MyPage() {
                                             calculateProfitOrLoss(
                                                 earningRate,
                                                 allCost
-                                            ) < 0
+                                            ) > 0
                                                 ? "#ff0000"
                                                 : "#007bff",
                                     }}
@@ -172,7 +172,7 @@ export default function MyPage() {
                                     className={styles.percent}
                                     style={{
                                         color:
-                                            earningRate < 0
+                                            earningRate > 0
                                                 ? "#ff0000"
                                                 : "#007bff",
                                     }}
@@ -207,7 +207,15 @@ export default function MyPage() {
                                     <div className={styles.enterpriseName}>
                                         {rate.enterpriseName}
                                     </div>
-                                    <div className={styles.rateValue}>
+                                    <div
+                                        className={styles.rateValue}
+                                        style={{
+                                            color:
+                                                rate.earningRate > 0
+                                                    ? "#ff0000"
+                                                    : "#007bff",
+                                        }}
+                                    >
                                         ({rate.earningRate}%)
                                     </div>
                                 </div>
