@@ -35,12 +35,16 @@ export const getStatisticMemberStock = async (
     }
 };
 
-export const getStatisticStock = async (enterpriseName, year, month) => {
+export const getStatisticStock = async (enterpriseInfo, year, month) => {
     try {
         const response = await instance.get(
             `/search/admin/search-history/stock`,
             {
-                params: { enterpriseName, year, month },
+                params: {
+                    enterpriseInfo: enterpriseInfo,
+                    year: year,
+                    month: month,
+                },
             }
         );
         return response.data;
