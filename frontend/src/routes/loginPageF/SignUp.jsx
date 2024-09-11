@@ -173,11 +173,11 @@ export default function SignUp() {
         const phoneNumber = getValues("phoneNumber");
 
         const response = await sendAuth(phoneNumber);
-
+        console.log(response);
         if (response) {
             showToast("success", "인증번호를 발송하였습니다.");
         } else {
-            showToast("error", "인증번호 발송에 실패하였습니다.");
+            showToast("error", "2분 경과 후 인증번호 재발급이 가능합니다.");
         }
     };
 
