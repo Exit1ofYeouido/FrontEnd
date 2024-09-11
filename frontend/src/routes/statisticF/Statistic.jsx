@@ -18,11 +18,13 @@ export default function Statistic() {
     const [year, setYear] = useState(new Date().getFullYear().toString());
     const [month, setMonth] = useState((new Date().getMonth() + 1).toString());
     const [searchHistory, setSearchHistory] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const price = await getAdmin();
+                setLoading(false);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -109,6 +111,17 @@ export default function Statistic() {
         }
         return null;
     };
+
+    if (loading) {
+        return (
+            <div className={styles.loadingloading}>
+                <img
+                    src="https://stock-craft.s3.ap-northeast-2.amazonaws.com/brand_logo/shinhan.svg"
+                    className={styles.loading}
+                ></img>
+            </div>
+        );
+    }
 
     return (
         <div className={styles.container}>
