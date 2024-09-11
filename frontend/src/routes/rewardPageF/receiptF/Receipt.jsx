@@ -148,8 +148,8 @@ export default function Receipt() {
 
     const closeRewardModal = () => {
         setIsRewardModalOpen(false);
+        navigate("/reward/receipt");
     };
-
 
     const handleCancel = () => {
         setIsModalOpen(false);
